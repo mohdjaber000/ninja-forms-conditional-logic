@@ -30,6 +30,12 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Changelog ==
 
+= 1.0.1 =
+
+*Changes:*
+
+* The Conditionals Extension can now be used with the Multi-Part Extension to show or hide entire pages.
+
 = 1.0 =
 
 *Bugs:*
