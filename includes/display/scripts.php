@@ -11,7 +11,7 @@ function ninja_forms_conditionals_display_js( $form_id ){
 	if( !empty( $conditionals ) ){
 		
 		wp_enqueue_script( 'ninja-forms-conditionals-display',
-			NINJA_FORMS_CON_URL .'/js/dev/ninja-forms-conditionals-display.js',
+			NINJA_FORMS_CON_URL .'/js/min/ninja-forms-conditionals-display.min.js',
 			array( 'jquery', 'ninja-forms-display' ) );
 
 		wp_localize_script( 'ninja-forms-conditionals-display', 'ninja_forms_form_'.$form_id.'_conditionals_settings', array( 'conditionals' => $conditionals ) );

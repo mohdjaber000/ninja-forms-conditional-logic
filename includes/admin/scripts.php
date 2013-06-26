@@ -3,7 +3,7 @@ add_action( 'admin_init', 'ninja_forms_conditionals_admin_js', 10, 2 );
 function ninja_forms_conditionals_admin_js( $form_id ){
 	if( isset( $_REQUEST['page'] ) AND $_REQUEST['page'] == 'ninja-forms' ){
 		wp_enqueue_script( 'ninja-forms-conditionals-admin',
-			NINJA_FORMS_CON_URL .'/js/dev/ninja-forms-conditionals-admin.js',
+			NINJA_FORMS_CON_URL .'/js/min/ninja-forms-conditionals-admin.min.js',
 			array( 'jquery', 'ninja-forms-admin' ) );
 	}
 }
