@@ -1,8 +1,4 @@
 <?php
-add_action( 'init', 'ninja_forms_register_conditionals_field_filter' );
-function ninja_forms_register_conditionals_field_filter(){
-	add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', 11, 2 );
-}
 
 function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' ){
 	global $ninja_forms_processing, $current_user;
@@ -139,3 +135,5 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 
 	return $data;
 }
+
+add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', 8, 2 );
