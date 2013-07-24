@@ -36,7 +36,7 @@ function ninja_forms_conditionals_req_fields(){
 							if( isset( $cr['value'] ) ){
 								if( is_array( $user_value ) ){
 									foreach( $user_value as $v ){
-										if( !$pass_array[$x] ){
+										if( !isset ( $pass_array[$x] ) ){
 											$pass_array[$x] = ninja_forms_conditional_compare($v, $cr['value'], $cr['operator']);
 										}else{
 											break;
