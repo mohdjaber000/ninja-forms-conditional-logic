@@ -13,9 +13,12 @@ function ninja_forms_register_display_conditionals(){
 
 function ninja_forms_display_conditionals($form_id){
 	global $ninja_forms_fields;
+
 	$form_row = ninja_forms_get_form_by_id($form_id);
 	$field_results = ninja_forms_get_fields_by_form_id($form_id);
+
 	if(is_array($field_results) AND !empty($field_results)){
+		/*
 		$watch_fields = array();
 		foreach($field_results as $field){
 			$data = $field['data'];
@@ -29,21 +32,17 @@ function ninja_forms_display_conditionals($form_id){
 				}
 			}
 		}
-		
+		*/
 		foreach($field_results as $field){
+
 			if( isset( $ninja_forms_fields[$field['type']] ) ){
 				$type = $ninja_forms_fields[$field['type']];
-				if(strpos($field['type'], '_') === 0){
-					$type_slug = substr($field['type'], 1);
-				}else{
-					$type_slug = $field['type'];
-				}
-				$type_slug = 'ninja-forms-'.$type_slug;				
 				$field_id = $field['id'];
 				$display_wrap = $type['display_wrap'];
 				$display_label = $type['display_label'];
 				$display_function = $type['display_function'];
 				$data = $field['data'];
+
 				$x = 0;
 				if(isset($data['conditional']) AND is_array($data['conditional'])){
 					if(!isset($local_vars)){
@@ -84,7 +83,7 @@ function ninja_forms_display_conditionals($form_id){
 				}
 			}
 		}
-		
+
 		if(isset($local_vars)){
 			return $local_vars;
 		}else{
