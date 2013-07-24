@@ -1,7 +1,7 @@
 <?php
 add_action('init', 'ninja_forms_register_edit_field_conditional', 999);
 function ninja_forms_register_edit_field_conditional(){
-	add_action('ninja_forms_edit_field_after_registered', 'ninja_forms_edit_field_conditional', 10);
+	add_action('ninja_forms_edit_field_after_registered', 'ninja_forms_edit_field_conditional', 11);
 }
 
 function ninja_forms_edit_field_conditional($field_id){
