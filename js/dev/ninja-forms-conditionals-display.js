@@ -26,21 +26,21 @@ function ninja_forms_check_conditional(element, action_value){
 	conditional = conditional.conditionals;
 
 	var field_id = jQuery(element).attr("rel");
-
 	for(field in conditional){
 		var target_field = field.replace("field_", "");
 		var conditional_length = jQuery(conditional[field]['conditional']).length;
 		for (i = 0; i < conditional_length; i++){
 			var cr_length = jQuery(conditional[field]['conditional'][i]['cr']).length;
 			for (x = 0; x < cr_length; x++){
-				if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
-					var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
-					ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
+				if(typeof conditional[field]['conditional'][i] !== 'undefined') {
+					if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
+						var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
+						ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
+					}					
 				}
 			}
 		}
 	}
-
 }
 
 function ninja_forms_conditional_change(element, target_field, action_value){
@@ -71,7 +71,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			cr_operator = cr_row[x]['operator'];
 			cr_value = cr_row[x]['value'];
 			cr_type = jQuery("#ninja_forms_field_" + cr_field + "_type").val();
-
+			cr_visible = false;
 			if(cr_type == 'list'){
 				// We are either dealing with a checkbox or radio list.
 				if(jQuery("#ninja_forms_field_" + cr_field + "_list_type").val() == "checkbox" ){ //This is a checkbox list.
@@ -80,10 +80,21 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}else{
 						var field_value = '';
 					}
+					jQuery(".ninja_forms_field_" + cr_field + "[value='" + cr_value + "']").each( function(){
+						if(!cr_visible){
+							cr_visible = jQuery(this).is(":visible");
+						}
+					});
 				}else if( jQuery("#ninja_forms_field_" + cr_field + "_list_type").val() == "radio" ){ //This is a radio list.
 					var field_value = jQuery("input[name='ninja_forms_field_" + cr_field + "']:checked").val();
+					jQuery("input[name='ninja_forms_field_" + cr_field + "']").each( function(){
+						if(!cr_visible){
+							cr_visible = jQuery(this).is(":visible");
+						}
+					});
 				}else{
 					field_value = jQuery("#ninja_forms_field_" + cr_field).val(); // This is a dropdown list.
+					cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 				}
 			}else if(cr_type == 'checkbox'){
 				if(jQuery("#ninja_forms_field_" + cr_field).prop("checked")){
@@ -91,11 +102,25 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}else{
 					var field_value = 'unchecked';
 				}
+				cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 			}else{
-				field_value = jQuery("#ninja_forms_field_" + cr_field).val();				
+				field_value = jQuery("#ninja_forms_field_" + cr_field).val();
+				cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
+			}
+
+			if(is_numeric(field_value)){
+				field_value = parseInt(field_value);
+			}
+
+			if(is_numeric(cr_value)){
+				cr_value = parseInt(cr_value);
 			}
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
+
+			if(!cr_visible){
+				tmp = false;
+			}
 
 			if(connector == 'and'){
 				if(!tmp){
@@ -116,23 +141,67 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 		value = value_array[i];
 
 		var input_type = jQuery("#ninja_forms_field_" + target_field + "_type").val();
+		var list_type = '';
+		var list = false;
 		if(input_type == "list"){
 			input_type = jQuery("#ninja_forms_field_" + target_field + "_list_type").val();
+			list_type = input_type;
+			list = true;
 		}
-
+		
 		if(action == 'show'){
-			
 			if(pass){
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
+				if ( list ) {
+					if ( input_type == 'checkbox' || input_type == 'radio' ) {
+						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+					} else {
+						var target_element = jQuery("#ninja_forms_field_" + target_field);
+					}
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
 			}else{
-				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();	
+				if ( list ) {
+					if ( input_type == 'checkbox' || input_type == 'radio' ) {
+						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+					} else {
+						var target_element = jQuery("#ninja_forms_field_" + target_field);
+					}
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
 			}
+
+			// Check all of our other conditionals to see if one is based upon this field. If it is, set that to false.
+			jQuery(target_element).change();
 		}else if(action == 'hide'){
 			if(pass){
+				if ( list ) {
+					if ( input_type == 'checkbox' || input_type == 'radio' ) {
+						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+					} else {
+						var target_element = jQuery("#ninja_forms_field_" + target_field);
+					}
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
 			}else{
-				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();				
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
+				if ( list ) {
+					if ( input_type == 'checkbox' || input_type == 'radio' ) {
+						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+					} else {
+						var target_element = jQuery("#ninja_forms_field_" + target_field);
+					}
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}			
 			}
+			// Check all of our other conditionals to see if one is based upon this field. If it is, set that to false.
+			jQuery(target_element).change();
 		}else if(action == 'change_value'){
 			if(input_type == 'checkbox'){
 				if(pass){
@@ -155,7 +224,16 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}
 			}
 			if(pass){
-				jQuery("#ninja_forms_field_" + target_field).change();
+				if ( list ) {
+					if ( input_type == 'checkbox' || input_type == 'radio' ) {
+						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+					} else {
+						var target_element = jQuery("#ninja_forms_field_" + target_field);
+					}
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
+				jQuery(target_element).change();
 			}
 		}else if(action == 'remove_value'){
 			if(input_type == 'dropdown'){
@@ -201,6 +279,16 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					jQuery("input[name^=ninja_forms_field_" + target_field + "][value='" + value + "']").parent().show();
 				}
 			}
+			if ( list ) {
+				if ( input_type == 'checkbox' || input_type == 'radio' ) {
+					var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
+			} else {
+				var target_element = jQuery("#ninja_forms_field_" + target_field);
+			}
+			jQuery(target_element).change();
 		}else if(action == 'add_value'){
 			if( typeof value !== "undefined" ){
 				if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
@@ -243,6 +331,16 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}
 				}
 			}
+			if ( list ) {
+				if ( input_type == 'checkbox' || input_type == 'radio' ) {
+					var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
+				} else {
+					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
+			} else {
+				var target_element = jQuery("#ninja_forms_field_" + target_field);
+			}
+			jQuery(target_element).change();
 		}else{
 			//Put code here to call javascript function.
 
@@ -263,4 +361,8 @@ function ninja_forms_conditional_compare(param1, param2, op){
 		case ">":
 			return param1 > param2;
 	}
+}
+
+function is_numeric (mixed_var) {
+  return (typeof(mixed_var) === 'number' || typeof(mixed_var) === 'string') && mixed_var !== '' && !isNaN(mixed_var);
 }
