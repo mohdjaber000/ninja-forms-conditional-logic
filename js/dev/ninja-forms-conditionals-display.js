@@ -8,11 +8,11 @@ Array.prototype.remove = function(from, to) {
 jQuery(document).ready(function(jQuery) {
 	
 	/* * * Begin Conditional Logic JS * * */
-	jQuery(".ninja-forms-field-conditional-listen").change(function(){
+	jQuery(document).on( 'change', '.ninja-forms-field-conditional-listen', function(){
 		ninja_forms_check_conditional(this, true);
 	});	
 	
-	jQuery(".ninja-forms-field-conditional-listen").keyup(function(){
+	jQuery(document).on( 'keyup', '.ninja-forms-field-conditional-listen', function(){
 		ninja_forms_check_conditional(this, true);
 	});
 

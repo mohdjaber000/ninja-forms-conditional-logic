@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	/* * * Conditional Settings JS * * */
 	
 	//Listen to the "hidden list value" checkbox.
-	$(".ninja-forms-field-list-show-value").live('change', function(){
+	$(document).on( 'change', '.ninja-forms-field-list-show-value', function(){
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_list_show_value", "");
 		var new_values = new Object();
@@ -55,7 +55,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	//Conditional Action Change
-	$(".ninja-forms-field-conditional-action").live('change', function(){
+	$(document).on( 'change', '.ninja-forms-field-conditional-action', function(){
 		var value_id = this.id.replace('action', 'value');
 		var label_id = this.id.replace('action', 'value_label');
 		var form_id = $("#_form_id").val();
@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	//Add New Conditional
-	$(".ninja-forms-field-add-conditional").live("click", function(event){
+	$(document).on( 'click', '.ninja-forms-field-add-conditional', function(event){
 		event.preventDefault();
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_add_conditional", "");
@@ -104,7 +104,7 @@ jQuery(document).ready(function($) {
 	});
 
 	//Remove Conditional
-	$(".ninja-forms-field-remove-conditional").live("click", function(event){
+	$(document).on( 'click', '.ninja-forms-field-remove-conditional', function(event){
 		event.preventDefault();
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_remove_conditional", "");
@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	//Add New Criterion
-	$(".ninja-forms-field-add-cr").live("click", function(event){
+	$(document).on( 'click', '.ninja-forms-field-add-cr', function(event){
 		event.preventDefault();
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_add_cr", "");
@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	//Remove Criterion
-	$(".ninja-forms-field-remove-cr").live("click", function(event){
+	$(document).on( 'click', '.ninja-forms-field-remove-cr', function(event){
 		event.preventDefault();
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_remove_cr", "");
@@ -151,7 +151,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	//Change Criterion Select List
-	$(".ninja-forms-field-conditional-cr-field").live("change", function(){
+	$(document).on( 'change', '.ninja-forms-field-conditional-cr-field', function(){
 		var field_id = this.id.replace("ninja_forms_field_", "");
 		field_id = field_id.replace("_cr_field", "");
 		var tmp = this.title.split("_");
