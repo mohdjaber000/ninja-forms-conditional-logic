@@ -3,14 +3,14 @@
 Plugin Name: Ninja Forms - Conditionals
 Plugin URI: http://wpninjas.com.com
 Description: Conditional form logic add-on for Ninja Forms.
-Version: 1.0.3
+Version: 1.0.4
 Author: The WP Ninjas
 Author URI: http://wpninjas.com
 */
 
 define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/ninja-forms-conditionals");
 define("NINJA_FORMS_CON_URL", plugins_url()."/ninja-forms-conditionals");
-define("NINJA_FORMS_CON_VERSION", "1.0.3");
+define("NINJA_FORMS_CON_VERSION", "1.0.4");
 
 // this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
 define( 'NINJA_FORMS_CON_EDD_SL_STORE_URL', 'http://wpninjas.com' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
