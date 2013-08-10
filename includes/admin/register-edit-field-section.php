@@ -14,7 +14,7 @@ function ninja_forms_edit_field_conditional($field_id){
 	$edit_conditional = $reg_field['edit_conditional'];
 	if($edit_conditional){
 		?>
-	
+
 		<div id="ninja-forms-conditionals">
 		<span class="label">
 			Conditional Statements - <a href="#" name="" id="ninja_forms_field_<?php echo $field_id;?>_add_conditional" class="ninja-forms-field-add-conditional">Add Conditional Statement</a>
@@ -41,10 +41,10 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 	global $wpdb, $ninja_forms_fields;
 
 	$field_row = ninja_forms_get_field_by_id($field_id);
-	
+
 	$field_type = $field_row['type'];
 	$field_data = $field_row['data'];
-	
+
 	$reg_field = $ninja_forms_fields[$field_type];
 	$conditional = $reg_field['conditional'];
 	if( isset( $condition['action'] ) ){
@@ -75,7 +75,7 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 				}
 				?>
 			</select>
-			<span id="ninja_forms_field_<?php echo $field_id;?>_<?php echo $x;?>_value_span"> 
+			<span id="ninja_forms_field_<?php echo $field_id;?>_<?php echo $x;?>_value_span">
 				<?php
 				if( isset( $conditional['action'][$selected_action] ) ){
 					$conditional = $conditional['action'][$selected_action];
@@ -116,7 +116,7 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 	$form_id = $field_row['form_id'];
 	$field_type = $field_row['type'];
 	$field_data = $field_row['data'];
-	
+
 	if( isset( $cr['field'] ) AND $cr['field'] != '' ){
 		$selected_row = ninja_forms_get_field_by_id( $cr['field'] );
 		$selected_type = $selected_row['type'];
@@ -159,7 +159,7 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>>></option>
 		</select>
 		<span id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>_value" class="">
-		<?php	
+		<?php
 			if(isset($conditional['value']) AND is_array($conditional['value'])){
 				ninja_forms_field_conditional_cr_value_output($field_id, $x, $y, $conditional, $cr, $field_data);
 			}
@@ -237,12 +237,12 @@ function ninja_forms_field_conditional_cr_value_output( $field_id, $x, $y="", $c
 					$i++;
 				}
 			}
-			?>					
+			?>
 			</select>
 			<?php
 			break;
 		default:
-			
+
 			break;
 	}
 }
@@ -276,7 +276,7 @@ function ninja_forms_field_conditional_action_output( $field_id, $x, $conditiona
 			?>
 			<input type="hidden" name="<?php echo $name;?>" value="">
 			<?php
-			break;		
+			break;
 		case 'hide':
 			?>
 			<input type="hidden" name="<?php echo $name;?>" value="">
@@ -323,7 +323,7 @@ function ninja_forms_field_conditional_action_output( $field_id, $x, $conditiona
 					$i++;
 				}
 			}
-			?>		
+			?>
 			</select>
 			<?php
 			break;
@@ -338,7 +338,7 @@ function ninja_forms_field_conditional_action_output( $field_id, $x, $conditiona
 			$arguments['id'] = $id;
 			$arguments['current'] = $current;
 			$arguments['field_data'] = $field_data;
-		
+
 			call_user_func_array($action_output, $arguments);
 			break;
 	}
