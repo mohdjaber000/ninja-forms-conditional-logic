@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 License: GPLv2 or later
 
@@ -29,6 +29,10 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
 
 == Changelog ==
+
+= 1.0.5 =
+
+* Fixed a bug that caused Conditionals to break calculation fields if they were hidden.
 
 = 1.0.4 =
 
