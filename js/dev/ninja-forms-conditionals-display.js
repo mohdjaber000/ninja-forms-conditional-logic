@@ -151,6 +151,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 		
 		if(action == 'show'){
 			if(pass){
+				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
 				if ( list ) {
 					if ( input_type == 'checkbox' || input_type == 'radio' ) {
@@ -160,6 +161,17 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
+				}
+				if ( !was_visible ) {
+					// Check to see if we're working with a field that's listening for a calculation.
+					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
+						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
+						jQuery(target_element).data( "oldValue", '' );
+						// Now we need to prevent the value from being re-added.
+						jQuery(target_element).addClass('ninja-forms-field-calc-no-old-op');
+					}
+					jQuery(target_element).change();
+					jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
 				}
 			}else{
 				if ( list ) {
@@ -171,11 +183,20 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
+				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
+				if ( was_visible ) {
+					// Check to see if we're working with a field that's listening for a calculation.
+					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
+						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
+						jQuery(target_element).data( "oldValue", jQuery(target_element).val() );
+						// Now we need to prevent the value from being re-added.
+						jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+					}
+					jQuery(target_element).change();
+					jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+				}
 			}
-
-			// Check all of our other conditionals to see if one is based upon this field. If it is, set that to false.
-			jQuery(target_element).change();
 		}else if(action == 'hide'){
 			if(pass){
 				if ( list ) {
@@ -187,8 +208,21 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
+				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
+				if ( was_visible ) {
+					// Check to see if we're working with a field that's listening for a calculation.
+					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
+						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
+						jQuery(target_element).data( "oldValue", jQuery(target_element).val() );
+						// Now we need to prevent the value from being re-added.
+						jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+					}
+					jQuery(target_element).change();
+					jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+				}
 			}else{
+				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
 				if ( list ) {
 					if ( input_type == 'checkbox' || input_type == 'radio' ) {
@@ -198,10 +232,19 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
-				}			
+				}
+				if ( !was_visible ) {
+					// Check to see if we're working with a field that's listening for a calculation.
+					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
+						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
+						jQuery(target_element).data( "oldValue", '' );
+						// Now we need to prevent the value from being re-added.
+						jQuery(target_element).addClass('ninja-forms-field-calc-no-old-op');
+					}
+					jQuery(target_element).change();
+					jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
+				}
 			}
-			// Check all of our other conditionals to see if one is based upon this field. If it is, set that to false.
-			jQuery(target_element).change();
 		}else if(action == 'change_value'){
 			if(input_type == 'checkbox'){
 				if(pass){
@@ -233,7 +276,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
-				jQuery(target_element).change();
+				//jQuery(target_element).change();
 			}
 		}else if(action == 'remove_value'){
 			if(input_type == 'dropdown'){
@@ -288,7 +331,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			} else {
 				var target_element = jQuery("#ninja_forms_field_" + target_field);
 			}
-			jQuery(target_element).change();
+			//jQuery(target_element).change();
 		}else if(action == 'add_value'){
 			if( typeof value !== "undefined" ){
 				if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
@@ -340,7 +383,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			} else {
 				var target_element = jQuery("#ninja_forms_field_" + target_field);
 			}
-			jQuery(target_element).change();
+			//jQuery(target_element).change();
 		}else{
 			//Put code here to call javascript function.
 
