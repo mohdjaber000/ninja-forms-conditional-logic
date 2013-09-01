@@ -1,10 +1,10 @@
 === Ninja Forms - Conditionals Extension ===
 Contributors: kstover, jameslaws
-Donate link: http://wpninjas.com
+Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 License: GPLv2 or later
 
@@ -13,7 +13,7 @@ The Ninja Forms Conditionals Extension allows you to create "smart" forms that c
 
 == Screenshots ==
 
-To see up to date screenshots, visit the [Ninja Forms](http://wpninjas.com/ninja-forms/) page.
+To see up to date screenshots, visit [NinjaForms.com](http://ninjaforms.com).
 
 == Installation ==
 
@@ -26,9 +26,15 @@ This section describes how to install the plugin and get it working.
 
 == Use ==
 
-For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
+For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.0.7 =
+
+*Changes:*
+
+* Changed references to wpninjas.com to ninjaforms.com.
 
 = 1.0.6 =
 
