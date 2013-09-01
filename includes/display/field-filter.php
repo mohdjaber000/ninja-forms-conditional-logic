@@ -15,6 +15,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 
 	if(isset($data['conditional']) AND is_array($data['conditional']) AND !empty( $data['conditional'] ) ){
 		foreach( $data['conditional'] as $conditional ){
+			
 			if(isset( $conditional['cr']) AND is_array($conditional['cr']) AND !empty($conditional['cr'])){
 				$pass_array = array();
 				$x = 0;
@@ -52,7 +53,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 					$x++;
 				}
 			}
-
+			
 			if( is_array( $pass_array ) ){
 				if( $conditional['connector'] == 'and' ){
 					$pass = true;
@@ -136,4 +137,11 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 	return $data;
 }
 
-add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', 8, 2 );
+// If we are on the admin, this filter needs to run a bit later, so we'll check for admin and modify the priority if it is.
+if ( is_admin() ) {
+	$priority = 16;
+} else {
+	$priority = 8;
+}
+
+add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority, 2 );

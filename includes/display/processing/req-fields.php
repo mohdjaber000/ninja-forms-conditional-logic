@@ -2,7 +2,7 @@
 
 add_action( 'init', 'ninja_forms_register_conditionals_req_fields' );
 function ninja_forms_register_conditionals_req_fields(){
-	add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_req_fields', 12 );
+	add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_req_fields', 12.5 );
 }
 
 function ninja_forms_conditionals_req_fields(){
@@ -74,12 +74,14 @@ function ninja_forms_conditionals_req_fields(){
 							}
 						}
 					}
+
 					switch( $conditional['action'] ){
 						case 'show':
 							if( !$pass ){
 								if( $field_row['type'] != '_spam' ){
 									$field_row['data']['req'] = 0;
 									$ninja_forms_processing->update_field_settings( $field_id, $field_row );
+									$ninja_forms_processing->remove_field_value( $field_id );
 								}
 							}
 							break;
@@ -88,6 +90,7 @@ function ninja_forms_conditionals_req_fields(){
 								if( $field_row['type'] != '_spam' ){
 									$field_row['data']['req'] = 0;
 									$ninja_forms_processing->update_field_settings( $field_id, $field_row );
+									$ninja_forms_processing->remove_field_value( $field_id );
 								}
 							}
 							break;
