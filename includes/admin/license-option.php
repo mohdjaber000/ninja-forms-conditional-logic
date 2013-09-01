@@ -1,8 +1,6 @@
 <?php
 
-add_action( 'init', 'ninja_forms_register_tab_metabox_option_conditionals_license', 11 );
 function ninja_forms_register_tab_metabox_option_conditionals_license(){
-
 	$args = array(
 		'page' => 'ninja-forms-settings',
 		'tab' => 'license_settings',
@@ -22,7 +20,7 @@ function ninja_forms_register_tab_metabox_option_conditionals_license(){
 	}
 }
 
-add_action( 'admin_init', 'ninja_forms_conditionals_modify_license_label' );
+add_action( 'init', 'ninja_forms_conditionals_modify_license_label' );
 function ninja_forms_conditionals_modify_license_label(){
 	global $ninja_forms_tabs_metaboxes;
 
@@ -38,6 +36,8 @@ function ninja_forms_conditionals_modify_license_label(){
 		}		
 	}
 }
+
+add_action( 'init', 'ninja_forms_register_tab_metabox_option_conditionals_license', 11 );
 
 function ninja_forms_conditionals_activate_license( $data ){
 	$plugin_settings = get_option( 'ninja_forms_settings' );
