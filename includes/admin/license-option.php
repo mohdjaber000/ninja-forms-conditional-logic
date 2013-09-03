@@ -7,10 +7,10 @@ function ninja_forms_register_tab_metabox_option_conditionals_license(){
 		'slug' => 'license_settings',
 		'settings' => array(
 			array(
-				'name' => 'conditionals_license',
-				'type' => 'text',
-				'label' => __('Conditionals License Key', 'ninja-forms'),
-				'desc' => __('You will find this included with your purchase email.', 'ninja-forms'),
+				'name'          => 'conditionals_license',
+				'type'          => 'text',
+				'label'         => __( 'Conditionals License Key', 'ninja-forms-conditionals' ),
+				'desc'          => __( 'You will find this included with your purchase email.', 'ninja-forms-conditionals' ),
 				'save_function' => 'ninja_forms_conditionals_activate_license',
 			),
 		),

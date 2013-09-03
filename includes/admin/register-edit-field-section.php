@@ -17,7 +17,7 @@ function ninja_forms_edit_field_conditional($field_id){
 
 		<div id="ninja-forms-conditionals">
 		<span class="label">
-			Conditional Statements - <a href="#" name="" id="ninja_forms_field_<?php echo $field_id;?>_add_conditional" class="ninja-forms-field-add-conditional">Add Conditional Statement</a>
+			<?php _e( 'Conditional Statements', 'ninja-forms-conditionals' ); ?> - <a href="#" name="" id="ninja_forms_field_<?php echo $field_id;?>_add_conditional" class="ninja-forms-field-add-conditional"><?php _e( 'Add Conditional Statement', 'ninja-forms-conditionals' ); ?></a>
 		</span>
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[conditional]" value="">
 		<div id="ninja_forms_field_<?php echo $field_id;?>_conditionals" class="" name="">
@@ -56,9 +56,9 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 	?>
 		<div id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>" class="ninja-forms-field-<?php echo $field_id;?>-conditional ninja-forms-condition" name="<?php echo $field_id;?>">
 		<div class="ninja-forms-condition-title">
-		<a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_conditional" name="<?php echo $x;?>" class="ninja-forms-field-remove-conditional">X</a>
+		<a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_conditional" name="<?php echo $x;?>" class="ninja-forms-field-remove-conditional" title="<?php echo esc_html_e( 'Remove condition', 'ninja-forms-conditionals' ); ?>"><?php echo _x( 'X', 'Translators: remove condition label', 'ninja-forms-conditionals' ); ?></a>
 			<select id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_action" name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][action]" class="ninja-forms-field-conditional-action">
-				<option value="">-- Action</option>
+				<option value=""><?php _e( '-- Action', 'ninja-forms-conditionals' ); ?></option>
 				<?php
 				if(isset($conditional['action']) AND is_array($conditional['action'])){
 					foreach($conditional['action'] as $slug => $action){
@@ -68,9 +68,9 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 					}
 				}else{
 				?>
-					<option value="show" <?php selected( $selected_action, 'show' );?>>Show This</option>
-					<option value="hide" <?php selected( $selected_action, 'hide' );?>>Hide This</option>
-					<option value="change_value" <?php selected( $selected_action, 'change_value' );?>>Change Value</option>
+					<option value="show" <?php selected( $selected_action, 'show' );?>><?php _e( 'Show This', 'ninja-forms-conditionals' ); ?></option>
+					<option value="hide" <?php selected( $selected_action, 'hide' );?>><?php _e( 'Hide This', 'ninja-forms-conditionals' ); ?></option>
+					<option value="change_value" <?php selected( $selected_action, 'change_value' );?>><?php _e( 'Change Value', 'ninja-forms-conditionals' ); ?></option>
 				<?php
 				}
 				?>
@@ -87,12 +87,12 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 				ninja_forms_field_conditional_action_output( $field_id, $x, $conditional, $condition, $field_data );
 				?>
 			</span>
-			If
+			<?php _e( 'If', 'ninja-forms-conditionals' ); ?>
 			<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][connector]">
-				<option value="and" <?php if(isset($condition['connector']) AND $condition['connector'] == 'and'){ echo 'selected';}?> >All</option>
-				<option value="or" <?php if(isset($condition['connector']) AND $condition['connector'] == 'or'){ echo 'selected';}?> >Any</option>
+				<option value="and" <?php if(isset($condition['connector']) AND $condition['connector'] == 'and'){ echo 'selected';}?> ><?php _e( 'All', 'ninja-forms-conditionals' ); ?></option>
+				<option value="or" <?php if(isset($condition['connector']) AND $condition['connector'] == 'or'){ echo 'selected';}?> ><?php _e( 'Any', 'ninja-forms-conditionals' ); ?></option>
 			</select>
-			of the following critera are met: <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_add_cr" name="<?php echo $x;?>" class="ninja-forms-field-add-cr">Add Criteria</a>
+			<?php _e( 'of the following critera are met', 'ninja-forms-conditionals' ); ?>: <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_add_cr" name="<?php echo $x;?>" class="ninja-forms-field-add-cr"><?php _e( 'Add Criteria', 'ninja-forms-conditionals' ); ?></a>
 		</div>
 		<div id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr" class="ninja-forms-criteria">
 		<?php
@@ -128,9 +128,9 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 
 	?>
 	<div class="description-wide single-criteria ninja-forms-field-<?php echo $field_id;?>-conditional-<?php echo $x;?>-cr" id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>">
-		&nbsp;&nbsp; <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_cr" class="ninja-forms-field-remove-cr" name="<?php echo $x;?>" rel="<?php echo $y;?>">X</a> &rarr;
+		&nbsp;&nbsp; <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_cr" class="ninja-forms-field-remove-cr" name="<?php echo $x;?>" rel="<?php echo $y;?>" title="<?php echo esc_html_e( 'Remove criteria', 'ninja-forms-conditionals' ); ?>"><?php echo _x( 'X', 'Translators: remove criteria label', 'ninja-forms-conditionals' ); ?></a> &rarr;
 		<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][cr][<?php echo $y;?>][field]" class="ninja-forms-field-conditional-cr-field" id="ninja_forms_field_<?php echo $field_id;?>_cr_field" title="<?php echo $x;?>_<?php echo $y;?>">
-			<option value="">-- Field</option>
+			<option value=""><?php _e( '-- Field', 'ninja-forms-conditionals' ); ?></option>
 				<?php
 					if(is_array($field_results)){
 						foreach($field_results as $field){
@@ -145,7 +145,7 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 
 							if($ninja_forms_fields[$field_type]['process_field'] AND $this_id != $field_id){
 				?>
-							<option value="<?php echo $this_id;?>" <?php if(isset($cr['field']) AND $cr['field'] == $this_id){ echo 'selected';} ?>>ID: <?php echo $this_id;?> - <?php echo $label;?></option>
+							<option value="<?php echo $this_id;?>" <?php if(isset($cr['field']) AND $cr['field'] == $this_id){ echo 'selected';} ?>><?php _e( 'ID', 'ninja-forms-conditionals' ); ?>: <?php echo $this_id;?> - <?php echo $label;?></option>
 				<?php
 							}
 						}
@@ -153,12 +153,12 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 				?>
 		</select>
 		<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][cr][<?php echo $y;?>][operator]">
-			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>>=</option>
-			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>>!=</option>
-			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><</option>
-			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>>></option>
+			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>><?php echo _x( '=', 'Translators: label for "is equal"', 'ninja-forms-conditionals' ); ?></option>
+			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>><?php echo _x( '!=', 'Translators: label for "is not"', 'ninja-forms-conditionals' ); ?></option>
+			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><?php echo _x( '<', 'Translators: label for "is smaller"', 'ninja-forms-conditionals' ); ?></option>
+			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>><?php echo _x( '>', 'Translators: label for "is bigger"', 'ninja-forms-conditionals' ); ?></option>
 		</select>
-		<span id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>_value" class="">
+		<br /><span id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>_value" class="">
 		<?php
 			if(isset($conditional['value']) AND is_array($conditional['value'])){
 				ninja_forms_field_conditional_cr_value_output($field_id, $x, $y, $conditional, $cr, $field_data);

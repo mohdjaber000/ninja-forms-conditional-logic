@@ -1,0 +1,128 @@
+# This file is distributed under the same license as the Conditionals package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2013-09-03 21:38:13+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: Conditionals\n"
+
+#: conditionals.php:0
+msgid "Ninja Forms - Conditionals"
+msgstr ""
+
+#: conditionals.php:0
+msgid "http://ninjaforms.com"
+msgstr ""
+
+#: conditionals.php:0
+msgid "Conditional form logic add-on for Ninja Forms."
+msgstr ""
+
+#: conditionals.php:0
+msgid "The WP Ninjas"
+msgstr ""
+
+#: conditionals.php:0
+msgid "1.0.7"
+msgstr ""
+
+#: includes/admin/license-option.php:12
+msgid "Conditionals License Key"
+msgstr ""
+
+#: includes/admin/license-option.php:13
+msgid "You will find this included with your purchase email."
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:20
+msgid "Conditional Statements"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:20
+msgid "Add Conditional Statement"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:61
+msgid "-- Action"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:71
+msgid "Show This"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:72
+msgid "Hide This"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:73
+msgid "Change Value"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:92
+msgid "All"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:93
+msgid "Any"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:95
+msgid "of the following critera are met"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:95
+msgid "Add Criteria"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:133
+msgid "-- Field"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:148
+msgid "ID"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:90
+msgid "If"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:131
+msgid "Remove criteria"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:131
+msgctxt "Translators: remove criteria label"
+msgid "X"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:59
+msgid "Remove condition"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:59
+msgctxt "Translators: remove condition label"
+msgid "X"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:156
+msgctxt "Translators: label for \"is equal\""
+msgid "="
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:157
+msgctxt "Translators: label for \"is not\""
+msgid "!="
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:158
+msgctxt "Translators: label for \"is smaller\""
+msgid "<"
+msgstr ""
+
+#: includes/admin/register-edit-field-section.php:159
+msgctxt "Translators: label for \"is bigger\""
+msgid ">"
+msgstr ""
