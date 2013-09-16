@@ -287,8 +287,10 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 						jQuery("#ninja_forms_field_" + target_field).val(next_val);
 					}
 					jQuery("#ninja_forms_field_" + target_field + " option[value='" + value + "']").hide();
+					jQuery("#ninja_forms_field_" + target_field + " option[value='" + value + "']").attr("disabled", true);
 				}else{
 					jQuery("#ninja_forms_field_" + target_field + " option[value='" + value + "']").show();
+					jQuery("#ninja_forms_field_" + target_field + " option[value='" + value + "']").attr("disabled", false);
 				}
 			}else if(input_type == 'multi'){
 				if(pass){
