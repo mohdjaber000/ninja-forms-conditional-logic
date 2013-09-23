@@ -10,8 +10,8 @@ Text Domain: ninja-forms-conditionals
 Domain Path: /languages/
 */
 
-define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/ninja-forms-conditionals");
-define("NINJA_FORMS_CON_URL", plugins_url()."/ninja-forms-conditionals");
+define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
+define("NINJA_FORMS_CON_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_CON_VERSION", "1.0.8");
 
 function ninja_forms_conditionals_setup_license() {
