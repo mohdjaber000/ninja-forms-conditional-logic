@@ -1,23 +1,23 @@
 <?php
 
-function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' ){
-	global $ninja_forms_processing, $current_user;
-	get_currentuserinfo();
-
-	if(isset($current_user)){
-		$user_id = $current_user->ID;	
-	}else{
-		$user_id = '';
-	}
+function ninja_forms_conditionals_field_filter( $data, $field_id ){
+	global $ninja_forms_processing;
 
 	$field = ninja_forms_get_field_by_id( $field_id );
 
 	$x = 0;
 	$display_style = '';
 	
+	if ( is_admin() ) {
+		$priority = 16;
+	} else {
+		$priority = 8;
+	}
+
+	remove_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority );
 	if(isset($data['conditional']) AND is_array($data['conditional']) AND !empty( $data['conditional'] ) ){
 		$action_pass = array();
-	
+		
 		foreach( $data['conditional'] as $conditional ){
 			$action = $conditional['action'];
 			$con_value = $conditional['value'];
@@ -33,16 +33,10 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 					}else{
 						$field_row = ninja_forms_get_field_by_id( $cr['field'] );
 						$field_data = $field_row['data'];
-						if ( is_admin() ) {
-							$priority = 16;
-						} else {
-							$priority = 8;
-						}
-						
-						remove_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority );
+
 						$field_data = apply_filters( 'ninja_forms_field', $field_data, $cr['field'] );
-						add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority, 2 );
 						
+
 						if( isset( $field_data['default_value'] ) ){
 							$user_value = $field_data['default_value'];
 						}else{
@@ -100,7 +94,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 				$action_pass[$action][$con_value] = $pass;
 			}
 		}
-		
+	
 		foreach( $data['conditional'] as $conditional ){
 			$action = $conditional['action'];
 			$con_value = $conditional['value'];
@@ -110,7 +104,8 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 				case 'show':
 					if( !$pass ){
 						$data['display_style'] = 'display:none;';
-						$data['class'] .= ',ninja-forms-field-calc-no-new-op';
+						$data['visible'] = false;
+						$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
 						// Set our $calc to 0 if we're dealing with a list field.
 						if ( $field['type'] == '_list' ) {
 							if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
@@ -121,12 +116,14 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 						}
 					}else{
 						$data['display_style'] = '';
+						$data['visible'] = true;
 					}
 					break;
 				case 'hide':
 					if( $pass ){
 						$data['display_style'] = 'display:none;';
-						$data['class'] .= ',ninja-forms-field-calc-no-new-op';
+						$data['visible'] = false;
+						$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
 						// Set our $calc to 0 if we're dealing with a list field.
 						if ( $field['type'] == '_list' ) {
 							if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
@@ -179,10 +176,10 @@ function ninja_forms_conditionals_field_filter( $data, $field_id, $sub_id = '' )
 					$data['conditional_action'] = $conditional['action'];
 					$data['conditional_pass'] = $pass;
 			}
-			
 		}
 	}
 
+	add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority, 2 );
 	return $data;
 }
 
