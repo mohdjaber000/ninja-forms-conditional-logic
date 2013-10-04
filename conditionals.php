@@ -51,6 +51,7 @@ function ninja_forms_conditionals_load_translations() {
 }
 add_action( 'plugins_loaded', 'ninja_forms_conditionals_load_translations' );
 
+require_once(NINJA_FORMS_CON_DIR."/includes/admin/ajax.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/admin/scripts.php"); 
 require_once(NINJA_FORMS_CON_DIR."/includes/admin/after-import.php");
