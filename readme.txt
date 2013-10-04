@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 
 License: GPLv2 or later
 
@@ -29,6 +29,17 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.0.9 =
+
+*Changes:*
+
+* Added a "visible" data attribute.
+* Moved functions from Ninja Forms core to this extension.
+
+*Bugs:*
+
+* Fixed several bugs related to using calculation fields and conditionals.
 
 = 1.0.8 =
 

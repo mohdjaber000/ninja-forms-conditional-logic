@@ -55,6 +55,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 	var value_array = new Array();
 	// We need to check our "actions" to make sure that if multiple actions are added with different conditions, any evaluating to true will fire.
 	var action_pass = new Object();
+
 	for (i = 0; i < conditional_length; i++){
 		var connector = cond[i]['connector'];
 		var cr_row = cond[i]['cr'];
@@ -74,7 +75,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			cr_operator = cr_row[x]['operator'];
 			cr_value = cr_row[x]['value'];
 			cr_type = jQuery("#ninja_forms_field_" + cr_field + "_type").val();
-			cr_visible = false;
+			cr_visible = jQuery("#ninja_forms_field_" + cr_field + "_div_wrap").data("visible");
 			if(cr_type == 'list'){
 				// We are either dealing with a checkbox or radio list.
 				if(jQuery("#ninja_forms_field_" + cr_field + "_list_type").val() == "checkbox" ){ //This is a checkbox list.
@@ -85,19 +86,19 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}
 					jQuery(".ninja_forms_field_" + cr_field + "[value='" + cr_value + "']").each( function(){
 						if(!cr_visible){
-							cr_visible = jQuery(this).is(":visible");
+							//cr_visible = jQuery(this).is(":visible");
 						}
 					});
 				}else if( jQuery("#ninja_forms_field_" + cr_field + "_list_type").val() == "radio" ){ //This is a radio list.
 					var field_value = jQuery("input[name='ninja_forms_field_" + cr_field + "']:checked").val();
 					jQuery("input[name='ninja_forms_field_" + cr_field + "']").each( function(){
 						if(!cr_visible){
-							cr_visible = jQuery(this).is(":visible");
+							//cr_visible = jQuery(this).is(":visible");
 						}
 					});
 				}else{
 					field_value = jQuery("#ninja_forms_field_" + cr_field).val(); // This is a dropdown list.
-					cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
+					//cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 				}
 			}else if(cr_type == 'checkbox'){
 				if(jQuery("#ninja_forms_field_" + cr_field).prop("checked")){
@@ -105,10 +106,10 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}else{
 					var field_value = 'unchecked';
 				}
-				cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
+				//cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 			}else{
 				field_value = jQuery("#ninja_forms_field_" + cr_field).val();
-				cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
+				//cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 			}
 
 			if(is_numeric(field_value)){
@@ -120,8 +121,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			}
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
-
-			if(!cr_visible){
+			
+			if( cr_visible != 1 ){
 				tmp = false;
 			}
 
@@ -152,10 +153,9 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 
 	for (i = 0; i < conditional_length; i++){
 		var action = cond[i]['action'];
-		//pass = pass_array[i];
 		value = value_array[i];
 		pass = action_pass[action][value];
-		
+
 		var input_type = jQuery("#ninja_forms_field_" + target_field + "_type").val();
 		var list_type = '';
 		var list = false;
@@ -166,10 +166,10 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 		}
 
 		if(action == 'show'){
-			
 			if(pass){
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", true);
 				if ( list ) {
 					if ( input_type == 'checkbox' || input_type == 'radio' ) {
 						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
@@ -186,14 +186,27 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
 						jQuery(target_element).data( "oldValue", '' );
 						// Now we need to prevent the value from being re-added.
-						jQuery(target_element).addClass('ninja-forms-field-calc-no-old-op');
-						jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+						// If we're working with a list, target every input
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).removeClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+						}
 					}
-
+					
 					if ( jQuery( target_element ).attr('type') != 'file' ) {
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).change();
+									jQuery(this).removeClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).change();
+							jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+						}
 						
-						jQuery(target_element).change();
-						jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
 					}
 				}
 				
@@ -207,21 +220,34 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
+
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", false);
 				if ( was_visible ) {
 					// Check to see if we're working with a field that's listening for a calculation.
 					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
 						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
 						jQuery(target_element).data( "oldValue", jQuery(target_element).val() );
 						// Now we need to prevent the value from being re-added.
-						jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
-						jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
-					}
-					if ( jQuery( target_element ).attr('type') != 'file' ) {
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).addClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+						}
 						
-						jQuery(target_element).change();
-						jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+					}
+					
+					if ( jQuery( target_element ).attr('type') != 'file' ) {
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).change();
+								});
+						} else {
+							jQuery(target_element).change();
+						}
 					}
 				}
 			}
@@ -239,22 +265,37 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", false);
 				if ( was_visible ) {
 					// Check to see if we're working with a field that's listening for a calculation.
 					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
 						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
 						jQuery(target_element).data( "oldValue", jQuery(target_element).val() );
 						// Now we need to prevent the value from being re-added.
-						jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).addClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).addClass('ninja-forms-field-calc-no-new-op');
+						}
+						
 					}
+					
 					if ( jQuery( target_element ).attr('type') != 'file' ) {
-						jQuery(target_element).change();
-						jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).change();
+								});
+						} else {
+							jQuery(target_element).change();
+						}
 					}
 				}
 			}else{
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", true);
 				if ( list ) {
 					if ( input_type == 'checkbox' || input_type == 'radio' ) {
 						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
@@ -264,17 +305,34 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
+				
 				if ( !was_visible ) {
 					// Check to see if we're working with a field that's listening for a calculation.
 					if ( jQuery( target_element ).hasClass("ninja-forms-field-calc-listen") ) {
 						// Since we are going to be hiding a field upon which a calculation is based, we need to set the oldValue of our calculation to the current field's value.
 						jQuery(target_element).data( "oldValue", '' );
 						// Now we need to prevent the value from being re-added.
-						jQuery(target_element).addClass('ninja-forms-field-calc-no-old-op');
+						// If we're working with a list, target every input
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).removeClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+						}
 					}
+					
 					if ( jQuery( target_element ).attr('type') != 'file' ) {
-						jQuery(target_element).change();
-						jQuery(target_element).removeClass('ninja-forms-field-calc-no-old-op');
+						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
+								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
+									jQuery(this).change();
+									jQuery(this).removeClass('ninja-forms-field-calc-no-new-op');
+								});
+						} else {
+							jQuery(target_element).change();
+							jQuery(target_element).removeClass('ninja-forms-field-calc-no-new-op');
+						}
+						
 					}
 				}
 			}
@@ -421,7 +479,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			//jQuery(target_element).change();
 		}else{
 			//Put code here to call javascript function.
-
+			pass = pass_array[i];
 			result = window[action](pass, target_field, element);
 		}
 	}

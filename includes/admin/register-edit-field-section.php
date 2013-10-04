@@ -136,7 +136,11 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 						foreach($field_results as $field){
 							$this_id = $field['id'];
 							$field_data = $field['data'];
-							$label = $field_data['label'];
+							if ( isset ( $field_data['label'] ) ) {
+								$label = $field_data['label'];
+							} else {
+								$label = '';
+							}
 							$field_type = $field['type'];
 
 							if( strlen( $label ) > 30 ){
