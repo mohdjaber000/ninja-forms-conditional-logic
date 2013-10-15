@@ -244,9 +244,11 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
 								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
 									jQuery(this).change();
+									jQuery(this).addClass('ninja-forms-field-calc-no-old-op');
 								});
 						} else {
 							jQuery(target_element).change();
+							jQuery(target_element).addClass('ninja-forms-field-calc-no-old-op');
 						}
 					}
 				}
