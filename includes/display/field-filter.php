@@ -136,7 +136,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 					break;
 				case 'change_value':
 					if( $pass ){
-						$data['default_value'] == $conditional['value'];
+						$data['default_value'] = $conditional['value'];
 					}
 					break;
 				case 'add_value':
@@ -180,6 +180,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 	}
 
 	add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority, 2 );
+
 	return $data;
 }
 
