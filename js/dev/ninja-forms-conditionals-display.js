@@ -369,7 +369,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
-				//jQuery(target_element).change();
+				jQuery(target_element).change();
 			}
 		}else if(action == 'remove_value'){
 			if(input_type == 'dropdown'){

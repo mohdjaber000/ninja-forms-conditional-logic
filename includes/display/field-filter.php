@@ -33,10 +33,9 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 					}else{
 						$field_row = ninja_forms_get_field_by_id( $cr['field'] );
 						$field_data = $field_row['data'];
-
+						
 						$field_data = apply_filters( 'ninja_forms_field', $field_data, $cr['field'] );
 						
-
 						if( isset( $field_data['default_value'] ) ){
 							$user_value = $field_data['default_value'];
 						}else{
@@ -66,7 +65,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 				
 			}
 			
-			if( is_array( $pass_array ) ){
+			if( isset ( $pass_array ) and is_array( $pass_array ) ){
 				if( $conditional['connector'] == 'and' ){
 					$pass = true;
 				}else if( $conditional['connector'] == 'or' ){
@@ -90,7 +89,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 				}
 			}
 
-			if ( !isset ( $action_pass[$action][$con_value] ) OR !$action_pass[$action][$con_value] ) {
+			if ( isset ( $pass ) and ( !isset ( $action_pass[$action][$con_value] ) OR !$action_pass[$action][$con_value] ) ) {
 				$action_pass[$action][$con_value] = $pass;
 			}
 		}
@@ -136,7 +135,7 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 					break;
 				case 'change_value':
 					if( $pass ){
-						$data['default_value'] == $conditional['value'];
+						$data['default_value'] = $conditional['value'];
 					}
 					break;
 				case 'add_value':
@@ -179,7 +178,9 @@ function ninja_forms_conditionals_field_filter( $data, $field_id ){
 		}
 	}
 
+
 	add_filter( 'ninja_forms_field', 'ninja_forms_conditionals_field_filter', $priority, 2 );
+
 	return $data;
 }
 
