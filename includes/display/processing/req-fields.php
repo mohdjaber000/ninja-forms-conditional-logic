@@ -17,9 +17,12 @@ function ninja_forms_conditionals_req_fields(){
 			$data = $field_row['data'];
 			if(isset($data['conditional']) AND is_array($data['conditional'])){
 				$pass_array = array();
+				$action_pass = array();
 				$x = 0;
 				foreach($data['conditional'] as $conditional){
 					if(is_array($conditional['cr']) AND !empty($conditional['cr'])){
+						$con_value = $conditional['value'];
+						$action = $conditional['action'];
 						foreach($conditional['cr'] as $cr){
 							if( is_object( $ninja_forms_processing)){
 								$user_value = $ninja_forms_processing->get_field_value($cr['field']);
@@ -53,9 +56,9 @@ function ninja_forms_conditionals_req_fields(){
 					}
 					if( is_array( $pass_array ) ){
 						if( $conditional['connector'] == 'and' ){
-							$pass = true;
+								$pass = true;
 						}else if( $conditional['connector'] == 'or' ){
-							$pass = false;
+								$pass = false;
 						}
 
 						foreach( $pass_array as $p ){
@@ -74,7 +77,15 @@ function ninja_forms_conditionals_req_fields(){
 							}
 						}
 					}
+					if ( isset ( $pass ) and ( !isset ( $action_pass[$action][$con_value] ) OR !$action_pass[$action][$con_value] ) ) {
+						$action_pass[$action][$con_value] = $pass;
+					}
+				}
 
+				foreach($data['conditional'] as $conditional){
+					$action = $conditional['action'];
+					$con_value = $conditional['value'];
+					$pass = $action_pass[$action][$con_value];
 					switch( $conditional['action'] ){
 						case 'show':
 							if( !$pass ){
