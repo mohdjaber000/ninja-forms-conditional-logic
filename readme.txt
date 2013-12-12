@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 License: GPLv2 or later
 
@@ -29,6 +29,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.1.1 =
+
+*Bugs:*
+
+* Fixed a bug that could prevent conditionals from working properly with required fields.
+* Fixed a bug that could cause conditional logic to break when labels contained long strings of HTML.
+
+*Changes:*
+
+* Updating the JS so that when an element is shown/hidden, a jQuery event is fired after the show/hide is complete.
+* Removed old licensing file.
 
 = 1.1 =
 

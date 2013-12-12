@@ -168,7 +168,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 		if(action == 'show'){
 			if(pass){
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
-				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show(10, function(e){ jQuery(document).triggerHandler('ninja_forms_conditional_show'); });
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", true);
 				if ( list ) {
 					if ( input_type == 'checkbox' || input_type == 'radio' ) {
@@ -222,7 +222,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}
 
 				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
-				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
+				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide(10, function(e){ jQuery(document).triggerHandler('ninja_forms_conditional_hide'); });
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", false);
 				if ( was_visible ) {
 					// Check to see if we're working with a field that's listening for a calculation.
