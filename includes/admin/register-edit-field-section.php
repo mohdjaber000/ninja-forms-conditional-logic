@@ -143,6 +143,8 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 							}
 							$field_type = $field['type'];
 
+							$label = htmlentities( $label );
+
 							if( strlen( $label ) > 30 ){
 								$label = substr( $label, 0, 30 ).'...';
 							}
