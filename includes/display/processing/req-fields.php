@@ -24,18 +24,9 @@ function ninja_forms_conditionals_req_fields(){
 						$con_value = $conditional['value'];
 						$action = $conditional['action'];
 						foreach($conditional['cr'] as $cr){
-							if( is_object( $ninja_forms_processing)){
-								$user_value = $ninja_forms_processing->get_field_value($cr['field']);
-							}else{
-								$field_row = ninja_forms_get_field_by_id( $cr['field'] );
-								$field_data = $field_row['data'];
-
-								if( isset( $field_data['default_value'] ) ){
-									$user_value = $field_data['default_value'];
-								}else{
-									$user_value = '';
-								}
-							}
+							
+							$user_value = $ninja_forms_processing->get_field_value($cr['field']);
+							
 							if( isset( $cr['value'] ) ){
 								if( is_array( $user_value ) ){
 									foreach( $user_value as $v ){

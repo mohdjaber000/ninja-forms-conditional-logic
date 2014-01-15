@@ -27,12 +27,16 @@ function ninja_forms_check_conditional(element, action_value){
 	
 	var field_id = jQuery(element).attr("rel");
 	for(field in conditional){
+
 		var target_field = field.replace("field_", "");
 		var conditional_length = jQuery(conditional[field]['conditional']).length;
 		for (i = 0; i < conditional_length; i++){
+			
 			var cr_length = jQuery(conditional[field]['conditional'][i]['cr']).length;
 			for (x = 0; x < cr_length; x++){
+
 				if(typeof conditional[field]['conditional'][i] !== 'undefined') {
+
 					if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
 						var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
 						ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
@@ -44,7 +48,6 @@ function ninja_forms_check_conditional(element, action_value){
 }
 
 function ninja_forms_conditional_change(element, target_field, action_value){
-
 	var form_id = ninja_forms_get_form_id(element);
 	var conditional = eval( 'ninja_forms_form_' + form_id + '_conditionals_settings' );
 	conditional = conditional.conditionals;
@@ -122,6 +125,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
 			
+			console.log(tmp);
+
 			if( cr_visible != 1 ){
 				tmp = false;
 			}
