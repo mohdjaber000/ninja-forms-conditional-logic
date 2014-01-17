@@ -111,7 +111,6 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 								}							
 							}
 						}else{
-							echo "DEEP INSIDE!";
 							$data['display_style'] = '';
 							$data['visible'] = true;
 						}
@@ -186,3 +185,4 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 }
 
 add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter' );
+add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );
