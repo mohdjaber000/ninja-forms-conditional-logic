@@ -11,13 +11,16 @@ function ninja_forms_register_display_conditionals(){
 }
 */
 
-function ninja_forms_display_conditionals($form_id){
-	global $ninja_forms_fields;
+function ninja_forms_display_conditionals( $form_id ){
+	global $ninja_forms_fields, $ninja_forms_loading, $ninja_forms_processing;
 
-	$form_row = ninja_forms_get_form_by_id($form_id);
-	$field_results = ninja_forms_get_fields_by_form_id($form_id);
+	if ( isset ( $ninja_forms_loading ) ) {
+		$field_results = $ninja_forms_loading->get_all_fields();
+	} else {
+		$field_results = $ninja_forms_processing->get_all_fields();
+	}
 
-	if(is_array($field_results) AND !empty($field_results)){
+	if ( is_array ( $field_results ) AND !empty ( $field_results ) ) {
 		/*
 		$watch_fields = array();
 		foreach($field_results as $field){
@@ -33,7 +36,13 @@ function ninja_forms_display_conditionals($form_id){
 			}
 		}
 		*/
-		foreach($field_results as $field){
+		foreach( $field_results as $field_id => $user_value ) {
+			
+			if ( isset ( $ninja_forms_loading ) ) {
+				$field = $ninja_forms_loading->get_field_settings( $field_id );
+			} else {
+				$field = $ninja_forms_processing->get_field_settings( $field_id );
+			}
 
 			if( isset( $ninja_forms_fields[$field['type']] ) ){
 				$type = $ninja_forms_fields[$field['type']];
