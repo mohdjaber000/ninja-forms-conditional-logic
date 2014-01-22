@@ -9,9 +9,16 @@ function ninja_forms_register_conditional_display_js_css(){
 function ninja_forms_conditionals_display_js( $form_id ){
 	$conditionals = ninja_forms_display_conditionals( $form_id );
 	if( !empty( $conditionals ) ){
-		
+		if ( defined( 'NINJA_FORMS_JS_DEBUG' ) && NINJA_FORMS_JS_DEBUG ) {
+			$suffix = '';
+			$src = 'dev';
+		} else {
+			$suffix = '.min';
+			$src = 'min';
+		}
+
 		wp_enqueue_script( 'ninja-forms-conditionals-display',
-			NINJA_FORMS_CON_URL .'/js/dev/ninja-forms-conditionals-display.js',
+			NINJA_FORMS_CON_URL . '/js/' . $src .'/ninja-forms-conditionals-display' . $suffix . '.js',
 			array( 'jquery', 'ninja-forms-display' ) );
 
 		wp_localize_script( 'ninja-forms-conditionals-display', 'ninja_forms_form_'.$form_id.'_conditionals_settings', array( 'conditionals' => $conditionals ) );

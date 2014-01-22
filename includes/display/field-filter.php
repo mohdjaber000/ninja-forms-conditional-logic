@@ -39,7 +39,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 						}else{
 							$user_value = $ninja_forms_processing->get_field_value( $cr['field'] );
 						}
-						
+
 						if( isset( $cr['value'] ) ){
 							if( is_array( $user_value ) ){
 								foreach( $user_value as $v ){
@@ -128,6 +128,9 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 									}
 								}							
 							}
+						} else {
+							$data['display_style'] = '';
+							$data['visible']= true;
 						}
 						break;
 					case 'change_value':

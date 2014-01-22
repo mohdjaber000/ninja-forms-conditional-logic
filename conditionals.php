@@ -60,6 +60,7 @@ require_once(NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/scripts.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/field-filter.php");
+require_once(NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/processing/req-fields.php");
 
 function ninja_forms_conditional_compare($param1, $param2, $operator){
