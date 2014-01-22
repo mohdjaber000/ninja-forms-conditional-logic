@@ -179,7 +179,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 				$ninja_forms_loading->update_field_settings( $field_id, $field );
 			} else {
 				$ninja_forms_processing->update_field_settings( $field_id, $field );
-			}			
+			}
 		}
 	}
 }
