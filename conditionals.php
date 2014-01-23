@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - Conditionals
 Plugin URI: http://ninjaforms.com
 Description: Conditional form logic add-on for Ninja Forms.
-Version: 1.2
+Version: 1.2.1
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 Text Domain: ninja-forms-conditionals
@@ -12,7 +12,7 @@ Domain Path: /languages/
 
 define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_CON_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
-define("NINJA_FORMS_CON_VERSION", "1.2");
+define("NINJA_FORMS_CON_VERSION", "1.2.1");
 
 function ninja_forms_conditionals_setup_license() {
   if ( class_exists( 'NF_Extension_Updater' ) ) {
@@ -60,6 +60,7 @@ require_once(NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/scripts.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/field-filter.php");
+require_once(NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php");
 require_once(NINJA_FORMS_CON_DIR."/includes/display/processing/req-fields.php");
 
 function ninja_forms_conditional_compare($param1, $param2, $operator){
