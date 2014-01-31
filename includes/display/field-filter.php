@@ -110,6 +110,12 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 									}
 								}							
 							}
+							if ( isset ( $ninja_forms_processing ) ) {
+								if( $field['type'] != '_spam' ){
+									$data['req'] = 0;
+									$ninja_forms_processing->remove_field_value( $field_id );
+								}
+							}
 						}else{
 							$data['display_style'] = '';
 							$data['visible'] = true;
@@ -126,7 +132,13 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 									for ($x=0; $x < count( $data['list']['options'] ) ; $x++) {
 										$data['list']['options'][$x]['calc'] = '';
 									}
-								}							
+								}
+							}
+							if ( isset ( $ninja_forms_processing ) ) {
+								if( $field['type'] != '_spam' ){
+									$data['req'] = 0;
+									$ninja_forms_processing->remove_field_value( $field_id );
+								}
 							}
 						} else {
 							$data['display_style'] = '';
@@ -187,5 +199,5 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 	}
 }
 
-add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter' );
+add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter', 11 );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );
