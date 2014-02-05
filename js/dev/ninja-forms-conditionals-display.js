@@ -124,8 +124,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			}
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
-			
-			console.log(tmp);
+
 
 			if( cr_visible != 1 ){
 				tmp = false;
@@ -140,18 +139,28 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					pass_array[i] = true;
 				}
 			}
+
 		}
 
 		if ( typeof action_pass[action] === 'undefined' ) {
 			action_pass[action] = new Object();
 		}
 
-		if ( typeof action_pass[action][cond[i]['value']] === 'undefined' || action_pass[action][cond[i]['value']] === false ) {
-			if ( pass_array[i] ) {
-				action_pass[action][cond[i]['value']] = true;
-			} else {
-				action_pass[action][cond[i]['value']] = false;
+		if ( action == 'show' || action == 'hide' || action == 'change_value' ) {
+			if ( typeof action_pass[action][cond[i]['value']] === 'undefined' || action_pass[action][cond[i]['value']] === false ) {
+				if ( pass_array[i] ) {
+					action_pass[action][cond[i]['value']] = true;
+				} else {
+					action_pass[action][cond[i]['value']] = false;
+				}
 			}
+		} else {
+			var value = value_array[i];
+			
+			if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
+				value.value = value.label;
+			}
+			action_pass[action][value.value] = pass_array[i];
 		}
 		
 	}
@@ -159,8 +168,15 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 	for (i = 0; i < conditional_length; i++){
 		var action = cond[i]['action'];
 		value = value_array[i];
-		pass = action_pass[action][value];
-
+		if ( action == 'show' || action == 'hide' || action == 'change_value' ) {
+			pass = action_pass[action][value];
+		} else {
+			if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
+				value.value = value.label;
+			}
+			pass = action_pass[action][value.value];
+		}
+		
 		var input_type = jQuery("#ninja_forms_field_" + target_field + "_type").val();
 		var list_type = '';
 		var list = false;
@@ -244,7 +260,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 						}
 						
 					}
-					
+
 					if ( jQuery( target_element ).attr('type') != 'file' ) {
 						if ( list && ( input_type == 'checkbox' || input_type == 'radio' ) ) {
 								jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field").each(function(){
@@ -467,6 +483,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 							jQuery(clone).find(":" + input_type).val(value.value);
 							jQuery(clone).find(":" + input_type).after(value.label);
 							jQuery(clone).attr("style", "");
+
 							jQuery("#ninja_forms_field_" + target_field + "_options_span").find("ul").append(clone);
 						}
 					}else{
