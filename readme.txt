@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.8.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 License: GPLv2 or later
 
@@ -29,6 +29,14 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.2.2 =
+
+*Bugs:*
+
+* Fixed a bug with required fields that were conditionally hidden.
+* Removed console logs that were causing problems in IE9.
+* Fixed a bug that caused the Add Value setting not to work properly.
 
 = 1.2.1 =
 
