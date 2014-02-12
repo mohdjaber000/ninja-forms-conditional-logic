@@ -16,6 +16,10 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			$field = $ninja_forms_processing->get_field_settings( $field_id );
 		}
 
+		// echo "<pre>";
+		// var_dump( $field );
+		// echo "</pre>";
+
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
 
 		$x = 0;
@@ -126,8 +130,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 							}
 							if ( isset ( $ninja_forms_processing ) ) {
 								if( $field['type'] != '_spam' ){
-									$data['req'] = 0;
-									$ninja_forms_processing->remove_field_value( $field_id );
+									$ninja_forms_processing->update_field_value( $field_id, false );
 								}
 							}
 						}else{
@@ -150,8 +153,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 							}
 							if ( isset ( $ninja_forms_processing ) ) {
 								if( $field['type'] != '_spam' ){
-									$data['req'] = 0;
-									$ninja_forms_processing->remove_field_value( $field_id );
+									$ninja_forms_processing->update_field_value( $field_id, false );
 								}
 							}
 						} else {
