@@ -16,6 +16,10 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			$field = $ninja_forms_processing->get_field_settings( $field_id );
 		}
 
+		// echo "<pre>";
+		// var_dump( $field );
+		// echo "</pre>";
+
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
 
 		$x = 0;
@@ -27,6 +31,13 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			foreach( $data['conditional'] as $conditional ){
 				$action = $conditional['action'];
 				$con_value = $conditional['value'];
+				if ( is_array( $con_value ) ) {
+					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
+						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
+							$con_value = $con_value['label'];
+						}
+					}
+				}
 				if(isset( $conditional['cr']) AND is_array($conditional['cr']) AND !empty($conditional['cr'])){
 					$pass_array = array();
 					$x = 0;
@@ -94,6 +105,13 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			foreach( $data['conditional'] as $conditional ){
 				$action = $conditional['action'];
 				$con_value = $conditional['value'];
+				if ( is_array( $con_value ) ) {
+					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
+						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
+							$con_value = $con_value['label'];
+						}
+					}
+				}
 				$pass = $action_pass[$action][$con_value];
 
 				switch( $conditional['action'] ){
@@ -101,14 +119,19 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 						if( !$pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
-							$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+							//$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
 							// Set our $calc to 0 if we're dealing with a list field.
 							if ( $field['type'] == '_list' ) {
 								if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
 									for ($x=0; $x < count( $data['list']['options'] ) ; $x++) {
-										$data['list']['options'][$x]['calc'] = '';
+										//$data['list']['options'][$x]['calc'] = '';
 									}
 								}							
+							}
+							if ( isset ( $ninja_forms_processing ) ) {
+								if( $field['type'] != '_spam' ){
+									$ninja_forms_processing->update_field_value( $field_id, false );
+								}
 							}
 						}else{
 							$data['display_style'] = '';
@@ -119,14 +142,19 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 						if( $pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
-							$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+							//$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
 							// Set our $calc to 0 if we're dealing with a list field.
 							if ( $field['type'] == '_list' ) {
 								if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
 									for ($x=0; $x < count( $data['list']['options'] ) ; $x++) {
-										$data['list']['options'][$x]['calc'] = '';
+										//$data['list']['options'][$x]['calc'] = '';
 									}
-								}							
+								}
+							}
+							if ( isset ( $ninja_forms_processing ) ) {
+								if( $field['type'] != '_spam' ){
+									$ninja_forms_processing->update_field_value( $field_id, false );
+								}
 							}
 						} else {
 							$data['display_style'] = '';
@@ -148,7 +176,21 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 							if( !isset( $data['list']['options'] ) OR !is_array( $data['list']['options'] ) ){
 								$data['list']['options'] = array();
 							}
-							array_push( $data['list']['options'], $value );						
+							$found = false;
+							for ($x=0; $x < count( $data['list']['options'] ) ; $x++) { 
+								if( isset( $data['list_show_value'] ) AND $data['list_show_value'] == 1 ){
+									if( $data['list']['options'][$x]['value'] == $con_value ){
+										$found = true;
+									}
+								}else{
+									if( $data['list']['options'][$x]['label'] == $con_value ){
+										$found = true;
+									}
+								}
+							}
+							if ( !$found ) {
+								array_push( $data['list']['options'], $value );	
+							}
 						}
 						break;
 					case 'remove_value':
@@ -187,5 +229,5 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 	}
 }
 
-add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter' );
+add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter', 12 );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );

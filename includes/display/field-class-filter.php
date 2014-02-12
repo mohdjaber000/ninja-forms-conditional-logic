@@ -10,24 +10,21 @@
 
 function ninja_forms_conditionals_field_class_filter( $form_id ) {
 	global $ninja_forms_loading, $ninja_forms_processing;
-	$watch_fields = array();
-	if ( isset ( $ninja_forms_loading ) ) {
-		$field_results = $ninja_forms_loading->get_all_fields();
-	} else {
-		$field_results = $ninja_forms_processing->get_all_fields();
-	}
 
-	foreach($field_results as $f_id => $user_value ){
-		if ( isset ( $ninja_forms_loading ) ) {
-			$field = $ninja_forms_loading->get_field_settings( $f_id );
+	$field_results = ninja_forms_get_fields_by_form_id( $form_id );
+
+	foreach( $field_results as $field ){
+
+		if ( isset ( $field['data']['conditional'] ) ) {
+			$conditional = $field['data']['conditional'];
 		} else {
-			$field = $ninja_forms_processing->get_field_settings( $f_id );
+			$conditional = '';
 		}
-		$data = $field['data'];
-		if(isset($data['conditional']) AND is_array($data['conditional'])){
-			foreach($data['conditional'] as $conditional){
-				if(isset($conditional['cr']) AND is_array($conditional['cr'])){
-					foreach($conditional['cr'] as $cr){
+
+		if ( isset( $conditional ) AND is_array( $conditional ) ) {
+			foreach ( $conditional as $conditional ) {
+				if ( isset( $conditional['cr'] ) AND is_array( $conditional['cr'] ) ) {
+					foreach ( $conditional['cr'] as $cr ) {
 						if ( isset ( $ninja_forms_loading ) ) {
 							$cr_field_class = $ninja_forms_loading->get_field_setting( $cr['field'], 'field_class' );
 						} else {
@@ -51,5 +48,4 @@ function ninja_forms_conditionals_field_class_filter( $form_id ) {
 	}
 }
 
-add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_class_filter', 10, 2 );
-add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_class_filter', 10, 2 );
+add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_class_filter', 11, 2 );
