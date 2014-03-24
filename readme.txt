@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.8.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 License: GPLv2 or later
 
@@ -29,6 +29,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.2.3 =
+
+*Bugs:*
+
+* Fixed a bug that prevented the 'add_value' and 'change_value' actions from working properly in some instances.
 
 = 1.2.2 =
 
