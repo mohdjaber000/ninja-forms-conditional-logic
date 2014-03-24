@@ -125,7 +125,6 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
 
-
 			if( cr_visible != 1 ){
 				tmp = false;
 			}
@@ -146,35 +145,34 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			action_pass[action] = new Object();
 		}
 
-		if ( action == 'show' || action == 'hide' || action == 'change_value' ) {
+		if ( action == 'add_value' ) {
+			var value = value_array[i];
+						
+			if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
+				value.value = value.label;
+			}
+			action_pass[action][value.value] = pass_array[i];
+		} else {
 			if ( typeof action_pass[action][cond[i]['value']] === 'undefined' || action_pass[action][cond[i]['value']] === false ) {
 				if ( pass_array[i] ) {
 					action_pass[action][cond[i]['value']] = true;
 				} else {
 					action_pass[action][cond[i]['value']] = false;
 				}
-			}
-		} else {
-			var value = value_array[i];
-			
-			if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
-				value.value = value.label;
-			}
-			action_pass[action][value.value] = pass_array[i];
+			}			
 		}
-		
 	}
 
 	for (i = 0; i < conditional_length; i++){
 		var action = cond[i]['action'];
 		value = value_array[i];
-		if ( action == 'show' || action == 'hide' || action == 'change_value' ) {
-			pass = action_pass[action][value];
-		} else {
+		if ( action == 'add_value' ) {
 			if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
 				value.value = value.label;
 			}
 			pass = action_pass[action][value.value];
+		} else {
+			pass = action_pass[action][value];
 		}
 		
 		var input_type = jQuery("#ninja_forms_field_" + target_field + "_type").val();
@@ -188,7 +186,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 
 		if(action == 'show'){
 			if(pass){
-				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
+				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
+				//var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show(10, function(e){ jQuery(document).triggerHandler('ninja_forms_conditional_show'); });
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", true);
 				if ( list ) {
@@ -241,8 +240,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
-
-				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
+				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
+				//var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide(10, function(e){ jQuery(document).triggerHandler('ninja_forms_conditional_hide'); });
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", false);
 				if ( was_visible ) {
@@ -286,7 +285,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
-				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
+				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
+				//var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").hide();
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", false);
 				if ( was_visible ) {
@@ -316,7 +316,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					}
 				}
 			}else{
-				var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
+				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
+				//var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show();
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").data("visible", true);
 				if ( list ) {
