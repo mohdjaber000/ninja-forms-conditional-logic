@@ -3,6 +3,9 @@
 function ninja_forms_conditionals_field_filter( $form_id ){
 	global $ninja_forms_loading, $ninja_forms_processing;
 
+	if ( is_admin() )
+		return false;
+
 	if ( isset ( $ninja_forms_loading ) ) {
 		$all_fields = $ninja_forms_loading->get_all_fields();
 	} else {
@@ -15,10 +18,6 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 		} else {
 			$field = $ninja_forms_processing->get_field_settings( $field_id );
 		}
-
-		// echo "<pre>";
-		// var_dump( $field );
-		// echo "</pre>";
 
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
 

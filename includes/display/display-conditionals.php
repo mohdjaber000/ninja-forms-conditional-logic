@@ -14,6 +14,9 @@ function ninja_forms_register_display_conditionals(){
 function ninja_forms_display_conditionals( $form_id ){
 	global $ninja_forms_fields, $ninja_forms_loading, $ninja_forms_processing;
 
+	if ( is_admin() )
+		return false;
+
 	$field_results = ninja_forms_get_fields_by_form_id($form_id);
 	$field_results = apply_filters('ninja_forms_display_fields_array', $field_results, $form_id);
 
