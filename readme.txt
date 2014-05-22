@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 1.2.3
+Tested up to: 3.9.1
+Stable tag: 1.2.4
 
 License: GPLv2 or later
 
@@ -29,6 +29,16 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.2.4 =
+
+*Changes:*
+
+* Conditionals should now not be applied when editing a form in the wp-admin.
+
+*Bugs:*
+
+* Fixed a bug with the change value setting.
 
 = 1.2.3 =
 
