@@ -31,17 +31,14 @@ function ninja_forms_check_conditional(element, action_value){
 		var target_field = field.replace("field_", "");
 		var conditional_length = jQuery(conditional[field]['conditional']).length;
 		for (i = 0; i < conditional_length; i++){
-			
-			var cr_length = jQuery(conditional[field]['conditional'][i]['cr']).length;
-			for (x = 0; x < cr_length; x++){
-
-				if(typeof conditional[field]['conditional'][i] !== 'undefined') {
-
+			if ( typeof conditional[field]['conditional'][i] !== 'undefined' ) {
+				var cr_length = jQuery(conditional[field]['conditional'][i]['cr']).length;
+				for (x = 0; x < cr_length; x++){
 					if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
 						var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
 						ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
 					}					
-				}
+				}				
 			}
 		}
 	}
@@ -183,7 +180,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 			list_type = input_type;
 			list = true;
 		}
-
+		
 		if(action == 'show'){
 			if(pass){
 				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
@@ -361,19 +358,33 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				}
 			}
 		}else if(action == 'change_value'){
+
+			var was_checked = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "checked" );
+						
 			if(input_type == 'checkbox'){
-				if(pass){
-					if(value == 'checked'){
-						jQuery("#ninja_forms_field_" + target_field).attr("checked", true);
-					}else if(value == 'unchecked'){
-						jQuery("#ninja_forms_field_" + target_field).attr("checked", false);					
+				if ( list ) {
+					var checked_now = jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked");
+					if(pass){
+						jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked", true);
+					}else{
+						jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked", false);
 					}
-				}	
+				} else {
+					var checked_now = jQuery("#ninja_forms_field_" + target_field).prop("checked");
+					if( pass ){
+						if(value == 'checked'){
+							jQuery("#ninja_forms_field_" + target_field).prop("checked", true);
+						}else if(value == 'unchecked'){
+							jQuery("#ninja_forms_field_" + target_field).prop("checked", false);					
+						}
+					}						
+				}
+
 			}else if(input_type == 'radio'){
 				if(pass){
-					jQuery("[name='ninja_forms_field_" + target_field + "'][value='" + value + "']").attr("checked", true);
+					jQuery("[name='ninja_forms_field_" + target_field + "'][value='" + value + "']").prop("checked", true);
 				}else{
-					jQuery("[name='ninja_forms_field_" + target_field + "'][value='" + value + "']").attr("checked", false);
+					jQuery("[name='ninja_forms_field_" + target_field + "'][value='" + value + "']").prop("checked", false);
 				}
 				
 			}else{
@@ -381,18 +392,25 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					jQuery("#ninja_forms_field_" + target_field).val(value);
 				}
 			}
-			if(pass){
-				if ( list ) {
-					if ( input_type == 'checkbox' || input_type == 'radio' ) {
-						var target_element = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").find(".ninja-forms-field:visible:first");
-					} else {
-						var target_element = jQuery("#ninja_forms_field_" + target_field);
-					}
+
+			if ( list ) {
+				if ( input_type == 'checkbox' || input_type == 'radio' ) {
+					var target_element = jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']");
 				} else {
 					var target_element = jQuery("#ninja_forms_field_" + target_field);
 				}
-				jQuery(target_element).change();
+			} else {
+				var target_element = jQuery("#ninja_forms_field_" + target_field);
+				
 			}
+
+			jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "checked", checked_now );
+
+			if ( i == conditional_length - 1 ) {
+				jQuery( target_element ).change();
+			}
+			
+			
 		}else if(action == 'remove_value'){
 			if(input_type == 'dropdown'){
 				if(pass){
