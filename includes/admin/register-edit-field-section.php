@@ -192,6 +192,9 @@ function ninja_forms_field_conditional_cr_value_output( $field_id, $x, $y="", $c
 		$id = "ninja_forms_field_".$field_id."_conditional_".$x."_value";
 		$class = 'ninja-forms-field-'.$field_id.'-conditional-value';
 	}
+
+	$conditional = apply_filters( 'nf_change_conditional_cr_field', $conditional, $cr_field );
+
 	if( isset( $conditional['value']['type'] ) ){
 		$value_type = $conditional['value']['type'];
 	}else{
