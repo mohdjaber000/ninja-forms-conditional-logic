@@ -1,9 +1,9 @@
 <?php
 
 function ninja_forms_conditionals_field_filter( $form_id ){
-	global $ninja_forms_loading, $ninja_forms_processing;
+	global $pagenow, $ninja_forms_loading, $ninja_forms_processing;
 
-	if ( is_admin() )
+	if ( is_admin() && $pagenow != 'admin-ajax.php' )
 		return false;
 
 	if ( isset ( $ninja_forms_loading ) ) {

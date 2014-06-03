@@ -48,6 +48,8 @@ function ninja_forms_change_action(){
 		$conditional = '';
 	}
 
+	$conditional = apply_filters( 'nf_change_conditional_action_output', $conditional, $field_id, $action_slug );
+
 	header("Content-type: application/json");
 
 	if( isset( $conditional['output'] ) ){
@@ -78,12 +80,13 @@ function ninja_forms_change_cr_field(){
 	$type = $field_row['type'];
 	$reg_field = $ninja_forms_fields[$type];
 	$conditional = $reg_field['conditional'];
+	$cr = array( 'field' => $field_value );
 	header("Content-type: application/json");
 
 	$new_html = '';
 
 	if(isset($conditional['value']) AND is_array($conditional['value'])){
-		$new_html = ninja_forms_return_echo('ninja_forms_field_conditional_cr_value_output', $field_id, $x, $y, $conditional);
+		$new_html = ninja_forms_return_echo('ninja_forms_field_conditional_cr_value_output', $field_id, $x, $y, $conditional, $cr );
 		$new_html = utf8_encode( $new_html );
 		$array = array('new_html' => $new_html, 'new_type' => $conditional['value']['type'] );
 		echo json_encode($array);
