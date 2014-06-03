@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - Conditionals
 Plugin URI: http://ninjaforms.com
 Description: Conditional form logic add-on for Ninja Forms.
-Version: 1.2.4
+Version: 1.2.5
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 Text Domain: ninja-forms-conditionals

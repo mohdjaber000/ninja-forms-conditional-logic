@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 
 License: GPLv2 or later
 
@@ -29,6 +29,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.2.5 =
+
+*Bugs:*
+
+* Fixed a bug that could cause conditions not to work in some AJAX setups.
 
 = 1.2.4 =
 
