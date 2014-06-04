@@ -12,7 +12,7 @@ Domain Path: /languages/
 
 define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_CON_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
-define("NINJA_FORMS_CON_VERSION", "1.2.4");
+define("NINJA_FORMS_CON_VERSION", "1.2.5");
 
 function ninja_forms_conditionals_setup_license() {
   if ( class_exists( 'NF_Extension_Updater' ) ) {
