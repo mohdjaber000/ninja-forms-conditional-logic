@@ -34,10 +34,12 @@ function ninja_forms_check_conditional(element, action_value){
 			if ( typeof conditional[field]['conditional'][i] !== 'undefined' ) {
 				var cr_length = jQuery(conditional[field]['conditional'][i]['cr']).length;
 				for (x = 0; x < cr_length; x++){
-					if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
-						var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
-						ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
-					}					
+					if ( typeof conditional[field]['conditional'][i] !== 'undefined' ) {
+						if(conditional[field]['conditional'][i]['cr'][x]['field'] == field_id){
+							var action_value = conditional[field]['conditional'][i]['cr'][x]['value'];
+							ninja_forms_conditional_change(element, target_field, action_value); //target_field, change value?
+						}								
+					}
 				}				
 			}
 		}
