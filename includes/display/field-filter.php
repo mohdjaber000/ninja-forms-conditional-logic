@@ -19,6 +19,9 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			$field = $ninja_forms_processing->get_field_settings( $field_id );
 		}
 
+		// Quick and dirty way of cleaning up the label for required elements with inside label positions
+		$field['data']['req_added'] = 1;
+
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
 
 		$x = 0;
@@ -115,6 +118,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
 				switch( $conditional['action'] ){
 					case 'show':
+
 						if( !$pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;

@@ -234,16 +234,18 @@ function ninja_forms_field_conditional_cr_value_output( $field_id, $x, $y="", $c
 			<?php
 			if( isset( $field_data['list']['options'] ) AND is_array( $field_data['list']['options'] ) ){
 				$i = 0;
-				foreach( $field_data['list']['options'] as $option ){
-					if( !isset( $field_data['list_show_value'] ) OR $field_data['list_show_value'] == 0 ){
-						$value = $option['label'];
-					}else{
-						$value = $option['value'];
-					}
-					?>
-					<option value="<?php echo $value;?>" title="<?php echo $i;?>" <?php if(isset($cr['value']) AND $value == $cr['value']){ echo 'selected';}?>><?php echo $option['label'];?></option>
-					<?php
-					$i++;
+				if ( ! isset ( $_REQUEST['field_id'] ) ) {
+					foreach( $field_data['list']['options'] as $option ){
+						if( !isset( $field_data['list_show_value'] ) OR $field_data['list_show_value'] == 0 ){
+							$value = $option['label'];
+						}else{
+							$value = $option['value'];
+						}
+						?>
+						<option value="<?php echo $value;?>" title="<?php echo $i;?>" <?php if(isset($cr['value']) AND $value == $cr['value']){ echo 'selected';}?>><?php echo $option['label'];?></option>
+						<?php
+						$i++;
+					}					
 				}
 			}
 			?>
