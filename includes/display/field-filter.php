@@ -118,7 +118,6 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
 				switch( $conditional['action'] ){
 					case 'show':
-
 						if( !$pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
@@ -131,11 +130,17 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 									}
 								}							
 							}
-							if ( isset ( $ninja_forms_processing ) ) {
+
+							if ( isset ( $ninja_forms_loading ) ) {
+								if( $field['type'] != '_spam' ){
+									$ninja_forms_loading->update_field_value( $field_id, false );
+								}
+							} else if ( isset ( $ninja_forms_processing ) ) {
 								if( $field['type'] != '_spam' ){
 									$ninja_forms_processing->update_field_value( $field_id, false );
 								}
 							}
+
 						}else{
 							$data['display_style'] = '';
 							$data['visible'] = true;
