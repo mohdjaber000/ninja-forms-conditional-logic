@@ -242,3 +242,4 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
 add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter', 12 );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );
+add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter', 1000 );
