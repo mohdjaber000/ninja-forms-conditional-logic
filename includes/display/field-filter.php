@@ -12,6 +12,9 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 		$all_fields = $ninja_forms_processing->get_all_fields();
 	}
 
+	if ( ! is_array( $all_fields ) )
+		return false;
+
 	foreach ( $all_fields as $field_id => $user_value ) {
 		if ( isset ( $ninja_forms_loading ) ) {
 			$field = $ninja_forms_loading->get_field_settings( $field_id );

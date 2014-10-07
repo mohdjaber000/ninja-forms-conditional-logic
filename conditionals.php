@@ -51,16 +51,18 @@ function ninja_forms_conditionals_load_translations() {
 }
 add_action( 'plugins_loaded', 'ninja_forms_conditionals_load_translations' );
 
-require_once(NINJA_FORMS_CON_DIR."/includes/admin/ajax.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/admin/scripts.php"); 
-require_once(NINJA_FORMS_CON_DIR."/includes/admin/after-import.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php");
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/ajax.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/scripts.php" ); 
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/after-import.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/notifications.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/functions.php" );
 
-require_once(NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/display/scripts.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/display/field-filter.php");
-require_once(NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php");
+require_once( NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/display/scripts.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/display/field-filter.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php" );
 
 function ninja_forms_conditional_compare($param1, $param2, $operator){
 	switch($operator){
