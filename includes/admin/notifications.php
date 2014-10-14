@@ -54,20 +54,29 @@ function nf_cl_notification_settings( $id ) {
 					<option value="<%= field.id %>" <%= selected %>>ID: <%= field.id %> - <%= field.label %></option>
 				<% }); %>
 			</select>
-			<select name="<%= cr_name %>[compare]">
-				<option value="==" <% if ( compare == '==' ) { %>selected="selected"<% }  %>><?php echo _e( 'Equal To', 'ninja-forms-conditionals' ); ?></option>
-				<option value="!=" <% if ( compare == '!=' ) { %>selected="selected"<% }  %> ><?php echo _e( 'Not Equal To', 'ninja-forms-conditionals' ); ?></option>
-				<option value="<" <% if ( compare == '<' ) { %>selected="selected"<% }  %> ><?php echo _e( 'Less Than', 'ninja-forms-conditionals' ); ?></option>
-				<option value=">" <% if ( compare == '>' ) { %>selected="selected"<% }  %> ><?php echo _e( 'Greater Than', 'ninja-forms-conditionals' ); ?></option>
-			</select>
+			<span class="cr-compare"></span>
 			<span class="cr-value"></span>
 		</div>
 	</script>
 
+	<script type="text/html" id="tmpl-nf-cl-criteria-compare">
+		<select name="<%= cr_name %>[compare]">
+			<%
+			if ( typeof fields[ selected_field ] !== 'undefined' ) {
+				_.each( fields[ selected_field ].compare, function( value, key ) {
+					%>
+					<option value="<%= key %>" <% if ( compare == key ) { %>selected="selected"<% }  %>><%= value %></option>
+					<%
+				} );
+			}
+			%>
+		</select>
+	</script>	
+
 	<script type="text/html" id="tmpl-nf-cl-criteria-value">
 		<%
-		if ( typeof nf_cl.fields[selected_field] !== 'undefined' ) {
-			var type = nf_cl.fields[selected_field].conditions.type;
+		if ( typeof fields[selected_field] !== 'undefined' ) {
+			var type = fields[selected_field].conditions.type;
 			if ( type == 'text' ) {
 				%>
 				<input type="text" name="<%= cr_name %>[value]" value="<%= value %>">
@@ -76,7 +85,7 @@ function nf_cl_notification_settings( $id ) {
 				%>
 				<select name="<%= cr_name %>[value]">
 					<%
-					_.each( nf_cl.fields[selected_field].conditions.options, function( opt ) {
+					_.each( fields[selected_field].conditions.options, function( opt ) {
 						if ( value == opt.value ) {
 							var selected = 'selected="selected"';
 						} else {

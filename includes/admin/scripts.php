@@ -63,6 +63,16 @@ function ninja_forms_conditionals_admin_js( $page ){
 			if ( isset ( $ninja_forms_fields[ $field_type ]['process_field'] ) && $ninja_forms_fields[ $field_type ]['process_field'] ) {
 				$label = nf_get_field_admin_label( $field_id );
 				$con_value = isset ( $ninja_forms_fields[ $field_type ]['conditional']['value'] ) ? $ninja_forms_fields[ $field_type ]['conditional']['value'] : array( 'type' => 'text' );
+				$compare = array( 
+					'==' 			=> __( 'Equal To', 'ninja-forms-conditionals' ),
+					'!=' 			=> __( 'Not Equal To', 'ninja-forms-conditionals' ),
+					'<' 			=> __( 'Less Than', 'ninja-forms-conditionals' ),
+					'>'				=> __( 'Greater Than', 'ninja-forms-conditionals' ),
+					'contain'		=> __( 'Contains', 'ninja-forms-conditionals' ),
+					'notcontain'	=> __( 'Does Not Contain', 'ninja-forms-conditionals' ),
+					'before'		=> __( 'Before', 'ninja-forms-conditionals' ),
+					'after'			=> __( 'After', 'ninja-forms-conditionals' ),
+				);
 				$type = $con_value['type'];
 				if ( 'list' == $type ) {
 					if ( is_array ( $field['data']['list']['options'] ) ) {
@@ -77,12 +87,26 @@ function ninja_forms_conditionals_admin_js( $page ){
 						}
 						$con_value = array( 'type' => 'select', 'options' => $list_options );
 					}
+
+					unset( $compare['contain'] );
+					unset( $compare['notcontain'] );
+					unset( $compare['before'] );
+					unset( $compare['after'] );
+
 				} else if ( '_checkbox' == $field_type ) {
 					$options[] = array( 'value' => 'checked', 'label' => __( 'Checked', 'ninja-forms' ) );
 					$options[] = array( 'value' => 'unchecked', 'label' => __( 'Unchecked', 'ninja-forms' ) );
 					$con_value = array( 'type' => 'select', 'options' => $options );
+
+					unset( $compare['<'] );
+					unset( $compare['>'] );
+					unset( $compare['contain'] );
+					unset( $compare['notcontain'] );
+					unset( $compare['before'] );
+					unset( $compare['after'] );
 				}
-				$cl_fields[ $field_id ] = array( 'id' => $field_id, 'label' => $label, 'conditions' => $con_value );
+				$compare = apply_filters( 'nf_cl_compare_array', $compare, $field_id );
+				$cl_fields[ $field_id ] = array( 'id' => $field_id, 'label' => $label, 'conditions' => $con_value, 'compare' => $compare );
 			}
 		}
 		wp_localize_script( 'nf-cl-admin', 'nf_cl', array( 'fields' => $cl_fields, 'conditions' => $conditions_json ) );

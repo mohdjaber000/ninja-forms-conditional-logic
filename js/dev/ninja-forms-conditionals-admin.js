@@ -68,6 +68,7 @@ jQuery(document).ready(function($) {
 	    	var cond_id = $( e.target ).data( 'cond-id' );
 	    	var selected_field = $( e.target ).val();
 	    	var value = '';
+	    	var compare = '';
 	    	if ( 'new' == cr_id ) {
 				var num = $( e.target ).data( 'num' );
 				var cr_name = 'conditions[' + cond_id + '][criteria][new][' + num + ']';
@@ -77,7 +78,8 @@ jQuery(document).ready(function($) {
 				var cr_name = 'conditions[' + cond_id + '][criteria][' + cr_id + ']';
 				var div_id = 'nf_cr_' + cr_id;
 			}
-	    	criteriaView.renderCriteriaValue( cr_id, cr_name, selected_field, value, num, div_id );
+			criteriaView.renderCriteriaCompare( cr_id, cr_name, nf_cl.fields, selected_field, compare, num, div_id );
+	    	criteriaView.renderCriteriaValue( cr_id, cr_name, nf_cl.fields, selected_field, value, num, div_id );
 	    }
 
 
@@ -150,12 +152,19 @@ jQuery(document).ready(function($) {
 			}
 			var tmp = _.template( $( '#tmpl-nf-cl-criteria' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: nf_cl.fields, selected_field: selected_field, value: value, compare: compare, num: num, div_id: div_id, data_id: data_id, cond_id: cond_id } );
 			$( this.conditionEl ).find( '.nf-cl-criteria' ).append( tmp );
-			this.renderCriteriaValue( cr_id, cr_name, selected_field, value, num, div_id );
+			this.renderCriteriaCompare( cr_id, cr_name, fields, selected_field, compare, num, div_id );
+			this.renderCriteriaValue( cr_id, cr_name, fields, selected_field, value, num, div_id );
 		},
 
-		renderCriteriaValue: function( cr_id, cr_name, selected_field, value, num, div_id ) {
+		renderCriteriaCompare: function( cr_id, cr_name, fields, selected_field, compare, num, div_id ) {
+			var span = $( '#' + div_id ).find( '.cr-compare' );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-compare' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: fields, selected_field: selected_field, compare: compare } );
+			$( span ).html( tmp );	
+		},
+
+		renderCriteriaValue: function( cr_id, cr_name, fields, selected_field, value, num, div_id ) {
 			var span = $( '#' + div_id ).find( '.cr-value' );
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, selected_field: selected_field, value: value, num: num } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: fields, selected_field: selected_field, value: value, num: num } );
 			$( span ).html( tmp );	
 		}
 

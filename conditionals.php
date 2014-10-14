@@ -75,5 +75,42 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 			return $param1 < $param2;
 		case ">":
 			return $param1 > $param2;
+		case "contain":
+			if ( stripos ( $param2, $param1 ) !== false ) {
+				return true;
+			} else {
+				return false;
+			}
+		case "notcontain":
+			if ( stripos ( $param2, $param1 ) === false ) {
+				return true;
+			} else {
+				return false;
+			}
+		case "before":
+			$plugin_settings = nf_get_settings();
+			if ( strtolower( substr( $plugin_settings['date_format'], 0, 1 ) ) == 'd' ) {
+				$param1 = str_replace( '/', '-', $param1 );
+				$param2 = str_replace( '/', '-', $param2 );
+			}
+
+			$date1 = new DateTime( $param1 );
+			$date2 = new DateTime( $param2 );
+			
+			return $date2 < $date1;
+
+			break;
+		case "after":
+			$plugin_settings = nf_get_settings();
+			if ( strtolower( substr( $plugin_settings['date_format'], 0, 1 ) ) == 'd' ) {
+				$param1 = str_replace( '/', '-', $param1 );
+				$param2 = str_replace( '/', '-', $param2 );
+			}
+
+			$date1 = new DateTime( $param1 );
+			$date2 = new DateTime( $param2 );
+			
+			return $date2 > $date1;
+			break;
 	}
 }
