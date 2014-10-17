@@ -1,4 +1,17 @@
 jQuery(document).ready(function($) {
+	// Function that searches our criteria params object for an id.
+	nf_cl.getParam = function( param_id ) {
+	    for ( var group in nf_cl.cr_param_groups ) {
+	    	for ( var id in nf_cl.cr_param_groups[ group ] ) {
+		        if ( nf_cl.cr_param_groups[ group ][ id ]['id'] == param_id ) {
+		            return nf_cl.cr_param_groups[ group ][ id ]; // Return as soon as the object is found
+		        }		
+	    	}
+
+	    }
+	    return null; // The object was not found
+	}
+
 	// Backbone View for all of our conditions.
 	var ConditionsView = Backbone.View.extend( {
 		el: $( '#nf_cl_conditions' ),
@@ -9,7 +22,7 @@ jQuery(document).ready(function($) {
 			'click .delete-condition': 'deleteCondition',			
 			'click .add-cr': 'addCriteria',
 			'click .delete-cr': 'deleteCriteria',
-			'change .cr-field': 'changeField'
+			'change .cr-param': 'changeParam'
 		},
 
 		// Get our view up and running.
@@ -49,11 +62,11 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 			var cond_id = $( e.target ).data( 'cond-id' );
 			var cr_id = 'new';
-			var selected_field = '';
+			var selected_param = '';
 			var value = '';
 			var compare = '==';
 			criteriaView.conditionEl = $( '#nf_cl_condition_' + cond_id );
-			criteriaView.renderCriteriaRow( cond_id, cr_id, nf_cl.fields, selected_field, value, compare );
+			criteriaView.renderCriteriaRow( cond_id, cr_id, nf_cl.param_groups, selected_param, value, compare );
 		},
 
 	    deleteCriteria: function( e ) {
@@ -62,11 +75,11 @@ jQuery(document).ready(function($) {
 	    	$( targetEl ).remove();
 	    },
 
-	    changeField: function( e ) {
+	    changeParam: function( e ) {
 	    	e.preventDefault();
 	    	var cr_id = $( e.target ).data( 'cr-id' );
 	    	var cond_id = $( e.target ).data( 'cond-id' );
-	    	var selected_field = $( e.target ).val();
+	    	var selected_param = $( e.target ).val();
 	    	var value = '';
 	    	var compare = '';
 	    	if ( 'new' == cr_id ) {
@@ -78,11 +91,17 @@ jQuery(document).ready(function($) {
 				var cr_name = 'conditions[' + cond_id + '][criteria][' + cr_id + ']';
 				var div_id = 'nf_cr_' + cr_id;
 			}
-			criteriaView.renderCriteriaCompare( cr_id, cr_name, nf_cl.fields, selected_field, compare, num, div_id );
-	    	criteriaView.renderCriteriaValue( cr_id, cr_name, nf_cl.fields, selected_field, value, num, div_id );
+			criteriaView.renderCriteriaCompare( cr_id, cr_name, nf_cl.param_groups, selected_param, compare, num, div_id );
+	    	criteriaView.renderCriteriaValue( cr_id, cr_name, nf_cl.param_groups, selected_param, value, num, div_id );
+
+	    	// Check to see if we should enable or disable the datepicker on our value.
+	    	var param = nf_cl.getParam( selected_param );
+	    	if ( param.type == 'date' ) {
+	    		$( e.target ).next().next().find( 'input' ).datepicker({
+					dateFormat: ninja_forms_settings.date_format
+				});
+	    	}
 	    }
-
-
 	} );
 
 	// Backbone View for our condition criteria
@@ -131,14 +150,14 @@ jQuery(document).ready(function($) {
 			var that = this;
 			_.each( criteria, function( cr ) {
 				var cr_id = cr.id;
-				var selected_field = cr.field;
+				var selected_param = cr.param;
 				var value = cr.value;
 				var compare = cr.compare;
-				that.renderCriteriaRow( cond_id, cr_id, nf_cl.fields, selected_field, value, compare );	
+				that.renderCriteriaRow( cond_id, cr_id, nf_cl.cr_param_groups, selected_param, value, compare );	
 			} );
 		},
 
-		renderCriteriaRow: function ( cond_id, cr_id, fields, selected_field, value, compare ) {
+		renderCriteriaRow: function ( cond_id, cr_id, param_groups, selected_param, value, compare ) {
 			if ( 'new' == cr_id ) {
 				var num = $( this.conditionEl ).find( '.single-criteria' ).length;
 				var cr_name = 'conditions[' + cond_id + '][criteria][new][' + num + ']';
@@ -150,33 +169,39 @@ jQuery(document).ready(function($) {
 				var div_id = 'nf_cr_' + cr_id;
 				var data_id = cr_id;
 			}
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: nf_cl.fields, selected_field: selected_field, value: value, compare: compare, num: num, div_id: div_id, data_id: data_id, cond_id: cond_id } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, compare: compare, num: num, div_id: div_id, data_id: data_id, cond_id: cond_id } );
 			$( this.conditionEl ).find( '.nf-cl-criteria' ).append( tmp );
-			this.renderCriteriaCompare( cr_id, cr_name, fields, selected_field, compare, num, div_id );
-			this.renderCriteriaValue( cr_id, cr_name, fields, selected_field, value, num, div_id );
+			this.renderCriteriaCompare( cr_id, cr_name, param_groups, selected_param, compare, num, div_id );
+			this.renderCriteriaValue( cr_id, cr_name, param_groups, selected_param, value, num, div_id );
 		},
 
-		renderCriteriaCompare: function( cr_id, cr_name, fields, selected_field, compare, num, div_id ) {
+		renderCriteriaCompare: function( cr_id, cr_name, param_groups, selected_param, compare, num, div_id ) {
 			var span = $( '#' + div_id ).find( '.cr-compare' );
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria-compare' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: fields, selected_field: selected_field, compare: compare } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-compare' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, compare: compare, nf_cl: nf_cl } );
 			$( span ).html( tmp );	
 		},
 
-		renderCriteriaValue: function( cr_id, cr_name, fields, selected_field, value, num, div_id ) {
+		renderCriteriaValue: function( cr_id, cr_name, param_groups, selected_param, value, num, div_id ) {
 			var span = $( '#' + div_id ).find( '.cr-value' );
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, fields: fields, selected_field: selected_field, value: value, num: num } );
-			$( span ).html( tmp );	
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, num: num, nf_cl: nf_cl } );
+			$( span ).html( tmp );
+			var param = nf_cl.getParam( selected_param );
+			if ( param.type == 'date' ) {
+				$( span ).find( 'input' ).datepicker( {
+					dateFormat: ninja_forms_settings.date_format
+				} );
+			}
 		}
 
 	} );
 
-	// **CriteriaView instance**: Instantiate main app view.
+	// **CriteriaView instance**: Instantiate Criteria view.
 	var criteriaView = new CriteriaView();
 
-	// **ConditionView instance**: Instantiate main app view.
+	// **ConditionView instance**: Instantiate Condition view.
 	var conditionView = new ConditionView();
 
-	// **ConditionsView instance**: Instantiate main app view.
+	// **ConditionsView instance**: Instantiate Conditions view.
 	var conditionsView = new ConditionsView();
 
 	//Listen to the "hidden list value" checkbox.

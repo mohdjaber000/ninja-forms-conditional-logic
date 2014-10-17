@@ -51,6 +51,8 @@ function ninja_forms_conditionals_load_translations() {
 }
 add_action( 'plugins_loaded', 'ninja_forms_conditionals_load_translations' );
 
+require_once( NINJA_FORMS_CON_DIR."/classes/trigger-base.php" );
+
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/ajax.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/scripts.php" ); 
@@ -64,6 +66,8 @@ require_once( NINJA_FORMS_CON_DIR."/includes/display/scripts.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/display/field-filter.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php" );
 
+
+
 function ninja_forms_conditional_compare($param1, $param2, $operator){
 	switch($operator){
 		case "==":
@@ -75,13 +79,13 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 			return $param1 < $param2;
 		case ">":
 			return $param1 > $param2;
-		case "contain":
+		case "contains":
 			if ( stripos ( $param2, $param1 ) !== false ) {
 				return true;
 			} else {
 				return false;
 			}
-		case "notcontain":
+		case "notcontains":
 			if ( stripos ( $param2, $param1 ) === false ) {
 				return true;
 			} else {

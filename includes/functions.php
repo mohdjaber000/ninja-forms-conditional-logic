@@ -68,3 +68,14 @@ function nf_cl_delete_condition( $cond_id ) {
 		nf_delete_object( $cr_id );
 	}
 }
+
+/**
+ * Sort our field list by label.
+ * 
+ * @param $a
+ * @param $b
+ * @return sorted array
+ */
+function nf_cl_sort_by_label($a, $b) {
+    return strcasecmp( $a['label'], $b['label'] );
+}

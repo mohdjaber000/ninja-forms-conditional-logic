@@ -39,10 +39,10 @@ function ninja_forms_conditionals_admin_js( $page ){
 					$criteria = nf_cl_get_criteria( $cond_id );
 					$criteria_json = array();
 					foreach ( $criteria as $cr_id ) {
-						$selected_field = nf_get_object_meta_value( $cr_id, 'field' );
+						$selected_param = nf_get_object_meta_value( $cr_id, 'param' );
 						$compare = nf_get_object_meta_value( $cr_id, 'compare' );
 						$value = nf_get_object_meta_value( $cr_id, 'value' );
-						$criteria_json[] = array( 'id' => $cr_id, 'field' => $selected_field, 'compare' => $compare, 'value' => $value );
+						$criteria_json[] = array( 'id' => $cr_id, 'param' => $selected_param, 'compare' => $compare, 'value' => $value );
 					}
 					$connector = nf_get_object_meta_value( $cond_id, 'connector' );
 					$conditions_json[ $cond_id ] = array( 'id' => $cond_id, 'action' => $action, 'connector' => $connector, 'criteria' => $criteria_json );
@@ -68,8 +68,8 @@ function ninja_forms_conditionals_admin_js( $page ){
 					'!=' 			=> __( 'Not Equal To', 'ninja-forms-conditionals' ),
 					'<' 			=> __( 'Less Than', 'ninja-forms-conditionals' ),
 					'>'				=> __( 'Greater Than', 'ninja-forms-conditionals' ),
-					'contain'		=> __( 'Contains', 'ninja-forms-conditionals' ),
-					'notcontain'	=> __( 'Does Not Contain', 'ninja-forms-conditionals' ),
+					'contains'		=> __( 'Contains', 'ninja-forms-conditionals' ),
+					'notcontains'	=> __( 'Does Not Contain', 'ninja-forms-conditionals' ),
 					'before'		=> __( 'Before', 'ninja-forms-conditionals' ),
 					'after'			=> __( 'After', 'ninja-forms-conditionals' ),
 				);
@@ -88,8 +88,10 @@ function ninja_forms_conditionals_admin_js( $page ){
 						$con_value = array( 'type' => 'select', 'options' => $list_options );
 					}
 
-					unset( $compare['contain'] );
-					unset( $compare['notcontain'] );
+					unset( $compare['<'] );
+					unset( $compare['>'] );
+					unset( $compare['contains'] );
+					unset( $compare['notcontains'] );
 					unset( $compare['before'] );
 					unset( $compare['after'] );
 
@@ -100,16 +102,54 @@ function ninja_forms_conditionals_admin_js( $page ){
 
 					unset( $compare['<'] );
 					unset( $compare['>'] );
-					unset( $compare['contain'] );
-					unset( $compare['notcontain'] );
+					unset( $compare['contains'] );
+					unset( $compare['notcontains'] );
 					unset( $compare['before'] );
 					unset( $compare['after'] );
+				} else if ( '_text' == $field_type ) {
+					if ( isset ( $field['data']['datepicker'] ) && $field['data']['datepicker'] == 1 ) {
+						$field_type = 'date';
+						unset( $compare['<'] );
+						unset( $compare['>'] );
+						unset( $compare['contains'] );
+						unset( $compare['notcontains'] );
+					} else {
+						unset( $compare['before'] );
+						unset( $compare['after'] );
+					}
 				}
 				$compare = apply_filters( 'nf_cl_compare_array', $compare, $field_id );
-				$cl_fields[ $field_id ] = array( 'id' => $field_id, 'label' => $label, 'conditions' => $con_value, 'compare' => $compare );
+				$cl_fields[] = array( 'id' => $field_id, 'label' => $label . ' ID - ' . $field_id, 'conditions' => $con_value, 'compare' => $compare, 'type' => $field_type );
 			}
 		}
-		wp_localize_script( 'nf-cl-admin', 'nf_cl', array( 'fields' => $cl_fields, 'conditions' => $conditions_json ) );
+
+		$cl_fields = apply_filters( 'nf_cl_criteria_fields', $cl_fields );
+
+		usort( $cl_fields, 'nf_cl_sort_by_label' );
+		
+		$triggers = apply_filters( 'nf_cl_criteria_triggers', array(
+			array( 
+				'id' 			=> 'date_submitted', 
+				'label' 		=> __( 'Date Submitted', 'ninja-forms-conditionals' ), 
+				'type' 			=> 'date', 
+				'compare' 		=> array(
+					'==' 		=> __( 'Equal To', 'ninja-forms-conditionals' ),
+					'!=' 		=> __( 'Not Equal To', 'ninja-forms-conditionals' ),
+					'before'	=> __( 'Before', 'ninja-forms-conditionals' ),
+					'after'		=> __( 'After', 'ninja-forms-conditionals' ),
+				),
+				'conditions'	=> array(
+					'type' 		=> 'text'
+				),
+			),
+		) );
+
+		$cr_param_groups = apply_filters( 'nf_cl_criteria_param_groups', array(
+			__( 'Triggers', 'ninja-forms-conditionals' ) 	=> $triggers,
+			__( 'Fields', 'ninja-forms-conditionals' ) 		=> $cl_fields,
+		) );
+
+		wp_localize_script( 'nf-cl-admin', 'nf_cl', array( 'cr_param_groups' => $cr_param_groups, 'conditions' => $conditions_json ) );
 	}
 }
 

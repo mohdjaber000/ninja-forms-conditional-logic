@@ -1,7 +1,5 @@
 <?php
 function nf_cl_notification_settings( $id ) {
-	global $ninja_forms_fields;
-
 	$conditions = nf_cl_get_conditions( $id );
 	if ( empty ( $conditions ) ) {
 		$add_button_style = '';
@@ -42,17 +40,27 @@ function nf_cl_notification_settings( $id ) {
 	<script type="text/html" id="tmpl-nf-cl-criteria">
 		<div class="single-criteria" id="<%= div_id %>">
 			<a href="#" class="nf-cl-delete delete-cr" style=""><div class="dashicons dashicons-dismiss"></div></a>
-			<select name="<%= cr_name %>[field]" class="cr-field" id="" title="" data-cr-id="<%= cr_id %>" data-num="<%= num %>" data-cond-id="<%= cond_id %>">
-				<option value=""><?php _e( '-- Select A Field', 'ninja-forms-conditionals' ); ?></option>
-				<% _.each( fields, function( field ) { 
-					if ( selected_field == field.id ) {
-						var selected = 'selected="selected"';
-					} else {
-						var selected = '';
-					}
+			<select name="<%= cr_name %>[param]" class="cr-param" id="" title="" data-cr-id="<%= cr_id %>" data-num="<%= num %>" data-cond-id="<%= cond_id %>">
+				<%
+				_.each( param_groups, function( params, group_label ) {
 					%>
-					<option value="<%= field.id %>" <%= selected %>>ID: <%= field.id %> - <%= field.label %></option>
-				<% }); %>
+					<optgroup label="<%= group_label %>">
+						<%
+						_.each( params, function( param ) {
+							if ( selected_param == param.id ) {
+								var selected = 'selected="selected"';
+							} else {
+								var selected = '';
+							}
+							%>
+							<option value="<%= param.id %>" <%= selected %>><%= param.label %></option>
+							<%
+						})
+						%>
+					</optgroup>
+					<%
+				});
+				%>
 			</select>
 			<span class="cr-compare"></span>
 			<span class="cr-value"></span>
@@ -62,8 +70,9 @@ function nf_cl_notification_settings( $id ) {
 	<script type="text/html" id="tmpl-nf-cl-criteria-compare">
 		<select name="<%= cr_name %>[compare]">
 			<%
-			if ( typeof fields[ selected_field ] !== 'undefined' ) {
-				_.each( fields[ selected_field ].compare, function( value, key ) {
+			var param = nf_cl.getParam( selected_param );
+			if ( param !== null ) {
+				_.each( param.compare, function( value, key ) {
 					%>
 					<option value="<%= key %>" <% if ( compare == key ) { %>selected="selected"<% }  %>><%= value %></option>
 					<%
@@ -75,8 +84,9 @@ function nf_cl_notification_settings( $id ) {
 
 	<script type="text/html" id="tmpl-nf-cl-criteria-value">
 		<%
-		if ( typeof fields[selected_field] !== 'undefined' ) {
-			var type = fields[selected_field].conditions.type;
+		var param = nf_cl.getParam( selected_param );
+		if ( param !== null ) {
+			var type = param.conditions.type;
 			if ( type == 'text' ) {
 				%>
 				<input type="text" name="<%= cr_name %>[value]" value="<%= value %>">
@@ -85,7 +95,7 @@ function nf_cl_notification_settings( $id ) {
 				%>
 				<select name="<%= cr_name %>[value]">
 					<%
-					_.each( fields[selected_field].conditions.options, function( opt ) {
+					_.each( param.conditions.options, function( opt ) {
 						if ( value == opt.value ) {
 							var selected = 'selected="selected"';
 						} else {
