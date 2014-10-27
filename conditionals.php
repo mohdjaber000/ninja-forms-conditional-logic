@@ -66,8 +66,6 @@ require_once( NINJA_FORMS_CON_DIR."/includes/display/scripts.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/display/field-filter.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php" );
 
-
-
 function ninja_forms_conditional_compare($param1, $param2, $operator){
 	switch($operator){
 		case "==":
@@ -91,6 +89,18 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 			} else {
 				return false;
 			}
+		case "on":
+			$plugin_settings = nf_get_settings();
+			if ( strtolower( substr( $plugin_settings['date_format'], 0, 1 ) ) == 'd' ) {
+				$param1 = str_replace( '/', '-', $param1 );
+				$param2 = str_replace( '/', '-', $param2 );
+			}
+
+			$date1 = new DateTime( $param1 );
+			$date2 = new DateTime( $param2 );
+			
+			return $date1 == $date2;
+
 		case "before":
 			$plugin_settings = nf_get_settings();
 			if ( strtolower( substr( $plugin_settings['date_format'], 0, 1 ) ) == 'd' ) {
@@ -101,9 +111,7 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 			$date1 = new DateTime( $param1 );
 			$date2 = new DateTime( $param2 );
 			
-			return $date2 < $date1;
-
-			break;
+			return $date1 < $date2;
 		case "after":
 			$plugin_settings = nf_get_settings();
 			if ( strtolower( substr( $plugin_settings['date_format'], 0, 1 ) ) == 'd' ) {
@@ -114,7 +122,22 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 			$date1 = new DateTime( $param1 );
 			$date2 = new DateTime( $param2 );
 			
-			return $date2 > $date1;
-			break;
+			return $date1 > $date2;
 	}
 }
+
+/**
+ * Hook into our nf_init action and register our trigger types.
+ *
+ * @since 1.2.8
+ * @return void
+ */
+function nf_cl_init( $instance ) {
+	$instance->cl_triggers = array();
+	$instance->cl_triggers['date_submitted'] = require_once( NINJA_FORMS_CON_DIR . '/classes/trigger-date-submitted.php' );
+	// $instance->cl_triggers['sub_count'] = require_once( NINJA_FORMS_CON_DIR . '/classes/trigger-sub-count.php' );
+
+	$instance->cl_triggers = apply_filters( 'nf_cl_criteria_triggers', $instance->cl_triggers );
+}
+
+add_action( 'nf_init', 'nf_cl_init' );

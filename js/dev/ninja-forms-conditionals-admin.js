@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
 			var value = '';
 			var compare = '==';
 			criteriaView.conditionEl = $( '#nf_cl_condition_' + cond_id );
-			criteriaView.renderCriteriaRow( cond_id, cr_id, nf_cl.param_groups, selected_param, value, compare );
+			criteriaView.renderCriteriaRow( cond_id, cr_id, nf_cl.cr_param_groups, selected_param, value, compare );
 		},
 
 	    deleteCriteria: function( e ) {
@@ -91,8 +91,8 @@ jQuery(document).ready(function($) {
 				var cr_name = 'conditions[' + cond_id + '][criteria][' + cr_id + ']';
 				var div_id = 'nf_cr_' + cr_id;
 			}
-			criteriaView.renderCriteriaCompare( cr_id, cr_name, nf_cl.param_groups, selected_param, compare, num, div_id );
-	    	criteriaView.renderCriteriaValue( cr_id, cr_name, nf_cl.param_groups, selected_param, value, num, div_id );
+			criteriaView.renderCriteriaCompare( cr_id, cr_name, nf_cl.cr_param_groups, selected_param, compare, num, div_id );
+	    	criteriaView.renderCriteriaValue( cr_id, cr_name, nf_cl.cr_param_groups, selected_param, value, num, div_id );
 
 	    	// Check to see if we should enable or disable the datepicker on our value.
 	    	var param = nf_cl.getParam( selected_param );
@@ -186,7 +186,7 @@ jQuery(document).ready(function($) {
 			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, num: num, nf_cl: nf_cl } );
 			$( span ).html( tmp );
 			var param = nf_cl.getParam( selected_param );
-			if ( param.type == 'date' ) {
+			if ( param && param.type == 'date' ) {
 				$( span ).find( 'input' ).datepicker( {
 					dateFormat: ninja_forms_settings.date_format
 				} );

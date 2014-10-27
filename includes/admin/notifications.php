@@ -41,6 +41,7 @@ function nf_cl_notification_settings( $id ) {
 		<div class="single-criteria" id="<%= div_id %>">
 			<a href="#" class="nf-cl-delete delete-cr" style=""><div class="dashicons dashicons-dismiss"></div></a>
 			<select name="<%= cr_name %>[param]" class="cr-param" id="" title="" data-cr-id="<%= cr_id %>" data-num="<%= num %>" data-cond-id="<%= cond_id %>">
+				<option value="">-- <?php _e( 'Select One', 'ninja-forms-conditionals' ); ?></option>
 				<%
 				_.each( param_groups, function( params, group_label ) {
 					%>
@@ -223,11 +224,16 @@ function nf_cl_notification_process( $id ) {
 		$criteria = nf_cl_get_criteria( $cond_id );
 		$pass_array = array();
 		foreach ( $criteria as $cr_id ) {
-			$field = nf_get_object_meta_value( $cr_id, 'field' );
+			$param = nf_get_object_meta_value( $cr_id, 'param' );
 			$compare = nf_get_object_meta_value( $cr_id, 'compare' );
 			$value = nf_get_object_meta_value( $cr_id, 'value' );
-			$user_value = $ninja_forms_processing->get_field_value( $field );
-			$pass_array[] = ninja_forms_conditional_compare( $value, $user_value, $compare );
+
+			if ( isset ( Ninja_Forms()->cl_triggers[ $param ] ) ) {
+				$pass_array[] = Ninja_Forms()->cl_triggers[ $param ]->compare( $value, $compare );
+			} else {
+				$user_value = $ninja_forms_processing->get_field_value( $param );
+				$pass_array[] = ninja_forms_conditional_compare( $value, $user_value, $compare );				
+			}
 		}
 		// Check our connector. If it is set to "all", then all our criteria have to match.
 		if ( 'and' == $connector ) {
@@ -265,3 +271,105 @@ function nf_cl_notification_process( $id ) {
 }
 
 add_action( 'nf_notification_before_process', 'nf_cl_notification_process' );
+
+/**
+ * Filter our form export.
+ */
+function nf_cl_form_export( $form_row ) {
+	// Make sure that this form has notifications on it.
+	if ( isset ( $form_row['notifications'] ) ) {
+		// Loop through our notifications and check conditions.
+		foreach ( $form_row['notifications'] as $id => $notification ) {
+			$conditions = nf_cl_get_conditions( $id );
+			// Make sure that we actually notifications to connect.
+			if ( empty ( $conditions ) )
+				continue;
+
+			$c_array = array(); // Stores all of our conditions.
+			// Loop over each condition.
+			foreach ( $conditions as $c_id ) {
+				// Grab the criteria ids for this condition.
+				$criteria = nf_cl_get_criteria( $c_id );
+				$cr_array = array(); // Stores all of our criteria.
+				// Loop through our criteria and populate our criteria array
+				foreach ( $criteria as $cr_id ) {
+					// Grab our three criteria settings.
+					$cr_array[] = array(
+						'param' 	=> nf_get_object_meta_value( $cr_id, 'param' ),
+						'compare' 	=> nf_get_object_meta_value( $cr_id, 'compare' ),
+						'value'		=> nf_get_object_meta_value( $cr_id, 'value' ),
+					);
+				}
+				// Add the criteria to the condition array.
+				$c_array[] = array( 'action' => nf_get_object_meta_value( $c_id, 'action' ), 'connector' => nf_get_object_meta_value( $c_id, 'connector' ), 'criteria' => $cr_array );
+			}
+			$form_row['notifications'][ $id ]['conditions'] = $c_array;
+		}
+	}
+
+	return $form_row;
+}
+
+add_filter( 'nf_export_form_row', 'nf_cl_form_export' );
+
+/**
+ * Change the field IDs in our notification conditions after we import a form.
+ */
+function nf_cl_form_import( $n, $n_id, $form ) {
+	
+	// Bail if we don't have any fields set.
+	if ( ! isset ( $form['field'] ) || empty ( $form['field'] ) )
+		return $n;
+
+	$fields = array();
+	foreach ( $form['field'] as $field ) {
+		$old_id = $field['old_id'];
+		$fields[ $old_id ] = $field['id'];
+	}
+
+	// Make sure we have some conditions.
+	if ( isset ( $n['conditions'] ) ) {
+		// Loop through our conditions, change the field ids, and insert them into the database.
+		foreach ( $n['conditions'] as $condition ) {
+			// Make sure that we have criteria set.
+			if ( ! isset ( $condition['criteria'] ) || empty( $condition['criteria'] ) )
+				continue; // There isn't any criteria set. Skip to the next condition.
+			
+			// Insert our condition
+			$c_id = nf_cl_insert_condition( $n_id );
+
+			// Update our condition meta
+			nf_update_object_meta( $c_id, 'action', $condition['action'] );
+			nf_update_object_meta( $c_id, 'connector', $condition['connector'] );
+
+			// Change our field ids.
+			// Loop through our criteria and search for field ids
+
+			foreach ( $condition['criteria'] as $cr ) {
+				// First, we check the param to see if it is a field id.
+				if ( isset ( $fields[ $cr['param'] ] ) )
+					$cr['param'] = $fields[ $cr['param'] ];
+
+				// Next, check to see if the value is a field id
+				if ( isset ( $fields[ $cr['value'] ] ) )
+					$cr['value'] = $fields[ $cr['param'] ];
+
+				// Insert our criteria
+				$cr_id = nf_cl_insert_criteria( $c_id );
+
+				// Update our criteria object meta.
+				nf_update_object_meta( $cr_id, 'param', $cr['param'] );
+				nf_update_object_meta( $cr_id, 'compare', $cr['compare'] );
+				nf_update_object_meta( $cr_id, 'value', $cr['value'] );
+
+			}
+
+		}
+
+		unset( $n['conditions'] );
+	}
+
+	return $n;
+}
+
+add_filter( 'nf_import_notification_meta', 'nf_cl_form_import', 10, 3 );

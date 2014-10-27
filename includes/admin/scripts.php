@@ -17,7 +17,7 @@ function ninja_forms_conditionals_admin_js( $page ){
 
 		wp_enqueue_script( 'nf-cl-admin',
 			NINJA_FORMS_CON_URL .'/js/' . $src . '/ninja-forms-conditionals-admin' . $suffix . '.js',
-			array( 'jquery', 'ninja-forms-admin' ) );
+			array( 'jquery', 'ninja-forms-admin', 'backbone', 'underscore' ) );
 
 		if ( empty ( $form_id ) )
 			return false;
@@ -70,6 +70,7 @@ function ninja_forms_conditionals_admin_js( $page ){
 					'>'				=> __( 'Greater Than', 'ninja-forms-conditionals' ),
 					'contains'		=> __( 'Contains', 'ninja-forms-conditionals' ),
 					'notcontains'	=> __( 'Does Not Contain', 'ninja-forms-conditionals' ),
+					'on'			=> __( 'On', 'ninja-forms-conditionals' ),
 					'before'		=> __( 'Before', 'ninja-forms-conditionals' ),
 					'after'			=> __( 'After', 'ninja-forms-conditionals' ),
 				);
@@ -92,6 +93,7 @@ function ninja_forms_conditionals_admin_js( $page ){
 					unset( $compare['>'] );
 					unset( $compare['contains'] );
 					unset( $compare['notcontains'] );
+					unset( $compare['on'] );
 					unset( $compare['before'] );
 					unset( $compare['after'] );
 
@@ -104,16 +106,20 @@ function ninja_forms_conditionals_admin_js( $page ){
 					unset( $compare['>'] );
 					unset( $compare['contains'] );
 					unset( $compare['notcontains'] );
+					unset( $compare['on'] );
 					unset( $compare['before'] );
 					unset( $compare['after'] );
 				} else if ( '_text' == $field_type ) {
 					if ( isset ( $field['data']['datepicker'] ) && $field['data']['datepicker'] == 1 ) {
 						$field_type = 'date';
+						unset( $compare['=='] );
+						unset( $compare['!='] );
 						unset( $compare['<'] );
 						unset( $compare['>'] );
 						unset( $compare['contains'] );
 						unset( $compare['notcontains'] );
 					} else {
+						unset( $compare['on'] );
 						unset( $compare['before'] );
 						unset( $compare['after'] );
 					}
@@ -127,22 +133,17 @@ function ninja_forms_conditionals_admin_js( $page ){
 
 		usort( $cl_fields, 'nf_cl_sort_by_label' );
 		
-		$triggers = apply_filters( 'nf_cl_criteria_triggers', array(
-			array( 
-				'id' 			=> 'date_submitted', 
-				'label' 		=> __( 'Date Submitted', 'ninja-forms-conditionals' ), 
-				'type' 			=> 'date', 
-				'compare' 		=> array(
-					'==' 		=> __( 'Equal To', 'ninja-forms-conditionals' ),
-					'!=' 		=> __( 'Not Equal To', 'ninja-forms-conditionals' ),
-					'before'	=> __( 'Before', 'ninja-forms-conditionals' ),
-					'after'		=> __( 'After', 'ninja-forms-conditionals' ),
-				),
-				'conditions'	=> array(
-					'type' 		=> 'text'
-				),
-			),
-		) );
+		$triggers = array();
+
+		foreach ( Ninja_Forms()->cl_triggers as $slug => $trigger ) {
+			$triggers[] = array(
+				'id' 			=> $slug,
+				'label' 		=> $trigger->label,
+				'type'			=> $trigger->type,
+				'compare'		=> $trigger->comparison_operators,
+				'conditions'	=> $trigger->conditions,
+			);
+		}
 
 		$cr_param_groups = apply_filters( 'nf_cl_criteria_param_groups', array(
 			__( 'Triggers', 'ninja-forms-conditionals' ) 	=> $triggers,

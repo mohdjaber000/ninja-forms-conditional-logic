@@ -13,9 +13,9 @@
 abstract class NF_CL_Trigger_Base {
 
 	/**
-	 * @var name - Store our trigger nicename.
+	 * @var label - Store our trigger nicename.
 	 */
-	var $name = '';
+	var $label = '';
 
 	/**
 	 * @var slug - Store our trigger slug.
@@ -28,6 +28,16 @@ abstract class NF_CL_Trigger_Base {
 	var $comparison_operators = array();
 
 	/**
+	 * @var conditions - Store our conditional output. Legacy, will be deprecated in the future.
+	 */
+	var $conditions = array( 'type' => 'text' );
+
+	/**
+	 * @var type - What type of trigger? (Currently, only options are '' and 'date' )
+	 */
+	var $type = '';
+
+	/**
 	 * Get things rolling
 	 */
 	function __construct() {
@@ -38,6 +48,7 @@ abstract class NF_CL_Trigger_Base {
 			'>'				=> __( 'Greater Than', 'ninja-forms-conditionals' ),
 			'contains'		=> __( 'Contains', 'ninja-forms-conditionals' ),
 			'notcontains'	=> __( 'Does Not Contain', 'ninja-forms-conditionals' ),
+			'on'			=> __( 'On', 'ninja-forms-conditionals' ),
 			'before'		=> __( 'Before', 'ninja-forms-conditionals' ),
 			'after'			=> __( 'After', 'ninja-forms-conditionals' ),
 		);
@@ -49,7 +60,7 @@ abstract class NF_CL_Trigger_Base {
 	 * @since 1.2.8
 	 * @return bool
 	 */
-	function compare() {
+	function compare( $value, $compare ) {
 		// This space left intentionally blank.
 	}
 

@@ -234,7 +234,7 @@ function ninja_forms_field_conditional_cr_value_output( $field_id, $x, $y="", $c
 			<?php
 			if( isset( $field_data['list']['options'] ) AND is_array( $field_data['list']['options'] ) ){
 				$i = 0;
-				if ( isset ( $_REQUEST['output_options'] ) && $_REQUEST['output_options'] == 1 ) {
+				if ( ! isset ( $_REQUEST['output_options'] ) || $_REQUEST['output_options'] == 1 ) {
 					foreach( $field_data['list']['options'] as $option ){
 						if( !isset( $field_data['list_show_value'] ) OR $field_data['list_show_value'] == 0 ){
 							$value = $option['label'];

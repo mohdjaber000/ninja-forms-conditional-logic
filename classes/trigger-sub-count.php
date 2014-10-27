@@ -1,6 +1,6 @@
 <?php
 /**
- * Class for the date submitted conditional trigger type. 
+ * Class for the sub count conditional trigger type. 
  *
  * @package     Ninja Forms - Conditional Logic
  * @subpackage  Classes/Triggers
@@ -9,7 +9,7 @@
  * @since       1.2.8
 */
 
-class NF_CL_Date_Submitted_Trigger extends NF_CL_Trigger_Base {
+class NF_CL_Sub_Count_Trigger extends NF_CL_Trigger_Base {
 	/**
 	 * Get things rolling
 	 */
@@ -18,19 +18,15 @@ class NF_CL_Date_Submitted_Trigger extends NF_CL_Trigger_Base {
 		parent::__construct();
 
 		// Set our label and slug.
-		$this->label = __( 'Date Submitted', 'ninja-forms-conditionals' );
-		$this->slug = 'date_submitted';
-
-		// Set our type to date. This will control our "value" output if a user selects this trigger.
-		$this->type = 'date';
+		$this->label = __( 'Number Of Submissions', 'ninja-forms-conditionals' );
+		$this->slug = 'sub_count';
 
 		// Unset the comparison operators we don't want to use for this trigger type.
-		unset( $this->comparison_operators['=='] );
-		unset( $this->comparison_operators['!='] );
-		unset( $this->comparison_operators['<'] );
-		unset( $this->comparison_operators['>'] );
+		unset( $this->comparison_operators['before'] );
+		unset( $this->comparison_operators['after'] );
 		unset( $this->comparison_operators['contains'] );
 		unset( $this->comparison_operators['notcontains'] );
+		unset( $this->comparison_operators['on'] );
 
 		$this->conditions = array( 'type' => 'text' );
 	}
@@ -43,12 +39,13 @@ class NF_CL_Date_Submitted_Trigger extends NF_CL_Trigger_Base {
 	 * @return bool
 	 */
 	function compare( $value, $compare ) {
-		$plugin_settings = nf_get_settings();
-		$date_format = $plugin_settings['date_format'];
+		global $ninja_forms_processing;
 
-		$now = date( $date_format, current_time( 'timestamp' ) );
-		return ninja_forms_conditional_compare( $now, $value, $compare );
+		$form_id = $ninja_forms_processing->get_form_ID();
+		$sub_count = nf_get_sub_count( $form_id );
+
+		return ninja_forms_conditional_compare( $sub_count, $value, $compare );
 	}
 }
 
-return new NF_CL_Date_Submitted_Trigger();
+return new NF_CL_Sub_Count_Trigger();
