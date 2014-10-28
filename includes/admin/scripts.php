@@ -76,7 +76,7 @@ function ninja_forms_conditionals_admin_js( $page ){
 				);
 				$type = $con_value['type'];
 				if ( 'list' == $type ) {
-					if ( is_array ( $field['data']['list']['options'] ) ) {
+					if ( isset ( $field['data']['list']['options'] ) && is_array ( $field['data']['list']['options'] ) ) {
 						$list_options = array();
 						foreach ( $field['data']['list']['options'] as $opt ) {
 							$opt_label = $opt['label'];
@@ -89,8 +89,6 @@ function ninja_forms_conditionals_admin_js( $page ){
 						$con_value = array( 'type' => 'select', 'options' => $list_options );
 					}
 
-					unset( $compare['<'] );
-					unset( $compare['>'] );
 					unset( $compare['contains'] );
 					unset( $compare['notcontains'] );
 					unset( $compare['on'] );
@@ -135,14 +133,16 @@ function ninja_forms_conditionals_admin_js( $page ){
 		
 		$triggers = array();
 
-		foreach ( Ninja_Forms()->cl_triggers as $slug => $trigger ) {
-			$triggers[] = array(
-				'id' 			=> $slug,
-				'label' 		=> $trigger->label,
-				'type'			=> $trigger->type,
-				'compare'		=> $trigger->comparison_operators,
-				'conditions'	=> $trigger->conditions,
-			);
+		if ( isset ( Ninja_Forms()->cl_triggers ) ) {
+			foreach ( Ninja_Forms()->cl_triggers as $slug => $trigger ) {
+				$triggers[] = array(
+					'id' 			=> $slug,
+					'label' 		=> $trigger->label,
+					'type'			=> $trigger->type,
+					'compare'		=> $trigger->comparison_operators,
+					'conditions'	=> $trigger->conditions,
+				);
+			}			
 		}
 
 		$cr_param_groups = apply_filters( 'nf_cl_criteria_param_groups', array(
