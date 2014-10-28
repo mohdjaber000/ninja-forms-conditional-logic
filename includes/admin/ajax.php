@@ -93,3 +93,17 @@ function ninja_forms_change_cr_field(){
 	}
 	die();
 }
+
+function nf_cl_add_criteria() {
+	// Bail if we aren't in the admin.
+	if ( ! is_admin() )
+		return false;
+
+	// Bail if our nonce isn't correct.
+	check_ajax_referer( 'nf_ajax', 'nf_ajax_nonce' );
+
+	echo "HELLO WORLD";
+	die();
+}
+
+add_action('wp_ajax_nf_cl_add_criteria', 'nf_cl_add_criteria');

@@ -12,6 +12,9 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 		$all_fields = $ninja_forms_processing->get_all_fields();
 	}
 
+	if ( ! is_array( $all_fields ) )
+		return false;
+
 	foreach ( $all_fields as $field_id => $user_value ) {
 		if ( isset ( $ninja_forms_loading ) ) {
 			$field = $ninja_forms_loading->get_field_settings( $field_id );
@@ -118,7 +121,6 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
 				switch( $conditional['action'] ){
 					case 'show':
-
 						if( !$pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
@@ -131,11 +133,17 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 									}
 								}							
 							}
-							if ( isset ( $ninja_forms_processing ) ) {
+
+							if ( isset ( $ninja_forms_loading ) ) {
+								if( $field['type'] != '_spam' ){
+									$ninja_forms_loading->update_field_value( $field_id, false );
+								}
+							} else if ( isset ( $ninja_forms_processing ) ) {
 								if( $field['type'] != '_spam' ){
 									$ninja_forms_processing->update_field_value( $field_id, false );
 								}
 							}
+
 						}else{
 							$data['display_style'] = '';
 							$data['visible'] = true;
@@ -234,3 +242,4 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
 add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter', 12 );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );
+add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter', 1000 );

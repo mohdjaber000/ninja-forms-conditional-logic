@@ -159,10 +159,10 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 				?>
 		</select>
 		<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][cr][<?php echo $y;?>][operator]">
-			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>><?php echo _x( '=', 'Translators: label for "is equal"', 'ninja-forms-conditionals' ); ?></option>
-			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>><?php echo _x( '!=', 'Translators: label for "is not"', 'ninja-forms-conditionals' ); ?></option>
-			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><?php echo _x( '<', 'Translators: label for "is smaller"', 'ninja-forms-conditionals' ); ?></option>
-			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>><?php echo _x( '>', 'Translators: label for "is bigger"', 'ninja-forms-conditionals' ); ?></option>
+			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>><?php echo _x( 'Equal To', 'ninja-forms-conditionals' ); ?></option>
+			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>><?php echo _x( 'Not Equal To', 'ninja-forms-conditionals' ); ?></option>
+			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><?php echo _x( 'Less Than', 'ninja-forms-conditionals' ); ?></option>
+			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>><?php echo _x( 'Greater Than', 'ninja-forms-conditionals' ); ?></option>
 		</select>
 		<br /><span id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>_value" class="">
 		<?php
@@ -234,7 +234,7 @@ function ninja_forms_field_conditional_cr_value_output( $field_id, $x, $y="", $c
 			<?php
 			if( isset( $field_data['list']['options'] ) AND is_array( $field_data['list']['options'] ) ){
 				$i = 0;
-				if ( ! isset ( $_REQUEST['field_id'] ) ) {
+				if ( ! isset ( $_REQUEST['output_options'] ) || $_REQUEST['output_options'] == 1 ) {
 					foreach( $field_data['list']['options'] as $option ){
 						if( !isset( $field_data['list_show_value'] ) OR $field_data['list_show_value'] == 0 ){
 							$value = $option['label'];
