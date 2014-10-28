@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.7
+Stable tag: 1.3
 
 License: GPLv2 or later
 
@@ -29,6 +29,22 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.3 (28 October 2014) =
+
+*Features:*
+
+* Conditional Logic now supports conditional notifications.
+* Only show, display, or send a notification when a user submits specific form data.
+
+*Changes:*
+
+* Custom conditional triggers can be added for notifications.
+
+*Bugs:*
+
+* Fixed a bug that caused conditionals based upon other conditional fields to work improperly.
+* Conditionally hidden totals should now be properly removed from the all fields table.
 
 = 1.2.7 (24 July 2014) =
 
