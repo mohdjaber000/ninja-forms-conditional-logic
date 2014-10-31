@@ -159,10 +159,10 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 				?>
 		</select>
 		<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][cr][<?php echo $y;?>][operator]">
-			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>><?php echo _x( 'Equal To', 'ninja-forms-conditionals' ); ?></option>
-			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>><?php echo _x( 'Not Equal To', 'ninja-forms-conditionals' ); ?></option>
-			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><?php echo _x( 'Less Than', 'ninja-forms-conditionals' ); ?></option>
-			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>><?php echo _x( 'Greater Than', 'ninja-forms-conditionals' ); ?></option>
+			<option value="==" <?php if(isset($cr['field']) AND $cr['operator'] == '=='){ echo 'selected';} ?>><?php _e( 'Equal To', 'ninja-forms-conditionals' ); ?></option>
+			<option value="!=" <?php if(isset($cr['field']) AND $cr['operator'] == '!='){ echo 'selected';} ?>><?php _e( 'Not Equal To', 'ninja-forms-conditionals' ); ?></option>
+			<option value="<" <?php if(isset($cr['field']) AND $cr['operator'] == '<'){ echo 'selected';} ?>><?php _e( 'Less Than', 'ninja-forms-conditionals' ); ?></option>
+			<option value=">" <?php if(isset($cr['field']) AND $cr['operator'] == '>'){ echo 'selected';} ?>><?php _e( 'Greater Than', 'ninja-forms-conditionals' ); ?></option>
 		</select>
 		<br /><span id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>_value" class="">
 		<?php
