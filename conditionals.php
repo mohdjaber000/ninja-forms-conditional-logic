@@ -70,6 +70,7 @@ require_once( NINJA_FORMS_CON_DIR."/includes/admin/after-import.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/notifications.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/upgrades/nf-update-notice.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/mp-copy-page.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/functions.php" );
 
 require_once( NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php" );
