@@ -56,7 +56,7 @@ function ninja_forms_field_conditional_output($field_id, $x, $condition = '', $a
 	?>
 		<div id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>" class="ninja-forms-field-<?php echo $field_id;?>-conditional ninja-forms-condition" name="<?php echo $field_id;?>">
 		<div class="ninja-forms-condition-title">
-		<a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_conditional" name="<?php echo $x;?>" class="ninja-forms-field-remove-conditional" title="<?php echo esc_html_e( 'Remove condition', 'ninja-forms-conditionals' ); ?>"><?php echo _x( 'X', 'Translators: remove condition label', 'ninja-forms-conditionals' ); ?></a>
+		<a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_conditional" name="<?php echo $x;?>" class="ninja-forms-field-remove-conditional" title="<?php echo _e( 'Remove condition', 'ninja-forms-conditionals' ); ?>">X</a>
 			<select id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_action" name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][action]" class="ninja-forms-field-conditional-action">
 				<option value=""><?php _e( '-- Action', 'ninja-forms-conditionals' ); ?></option>
 				<?php
@@ -128,7 +128,7 @@ function ninja_forms_field_conditional_cr_output($field_id, $x, $y, $cr = '', $a
 
 	?>
 	<div class="description-wide single-criteria ninja-forms-field-<?php echo $field_id;?>-conditional-<?php echo $x;?>-cr" id="ninja_forms_field_<?php echo $field_id;?>_conditional_<?php echo $x;?>_cr_<?php echo $y;?>">
-		&nbsp;&nbsp; <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_cr" class="ninja-forms-field-remove-cr" name="<?php echo $x;?>" rel="<?php echo $y;?>" title="<?php echo esc_html_e( 'Remove criteria', 'ninja-forms-conditionals' ); ?>"><?php echo _x( 'X', 'Translators: remove criteria label', 'ninja-forms-conditionals' ); ?></a> &rarr;
+		&nbsp;&nbsp; <a href="#" id="ninja_forms_field_<?php echo $field_id;?>_remove_cr" class="ninja-forms-field-remove-cr" name="<?php echo $x;?>" rel="<?php echo $y;?>" title="<?php echo esc_html_e( 'Remove criteria', 'ninja-forms-conditionals' ); ?>">X</a> &rarr;
 		<select name="ninja_forms_field_<?php echo $field_id;?>[conditional][<?php echo $x;?>][cr][<?php echo $y;?>][field]" class="ninja-forms-field-conditional-cr-field" id="ninja_forms_field_<?php echo $field_id;?>_cr_field" title="<?php echo $x;?>_<?php echo $y;?>">
 			<option value=""><?php _e( '-- Field', 'ninja-forms-conditionals' ); ?></option>
 				<?php

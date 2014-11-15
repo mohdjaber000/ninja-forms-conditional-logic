@@ -7,7 +7,7 @@ Version: 1.3
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 Text Domain: ninja-forms-conditionals
-Domain Path: /languages/
+Domain Path: /lang/
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ function ninja_forms_conditionals_load_translations() {
 
 	/** Translations: Secondly, look in plugin's "lang" folder = default */
 	$plugin_dir = trailingslashit( basename( dirname( __FILE__ ) ) );
-	$lang_dir = apply_filters( 'ninja_forms_conditionals_lang_dir', $plugin_dir . 'languages/' );
+	$lang_dir = apply_filters( 'ninja_forms_conditionals_lang_dir', $plugin_dir . 'lang/' );
 	load_plugin_textdomain( $textdomain, FALSE, $lang_dir );
 
 }
