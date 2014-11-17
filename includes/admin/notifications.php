@@ -12,7 +12,7 @@ function nf_cl_notification_settings( $id ) {
 			<th scope="row"><?php _e( 'Conditional Processing', 'ninja-forms-conditionals' ); ?></label></th>
 			<td>
 				<div id="nf_cl_conditions">
-					<a href="#" class="nf-cl-add button-secondary add-condition" style="<?php echo $add_button_style; ?>"><div class="dashicons dashicons-plus-alt"></div> Add</a>
+					<a href="#" class="nf-cl-add button-secondary add-condition" style="<?php echo $add_button_style; ?>"><div class="dashicons dashicons-plus-alt"></div> <?php _e( 'Add', 'ninja-forms-conditionals' ); ?></a>
 				</div>
 			</td>
 		</tr>

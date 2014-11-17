@@ -7,7 +7,17 @@ Version: 1.3
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 Text Domain: ninja-forms-conditionals
-Domain Path: /languages/
+Domain Path: /lang/
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 */
 
 define("NINJA_FORMS_CON_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
@@ -45,7 +55,7 @@ function ninja_forms_conditionals_load_translations() {
 
 	/** Translations: Secondly, look in plugin's "lang" folder = default */
 	$plugin_dir = trailingslashit( basename( dirname( __FILE__ ) ) );
-	$lang_dir = apply_filters( 'ninja_forms_conditionals_lang_dir', $plugin_dir . 'languages/' );
+	$lang_dir = apply_filters( 'ninja_forms_conditionals_lang_dir', $plugin_dir . 'lang/' );
 	load_plugin_textdomain( $textdomain, FALSE, $lang_dir );
 
 }
@@ -60,6 +70,7 @@ require_once( NINJA_FORMS_CON_DIR."/includes/admin/after-import.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/notifications.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/upgrades/nf-update-notice.php" );
+require_once( NINJA_FORMS_CON_DIR."/includes/admin/mp-copy-page.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/functions.php" );
 
 require_once( NINJA_FORMS_CON_DIR."/includes/display/display-conditionals.php" );
@@ -70,10 +81,21 @@ require_once( NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php" );
 function ninja_forms_conditional_compare($param1, $param2, $operator){
 	switch($operator){
 		case "==":
-			return $param1 == $param2;
+			if ( is_array( $param2 ) ) {
+				return in_array( $param1, $param2 );
+			} else {
+				return $param1 == $param2;
+			}
 		case "!=":
-			//return true;
-			return $param1 != $param2;
+			if ( is_array( $param2 ) ) {
+				if ( in_array( $param1, $param2 ) ) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return $param1 != $param2;
+			}
 		case "<":
 			return $param1 < $param2;
 		case ">":
