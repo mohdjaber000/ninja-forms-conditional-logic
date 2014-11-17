@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 License: GPLv2 or later
 
@@ -29,6 +29,15 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.3.1 (17 November 2014) =
+
+*Bugs:*
+
+* Fixing bad domain/translation issues.
+* Fixed a bug with checkbox lists and notification conditions.
+* Duplicating a page with conditions using multi-part forms should now properly duplicate those conditions.
+* Fixed several issues related to i18n.
 
 = 1.3 (28 October 2014) =
 
