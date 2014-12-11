@@ -411,11 +411,11 @@ jQuery(document).ready(function($) {
 			$("#ninja_forms_field_" + field_id + "_conditional_" + x + "_cr_" + y + "_value").prop("innerHTML", "");
 		}
 	});
-	
-}); //Document.ready();
 
-function ninja_forms_serialize_data( field_id ){
-	var data = $('input[name^=ninja_forms_field_' + field_id + ']');
-	var field_data = jQuery(data).serializeFullArray();
-	return field_data;
-}
+	function ninja_forms_serialize_data( field_id ){
+		var data = $('input[name^=ninja_forms_field_' + field_id + ']');
+		var field_data = jQuery(data).serializeFullArray();
+		return field_data;
+	}
+
+}); //Document.ready();
