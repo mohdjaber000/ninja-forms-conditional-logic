@@ -418,4 +418,11 @@ jQuery(document).ready(function($) {
 		return field_data;
 	}
 
+	// When we add a new field, add the new field to any conditional criterion we have.
+	$( document ).on( 'addField.clAdd', function( e, response ) {
+		$(".ninja-forms-field-conditional-cr-field").each(function(){
+			$(this).append('<option value="' + response.new_id + '">' + response.new_type + '</option>');
+		});
+	});
+
 }); //Document.ready();

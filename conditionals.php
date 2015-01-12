@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Ninja Forms - Conditionals
+Plugin Name: Ninja Forms - Conditional Logic
 Plugin URI: http://ninjaforms.com
 Description: Conditional form logic add-on for Ninja Forms.
 Version: 1.3.1

@@ -40,6 +40,8 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
 						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
 							$con_value = $con_value['label'];
+						} else {
+							$con_value = $con_value['value'];
 						}
 					}
 				}
@@ -114,6 +116,8 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
 						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
 							$con_value = $con_value['label'];
+						} else {
+							$con_value = $con_value['value'];
 						}
 					}
 				}
