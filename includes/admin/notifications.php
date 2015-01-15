@@ -96,7 +96,16 @@ function nf_cl_notification_settings( $id ) {
 				%>
 				<select name="<%= cr_name %>[value]">
 					<%
-					_.each( param.conditions.options, function( opt ) {
+					_.each( param.conditions.options, function( opt, key ) {
+						// If we don't have an opt.value, then use the opt var.
+						if ( 'undefined' == typeof opt.value ) {
+							var v = opt;
+							var l = key;
+							opt = {};
+							opt.label = l;
+							opt.value = v;
+						}
+
 						if ( value == opt.value ) {
 							var selected = 'selected="selected"';
 						} else {
