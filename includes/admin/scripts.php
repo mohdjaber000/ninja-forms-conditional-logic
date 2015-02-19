@@ -3,7 +3,7 @@ add_action( 'admin_enqueue_scripts', 'ninja_forms_conditionals_admin_js', 10, 2 
 function ninja_forms_conditionals_admin_js( $page ){
 	global $ninja_forms_fields;
 
-	if( isset( $_REQUEST['page'] ) AND $_REQUEST['page'] == 'ninja-forms' ){
+	if( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'ninja-forms' && isset ( $_REQUEST['tab'] ) && $_REQUEST['tab'] != '' ){
 
 		$form_id = isset ( $_REQUEST['form_id'] ) ? $_REQUEST['form_id'] : '';
 
