@@ -6,7 +6,7 @@
 }
 
 #ninja-forms-conditionals {
-	/*border: 1px solid #ccc;*/
+	border: 1px solid #ccc;
 	border-radius: 5px;
 	clear: both;
 	float: none;
@@ -14,7 +14,7 @@
 }
 
 #ninja-forms-conditionals .label {
-/*	background: #ccc;*/
+	background: #ccc;
 	display: block;
 }
 

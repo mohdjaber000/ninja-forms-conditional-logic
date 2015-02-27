@@ -1,16 +1,7 @@
 <?php
-
-function nf_add_cl_edit_field_section( $sections ) {
-	$sections['cl'] = __( 'Conditional Logic Settings', 'ninja-forms-conditionals' );
-	return $sections;
-}
-
-add_filter( 'nf_edit_field_settings_sections', 'nf_add_cl_edit_field_section' );
-
-
 add_action('init', 'ninja_forms_register_edit_field_conditional', 999);
 function ninja_forms_register_edit_field_conditional(){
-	add_action('nf_edit_field_cl', 'ninja_forms_edit_field_conditional', 11);
+	add_action('ninja_forms_edit_field_after_registered', 'ninja_forms_edit_field_conditional', 11);
 }
 
 function ninja_forms_edit_field_conditional($field_id){
@@ -26,11 +17,10 @@ function ninja_forms_edit_field_conditional($field_id){
 
 		<div id="ninja-forms-conditionals">
 		<span class="label">
-			<a href="#" id="ninja_forms_field_<?php echo $field_id;?>_add_conditional" class="ninja-forms-field-add-conditional button-secondary"><?php _e( 'Add Conditional Statement', 'ninja-forms-conditionals' ); ?></a>
+			<?php _e( 'Conditional Statements', 'ninja-forms-conditionals' ); ?> - <a href="#" name="" id="ninja_forms_field_<?php echo $field_id;?>_add_conditional" class="ninja-forms-field-add-conditional"><?php _e( 'Add Conditional Statement', 'ninja-forms-conditionals' ); ?></a>
 		</span>
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[conditional]" value="">
 		<div id="ninja_forms_field_<?php echo $field_id;?>_conditionals" class="" name="">
-			
 		<?php
 			if(isset($field_data['conditional']) AND is_array($field_data['conditional'])){
 				$x = 0;

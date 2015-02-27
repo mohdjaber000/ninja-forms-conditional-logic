@@ -61,11 +61,20 @@ function ninja_forms_conditionals_load_translations() {
 }
 add_action( 'plugins_loaded', 'ninja_forms_conditionals_load_translations' );
 
-require_once( NINJA_FORMS_CON_DIR."/classes/trigger-base.php" );
+// Get our current Ninja Forms plugin version.
+$plugin_settings = get_option( 'ninja_forms_settings' );
+$nf_plugin_version = isset( $plugin_settings['version'] ) ? $plugin_settings['version'] : '';
 
+if ( version_compare ( $nf_plugin_version, '2.9', '<' ) ) { // If our current version of Ninja Forms is before 2.9, include our deprecated files.
+	require_once( NINJA_FORMS_CON_DIR."/includes/deprecated/scripts.php" );
+	require_once( NINJA_FORMS_CON_DIR."/includes/deprecated/register-edit-field-section.php" );
+} else {
+	require_once( NINJA_FORMS_CON_DIR."/includes/admin/scripts.php" );
+	require_once( NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php" );
+}
+
+require_once( NINJA_FORMS_CON_DIR."/classes/trigger-base.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/ajax.php" );
-require_once( NINJA_FORMS_CON_DIR."/includes/admin/register-edit-field-section.php" );
-require_once( NINJA_FORMS_CON_DIR."/includes/admin/scripts.php" ); 
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/after-import.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/view-subs-header-filter.php" );
 require_once( NINJA_FORMS_CON_DIR."/includes/admin/notifications.php" );
