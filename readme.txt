@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 4.1.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 License: GPLv2 or later
 
@@ -30,7 +30,7 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Changelog ==
 
-= 1.3.2 (27 February 2015) =
+= 1.3.3 (27 February 2015) =
 
 *Changes:*
 
