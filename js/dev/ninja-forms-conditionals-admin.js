@@ -423,6 +423,17 @@ jQuery(document).ready(function($) {
 		$(".ninja-forms-field-conditional-cr-field").each(function(){
 			$(this).append('<option value="' + response.new_id + '">' + response.new_type + '</option>');
 		});
-	});
+	} );
+
+	// When we remove a field, update our conditions
+	$( document ).on( 'removeField.clRemove', function( e, field_id ) {
+		$( '.ninja-forms-field-conditional-cr-field' ).each( function() {
+			$( this ).children( 'option' ).each( function() {
+				if( this.value == field_id ) {
+					$( this ).remove();
+				}
+			});
+		});
+	} );
 
 }); //Document.ready();
