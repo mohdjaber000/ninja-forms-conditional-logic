@@ -411,11 +411,29 @@ jQuery(document).ready(function($) {
 			$("#ninja_forms_field_" + field_id + "_conditional_" + x + "_cr_" + y + "_value").prop("innerHTML", "");
 		}
 	});
-	
-}); //Document.ready();
 
-function ninja_forms_serialize_data( field_id ){
-	var data = $('input[name^=ninja_forms_field_' + field_id + ']');
-	var field_data = jQuery(data).serializeFullArray();
-	return field_data;
-}
+	function ninja_forms_serialize_data( field_id ){
+		var data = $('input[name^=ninja_forms_field_' + field_id + ']');
+		var field_data = jQuery(data).serializeFullArray();
+		return field_data;
+	}
+
+	// When we add a new field, add the new field to any conditional criterion we have.
+	$( document ).on( 'addField.clAdd', function( e, response ) {
+		$(".ninja-forms-field-conditional-cr-field").each(function(){
+			$(this).append('<option value="' + response.new_id + '">' + response.new_type + '</option>');
+		});
+	} );
+
+	// When we remove a field, update our conditions
+	$( document ).on( 'removeField.clRemove', function( e, field_id ) {
+		$( '.ninja-forms-field-conditional-cr-field' ).each( function() {
+			$( this ).children( 'option' ).each( function() {
+				if( this.value == field_id ) {
+					$( this ).remove();
+				}
+			});
+		});
+	} );
+
+}); //Document.ready();

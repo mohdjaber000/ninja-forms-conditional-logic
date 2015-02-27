@@ -96,7 +96,16 @@ function nf_cl_notification_settings( $id ) {
 				%>
 				<select name="<%= cr_name %>[value]">
 					<%
-					_.each( param.conditions.options, function( opt ) {
+					_.each( param.conditions.options, function( opt, key ) {
+						// If we don't have an opt.value, then use the opt var.
+						if ( 'undefined' == typeof opt.value ) {
+							var v = opt;
+							var l = key;
+							opt = {};
+							opt.label = l;
+							opt.value = v;
+						}
+
 						if ( value == opt.value ) {
 							var selected = 'selected="selected"';
 						} else {
@@ -232,9 +241,10 @@ function nf_cl_notification_process( $id ) {
 				$pass_array[] = Ninja_Forms()->cl_triggers[ $param ]->compare( $value, $compare );
 			} else {
 				$user_value = $ninja_forms_processing->get_field_value( $param );
-				$pass_array[] = ninja_forms_conditional_compare( $value, $user_value, $compare );				
+				$pass_array[] = ninja_forms_conditional_compare( $user_value, $value, $compare );
 			}
 		}
+
 		// Check our connector. If it is set to "all", then all our criteria have to match.
 		if ( 'and' == $connector ) {
 			$pass = true;

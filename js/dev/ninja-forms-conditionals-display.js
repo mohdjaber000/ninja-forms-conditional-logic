@@ -163,6 +163,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 	}
 
 	for (i = 0; i < conditional_length; i++){
+		if ( typeof cond[i] === 'undefined' ) continue;
 		var action = cond[i]['action'];
 		value = value_array[i];
 		if ( action == 'add_value' ) {
@@ -474,6 +475,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				if(typeof value.value === "undefined" || value.value == "_ninja_forms_no_value"){
 					value.value = value.label;
 				}
+				var form_id = ninja_forms_get_form_id( jQuery("#ninja_forms_field_" + target_field ) );
+				window['ninja_forms_form_' + form_id + '_calc_settings'].calc_value[ target_field ][ value.value ] = value.calc;
 
 				if(input_type == "dropdown" || input_type == "multi"){
 					if(pass){

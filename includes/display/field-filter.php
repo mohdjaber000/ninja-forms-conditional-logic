@@ -26,6 +26,11 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 		$field['data']['req_added'] = 1;
 
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
+		
+		// We don't want to use the default value if we are on a calc field.
+		if ( $field['type'] == '_calc' ) {
+			$data['default_value'] = 0;
+		}
 
 		$x = 0;
 		$display_style = '';
@@ -40,6 +45,8 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
 						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
 							$con_value = $con_value['label'];
+						} else {
+							$con_value = $con_value['value'];
 						}
 					}
 				}
@@ -114,6 +121,8 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 					if ( isset ( $con_value['value'] ) and isset ( $con_value['label'] ) ) {
 						if ( $con_value['value'] == '_ninja_forms_no_value' ) {
 							$con_value = $con_value['label'];
+						} else {
+							$con_value = $con_value['value'];
 						}
 					}
 				}
@@ -240,6 +249,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 	}
 }
 
+add_action( 'ninja_forms_display_pre_init', 'ninja_forms_conditionals_field_filter', 75 );
 add_action( 'ninja_forms_display_init', 'ninja_forms_conditionals_field_filter', 12 );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter' );
 add_action( 'ninja_forms_pre_process', 'ninja_forms_conditionals_field_filter', 1000 );
