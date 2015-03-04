@@ -362,19 +362,45 @@ jQuery(document).ready(function($) {
 		var field_value = this.value;
 		
 		if(this.value != ''){
-			$.post(ajaxurl, { field_id: field_id, field_value: field_value, x: x, y: y, output_options: 0, action:"ninja_forms_change_cr_field"}, function(response){
+			$.post(ajaxurl, { field_id: field_id, field_value: field_value, x: x, y: y, output_options: 1, action:"ninja_forms_change_cr_field"}, function(response){
 				$("#ninja_forms_field_" + field_id + "_conditional_" + x + "_cr_" + y + "_value").prop("innerHTML", response.new_html);
 				if(response.new_type == 'list'){
-					$(".ninja-forms-field-" + field_value + "-list-option").each(function(){
-						var label = $(this).find(".ninja-forms-field-list-option-label").val();
-						if($("#ninja_forms_field_" + field_value + "_list_show_value").prop("checked") == true){
-							var value = $(this).find(".ninja-forms-field-list-option-value").val();
-						}else{
-							var value = label;
+					// Check our field model to see if we have any collapsed list options that may have changed.
+					var target_field = nfFields.get( field_value );
+
+					if ( 'undefined' !== typeof target_field.get( 'list' ) ) {
+						if ( 'undefined' !== target_field.get( 'list' ).options ) {
+							var i = 0;
+							$('select[name="ninja_forms_field_' + field_id + '\\[conditional\\]\\[' + x + '\\]\\[cr\\]\\[' + y + '\\]\\[value\\]"]').find( 'option' ).remove().end();
+							_.each( target_field.get( 'list' ).options, function( option ) {
+								var label = option.label;
+								var value = option.value;
+								var calc = option.calc;
+								if ( 0 == target_field.get( 'list_show_value' ) ) {
+									value = label;
+								}
+								$('select[name="ninja_forms_field_' + field_id + '\\[conditional\\]\\[' + x + '\\]\\[cr\\]\\[' + y + '\\]\\[value\\]"]').append('<option value="' + value + '" title="' + i + '">' + label + '</option>');		
+								i++;
+							} );
 						}
-						var i = this.id.replace("ninja_forms_field_" + field_value + "_list_option_", "");
-						$('select[name="ninja_forms_field_' + field_id + '\\[conditional\\]\\[' + x + '\\]\\[cr\\]\\[' + y + '\\]\\[value\\]"]').append('<option value="' + value + '" title="' + i + '">' + label + '</option>');
-					});
+					}
+
+					if ( $(".ninja-forms-field-" + field_value + "-list-option").length > 0 ) {
+						$('select[name="ninja_forms_field_' + field_id + '\\[conditional\\]\\[' + x + '\\]\\[cr\\]\\[' + y + '\\]\\[value\\]"]').find( 'option' ).remove().end();
+						$(".ninja-forms-field-" + field_value + "-list-option").each(function(){
+							var label = $(this).find(".ninja-forms-field-list-option-label").val();
+							if($("#ninja_forms_field_" + field_value + "_list_show_value").prop("checked") == true){
+								var value = $(this).find(".ninja-forms-field-list-option-value").val();
+							}else{
+								var value = label;
+							}
+							var i = this.id.replace("ninja_forms_field_" + field_value + "_list_option_", "");
+							$('select[name="ninja_forms_field_' + field_id + '\\[conditional\\]\\[' + x + '\\]\\[cr\\]\\[' + y + '\\]\\[value\\]"]').append('<option value="' + value + '" title="' + i + '">' + label + '</option>');
+						});
+					}
+
+
+
 				}
 			});
 		}else{
