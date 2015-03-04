@@ -186,6 +186,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 		
 		if(action == 'show'){
 			if(pass){
+
 				var was_visible = jQuery( "#ninja_forms_field_" + target_field + "_div_wrap" ).data( "visible" );
 				//var was_visible = jQuery("#ninja_forms_field_" + target_field + "_div_wrap").is(":visible");
 				jQuery("#ninja_forms_field_" + target_field + "_div_wrap").show(10, function(e){ jQuery(document).triggerHandler('ninja_forms_conditional_show'); });
@@ -476,8 +477,10 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					value.value = value.label;
 				}
 				var form_id = ninja_forms_get_form_id( jQuery("#ninja_forms_field_" + target_field ) );
-				window['ninja_forms_form_' + form_id + '_calc_settings'].calc_value[ target_field ][ value.value ] = value.calc;
-
+				if ( typeof window['ninja_forms_form_' + form_id + '_calc_settings'].calc_value[ target_field ] !== 'undefined' ) {
+					window['ninja_forms_form_' + form_id + '_calc_settings'].calc_value[ target_field ][ value.value ] = value.calc;
+				}
+				
 				if(input_type == "dropdown" || input_type == "multi"){
 					if(pass){
 						var current_count = jQuery("#ninja_forms_field_" + target_field + " option[value='" + value.value + "']").length;
