@@ -110,13 +110,13 @@ function ninja_forms_conditional_compare($param1, $param2, $operator){
 		case ">":
 			return $param1 > $param2;
 		case "contains":
-			if ( stripos ( $param2, $param1 ) !== false ) {
+			if ( stripos ( $param1, $param2 ) !== false ) {
 				return true;
 			} else {
 				return false;
 			}
 		case "notcontains":
-			if ( stripos ( $param2, $param1 ) === false ) {
+			if ( stripos ( $param1, $param2 ) === false ) {
 				return true;
 			} else {
 				return false;
