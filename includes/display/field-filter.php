@@ -149,13 +149,23 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 								}
 							} else if ( isset ( $ninja_forms_processing ) ) {
 								if( $field['type'] != '_spam' ){
+                                    $user_value = $ninja_forms_processing->get_field_value( $field_id );
 									$ninja_forms_processing->update_field_value( $field_id, false );
+                                    $ninja_forms_processing->update_extra_value( '_' . $field_id, $user_value);
 								}
 							}
 
 						}else{
 							$data['display_style'] = '';
 							$data['visible'] = true;
+
+                            if ( isset ( $ninja_forms_processing ) ) {
+                                if( $field['type'] != '_spam' ){
+                                    $user_value = $ninja_forms_processing->get_extra_value( '_' . $field_id );
+                                    $ninja_forms_processing->update_field_value( $field_id, $user_value );
+                                }
+                            }
+
 						}
 						break;
 					case 'hide':
