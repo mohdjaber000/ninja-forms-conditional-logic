@@ -194,6 +194,12 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 					case 'change_value':
 						if( $pass ){
 							$data['default_value'] = $conditional['value'];
+
+							if ( isset ( $ninja_forms_loading ) ) {
+								$ninja_forms_loading->update_field_value( $field_id, $conditional['value'] );
+							} else if ( isset ( $ninja_forms_processing ) ) {
+								$ninja_forms_processing->update_field_value( $field_id, $conditional['value'] );
+							}
 						}
 						break;
 					case 'add_value':
