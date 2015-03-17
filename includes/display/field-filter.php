@@ -23,7 +23,7 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 		}
 
 		// Quick and dirty way of cleaning up the label for required elements with inside label positions
-		$field['data']['req_added'] = 1;
+        //$field['data']['req_added'] = 1;
 
 		$data = apply_filters( 'ninja_forms_field', $field['data'], $field_id );
 		
