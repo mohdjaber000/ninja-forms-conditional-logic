@@ -18,7 +18,7 @@ function ninja_forms_conditionals_display_js( $form_id ){
 		}
 
 		wp_enqueue_script( 'ninja-forms-conditionals-display',
-			NINJA_FORMS_CON_URL . '/js/' . $src .'/ninja-forms-conditionals-display' . $suffix . '.js',
+			NINJA_FORMS_CON_URL . '/js/' . $src .'/ninja-forms-conditionals-display' . $suffix . '.js?nf_ver=' . NINJA_FORMS_CON_VERSION,
 			array( 'jquery', 'ninja-forms-display' ) );
 
 		wp_localize_script( 'ninja-forms-conditionals-display', 'ninja_forms_form_'.$form_id.'_conditionals_settings', array( 'conditionals' => $conditionals ) );
