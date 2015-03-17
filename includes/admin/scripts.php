@@ -157,6 +157,6 @@ function ninja_forms_conditionals_admin_js( $page ){
 add_action( 'admin_enqueue_scripts', 'ninja_forms_conditionals_admin_css' );
 function ninja_forms_conditionals_admin_css(){
 	if( isset( $_REQUEST['page'] ) AND $_REQUEST['page'] == 'ninja-forms' ){
-		wp_enqueue_style('ninja-forms-conditionals-admin', NINJA_FORMS_CON_URL .'/css/ninja-forms-conditionals-admin.css', array( 'ninja-forms-admin' ) );
+		wp_enqueue_style('ninja-forms-conditionals-admin', NINJA_FORMS_CON_URL .'/css/ninja-forms-conditionals-admin.css?nf_ver=' . NINJA_FORMS_CON_VERSION, array( 'ninja-forms-admin' ) );
 	}
 }

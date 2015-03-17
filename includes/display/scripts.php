@@ -29,6 +29,6 @@ function ninja_forms_conditionals_display_js( $form_id ){
 function ninja_forms_conditionals_display_css( $form_id ){
 	$conditionals = ninja_forms_display_conditionals( $form_id );
 	if( !empty( $conditionals ) ){
-		wp_enqueue_style('ninja-forms-conditionals-display', NINJA_FORMS_CON_URL .'/css/ninja-forms-conditionals-display.css');
+		wp_enqueue_style('ninja-forms-conditionals-display', NINJA_FORMS_CON_URL .'/css/ninja-forms-conditionals-display.css?nf_ver=' . NINJA_FORMS_CON_VERSION );
 	}
 }
