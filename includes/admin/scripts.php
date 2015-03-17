@@ -16,7 +16,7 @@ function ninja_forms_conditionals_admin_js( $page ){
 		}
 
 		wp_enqueue_script( 'nf-cl-admin',
-			NINJA_FORMS_CON_URL .'/js/' . $src . '/ninja-forms-conditionals-admin' . $suffix . '.js',
+			NINJA_FORMS_CON_URL .'/js/' . $src . '/ninja-forms-conditionals-admin' . $suffix . '.js?nf_ver=' . NINJA_FORMS_CON_VERSION,
 			array( 'jquery', 'ninja-forms-admin', 'backbone', 'underscore' ) );
 
 		if ( empty ( $form_id ) )
