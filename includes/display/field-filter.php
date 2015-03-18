@@ -161,8 +161,11 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 
                             if ( isset ( $ninja_forms_processing ) ) {
                                 if( $field['type'] != '_spam' ){
+                                    $current_value = $ninja_forms_processing->get_field_value( $field_id );
                                     $user_value = $ninja_forms_processing->get_extra_value( '_' . $field_id );
-                                    $ninja_forms_processing->update_field_value( $field_id, $user_value );
+                                    if ( ! $current_value && $user_value  ) {
+                                        $ninja_forms_processing->update_field_value($field_id, $user_value);
+                                    }
                                 }
                             }
 
