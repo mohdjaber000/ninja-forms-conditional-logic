@@ -19,18 +19,18 @@ function nf_cl_notification_settings( $id ) {
 	</tbody>
 
 	<script type="text/html" id="tmpl-nf-cl-condition">
-		<div id="nf_cl_condition_<%= cond_id %>" class="nf-cl-condition" name=""><!-- Opening Conditional Logic Div -->
+		<div id="nf_cl_condition_<#= cond_id #>" class="nf-cl-condition" name=""><!-- Opening Conditional Logic Div -->
 			<div class="nf-cl-condition-title">
-				<select id="" name="conditions[<%= cond_id %>][action]" class="nf-cl-conditional-action">
-					<option value="process" <% if ( 'process' == action ) { %> selected="selected" <% } %>><?php _e( 'Process This', 'ninja-forms-conditionals' ); ?></option>
-					<option value="noprocess" <% if ( 'noprocess' == action ) { %> selected="selected" <% } %>><?php _e( 'Do Not Process This', 'ninja-forms-conditionals' ); ?></option>
+				<select id="" name="conditions[<#= cond_id #>][action]" class="nf-cl-conditional-action">
+					<option value="process" <# if ( 'process' == action ) { #> selected="selected" <# } #>><?php _e( 'Process This', 'ninja-forms-conditionals' ); ?></option>
+					<option value="noprocess" <# if ( 'noprocess' == action ) { #> selected="selected" <# } #>><?php _e( 'Do Not Process This', 'ninja-forms-conditionals' ); ?></option>
 				</select>
 				<?php _e( 'If', 'ninja-forms-conditionals' ); ?>
-				<select name="conditions[<%= cond_id %>][connector]">
-					<option value="and" <% if ( 'and' == connector ) { %> selected="selected" <% } %>><?php _e( 'All', 'ninja-forms-conditionals' ); ?></option>
-					<option value="or" <% if ( 'or' == connector ) { %> selected="selected" <% } %>><?php _e( 'Any', 'ninja-forms-conditionals' ); ?></option>
+				<select name="conditions[<#= cond_id #>][connector]">
+					<option value="and" <# if ( 'and' == connector ) { #> selected="selected" <# } #>><?php _e( 'All', 'ninja-forms-conditionals' ); ?></option>
+					<option value="or" <# if ( 'or' == connector ) { #> selected="selected" <# } #>><?php _e( 'Any', 'ninja-forms-conditionals' ); ?></option>
 				</select>
-				<?php _e( 'of the following criteria are met', 'ninja-forms-conditionals' ); ?>: <a href="#" id="" name="" class="button-secondary nf-cl-add add-cr" data-cond-id="<%= cond_id %>"><div class="dashicons dashicons-plus-alt" data-cond-id="<%= cond_id %>"></div><span class="spinner" style="float:left;"></span> <?php _e( 'Add Criteria', 'ninja-forms-conditionals' ); ?></a>
+				<?php _e( 'of the following criteria are met', 'ninja-forms-conditionals' ); ?>: <a href="#" id="" name="" class="button-secondary nf-cl-add add-cr" data-cond-id="<#= cond_id #>"><div class="dashicons dashicons-plus-alt" data-cond-id="<#= cond_id #>"></div><span class="spinner" style="float:left;"></span> <?php _e( 'Add Criteria', 'ninja-forms-conditionals' ); ?></a>
 				<a href="#" class="nf-cl-delete delete-condition" style=""><div class="dashicons dashicons-dismiss"></div></a>
 			</div>
 			<div id="" class="nf-cl-criteria"></div>
@@ -38,30 +38,30 @@ function nf_cl_notification_settings( $id ) {
 	</script>
 
 	<script type="text/html" id="tmpl-nf-cl-criteria">
-		<div class="single-criteria" id="<%= div_id %>">
+		<div class="single-criteria" id="<#= div_id #>">
 			<a href="#" class="nf-cl-delete delete-cr" style=""><div class="dashicons dashicons-dismiss"></div></a>
-			<select name="<%= cr_name %>[param]" class="cr-param" id="" title="" data-cr-id="<%= cr_id %>" data-num="<%= num %>" data-cond-id="<%= cond_id %>">
+			<select name="<#= cr_name #>[param]" class="cr-param" id="" title="" data-cr-id="<#= cr_id #>" data-num="<#= num #>" data-cond-id="<#= cond_id #>">
 				<option value="">-- <?php _e( 'Select One', 'ninja-forms-conditionals' ); ?></option>
-				<%
+				<#
 				_.each( param_groups, function( params, group_label ) {
-					%>
-					<optgroup label="<%= group_label %>">
-						<%
+					#>
+					<optgroup label="<#= group_label #>">
+						<#
 						_.each( params, function( param ) {
 							if ( selected_param == param.id ) {
 								var selected = 'selected="selected"';
 							} else {
 								var selected = '';
 							}
-							%>
-							<option value="<%= param.id %>" <%= selected %>><%= param.label %></option>
-							<%
+							#>
+							<option value="<#= param.id #>" <#= selected #>><#= param.label #></option>
+							<#
 						})
-						%>
+						#>
 					</optgroup>
-					<%
+					<#
 				});
-				%>
+				#>
 			</select>
 			<span class="cr-compare"></span>
 			<span class="cr-value"></span>
@@ -69,33 +69,33 @@ function nf_cl_notification_settings( $id ) {
 	</script>
 
 	<script type="text/html" id="tmpl-nf-cl-criteria-compare">
-		<select name="<%= cr_name %>[compare]">
-			<%
+		<select name="<#= cr_name #>[compare]">
+			<#
 			var param = nf_cl.getParam( selected_param );
 			if ( param !== null ) {
 				_.each( param.compare, function( value, key ) {
-					%>
-					<option value="<%= key %>" <% if ( compare == key ) { %>selected="selected"<% }  %>><%= value %></option>
-					<%
+					#>
+					<option value="<#= key #>" <# if ( compare == key ) { #>selected="selected"<# }  #>><#= value #></option>
+					<#
 				} );
 			}
-			%>
+			#>
 		</select>
 	</script>	
 
 	<script type="text/html" id="tmpl-nf-cl-criteria-value">
-		<%
+		<#
 		var param = nf_cl.getParam( selected_param );
 		if ( param !== null ) {
 			var type = param.conditions.type;
 			if ( type == 'text' ) {
-				%>
-				<input type="text" name="<%= cr_name %>[value]" value="<%= value %>">
-				<%
+				#>
+				<input type="text" name="<#= cr_name #>[value]" value="<#= value #>">
+				<#
 			} else if ( type == 'select' ) {
-				%>
-				<select name="<%= cr_name %>[value]">
-					<%
+				#>
+				<select name="<#= cr_name #>[value]">
+					<#
 					_.each( param.conditions.options, function( opt, key ) {
 						// If we don't have an opt.value, then use the opt var.
 						if ( 'undefined' == typeof opt.value ) {
@@ -111,20 +111,20 @@ function nf_cl_notification_settings( $id ) {
 						} else {
 							var selected = '';
 						}
-						%>
-						<option value="<%= opt.value %>" <%= selected %>><%= opt.label %></option>
-						<%
+						#>
+						<option value="<#= opt.value #>" <#= selected #>><#= opt.label #></option>
+						<#
 					});
-					%>
+					#>
 				</select>
-				<%
+				<#
 			} else if ( type == 'textarea' ) {
-				%>
-				<textarea name="<%= cr_name %>[value]" style="vertical-align:top"><%= value %></textarea>
-				<%
+				#>
+				<textarea name="<#= cr_name #>[value]" style="vertical-align:top"><#= value #></textarea>
+				<#
 			}
 		}
-		%>
+		#>
 	</script>
 
 	<?php

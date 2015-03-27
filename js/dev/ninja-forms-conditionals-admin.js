@@ -1,3 +1,10 @@
+// We don't want to use the default <% %> tags because of PHP servers using ASP-like tags.
+// Instead, we will use <# #> in our templates.
+_.templateSettings = {
+  evaluate    : /<#([\s\S]+?)#>/g,
+  interpolate : /<#=([\s\S]+?)#>/g
+};
+
 jQuery(document).ready(function($) {
 	// Function that searches our criteria params object for an id.
 	nf_cl.getParam = function( param_id ) {
