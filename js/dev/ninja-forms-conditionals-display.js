@@ -114,13 +114,13 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 				//cr_visible = jQuery("#ninja_forms_field_" + cr_field).is(":visible");
 			}
 
-			if(is_numeric(field_value)){
-				field_value = parseInt(field_value);
-			}
+            if(is_numeric(field_value)){
+                field_value = ( field_value % 1 === 0 ) ? parseInt(field_value) : parseFloat(field_value);
+            }
 
-			if(is_numeric(cr_value)){
-				cr_value = parseInt(cr_value);
-			}
+            if(is_numeric(cr_value)){
+                cr_value = ( cr_value % 1 === 0 ) ? parseInt(cr_value) : parseFloat(cr_value);
+            }
 
 			var tmp = ninja_forms_conditional_compare(field_value, cr_value, cr_operator);
 
