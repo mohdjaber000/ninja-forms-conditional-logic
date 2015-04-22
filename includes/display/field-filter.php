@@ -133,7 +133,15 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 						if( !$pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
-							$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+
+                            if( isset( $data['class'] ) ) {
+                                // Append to class list, with leading comma
+                                $data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+                            } else {
+                                // Create class list, without leading comma
+                                $data['class'] = 'ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+                            }
+
 							// Set our $calc to 0 if we're dealing with a list field.
 							if ( $field['type'] == '_list' ) {
 								if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
@@ -175,7 +183,16 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 						if( $pass ){
 							$data['display_style'] = 'display:none;';
 							$data['visible'] = false;
-							$data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+
+                            if ( isset( $data['class'] ) ) {
+                                // Append to class list, with leading comma
+                                $data['class'] .= ',ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+                            } else {
+                                // Create class list, without leading comma
+                                $data['class'] = 'ninja-forms-field-calc-no-new-op,ninja-forms-field-calc-no-old-op';
+                            }
+
+
 							// Set our $calc to 0 if we're dealing with a list field.
 							if ( $field['type'] == '_list' ) {
 								if ( isset ( $data['list']['options'] ) AND is_array ( $data['list']['options'] ) ) {
