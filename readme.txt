@@ -2,9 +2,9 @@
 Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
-Requires at least: 3.3
-Tested up to: 4.1.1
-Stable tag: 1.3.7
+Requires at least: 1.0
+Tested up to: 4.2.1
+Stable tag: 1.3.8
 
 License: GPLv2 or later
 
@@ -29,6 +29,15 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.3.8 (12 May 2015) =
+
+*Bugs:*
+
+* Array elements should now work properly with the "Contains" action conditionals.
+* Fixed a PHP Notice.
+* Decimals should now be compared properly.
+* Fixed a bug that could cause a PHP error if asp style tags are enabled in PHP.
 
 = 1.3.7 (18 March 2015) =
 
