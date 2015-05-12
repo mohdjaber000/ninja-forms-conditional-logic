@@ -370,6 +370,7 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 					var checked_now = jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked");
 					if(pass){
 						jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked", true);
+                        console.log("test");
 					}else{
 						jQuery("[name='ninja_forms_field_" + target_field + "\\[\\]'][value='" + value + "']").prop("checked", false);
 					}
@@ -381,6 +382,8 @@ function ninja_forms_conditional_change(element, target_field, action_value){
 						}else if(value == 'unchecked'){
 							jQuery("#ninja_forms_field_" + target_field).prop("checked", false);					
 						}
+                        // Manually trigger change
+                        jQuery("#ninja_forms_field_" + target_field).trigger( "change" );
 					}						
 				}
 
