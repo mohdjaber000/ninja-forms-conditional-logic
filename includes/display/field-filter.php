@@ -262,7 +262,10 @@ function ninja_forms_conditionals_field_filter( $form_id ){
 			if ( isset ( $ninja_forms_loading ) ) {
 				$ninja_forms_loading->update_field_settings( $field_id, $field );
 			} else {
-				$ninja_forms_processing->update_field_settings( $field_id, $field );
+                if( 1 == $ninja_forms_processing->get_form_setting( 'processing_complete' ) ) {
+                    $field['data']['default_value'] = '';
+                }
+                $ninja_forms_processing->update_field_settings($field_id, $field);
 			}
 		}
 	}
