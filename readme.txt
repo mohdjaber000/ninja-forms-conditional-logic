@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
-Tested up to: 4.2.1
-Stable tag: 1.3.8
+Tested up to: 4.2.2
+Stable tag: 1.3.9
 
 License: GPLv2 or later
 
@@ -29,6 +29,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 1.3.9 (26 May 2015) =
+
+*Bugs:*
+
+* Changed values should now reset to defaults when using the "clear form" setting.
 
 = 1.3.8 (12 May 2015) =
 
