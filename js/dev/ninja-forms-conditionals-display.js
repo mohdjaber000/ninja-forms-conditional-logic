@@ -16,6 +16,18 @@ jQuery(document).ready(function(jQuery) {
 		ninja_forms_check_conditional(this, true);
 	});
 
+	/*
+	Prevent submit on enter if the submit button is hidden.
+	 */
+	jQuery( ".ninja-forms-form" ).on( 'beforeSubmit.clPreventSubmit', function( e, formData, jqForm, options ) {
+		var form_id = jQuery( jqForm ).prop( 'id' ).replace( 'ninja_forms_form_', '' );
+		if ( true != jQuery( '#nf_submit_' + form_id ).parent().data( 'visible' ) ) {
+			jQuery( '#nf_processing_' + form_id ).hide();
+			jQuery( '#nf_submit_' + form_id ).show();
+			return false;
+		}
+	} );
+
 	/* * * End Conditional Logic JS * * */
 
 });
