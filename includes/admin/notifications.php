@@ -241,7 +241,7 @@ function nf_cl_notification_process( $id ) {
 				$pass_array[] = Ninja_Forms()->cl_triggers[ $param ]->compare( $value, $compare );
 			} else {
 				$user_value = $ninja_forms_processing->get_field_value( $param );
-				$pass_array[] = ninja_forms_conditional_compare( $value, $user_value, $compare );
+				$pass_array[] = ninja_forms_conditional_compare( $user_value, $value, $compare );
 			}
 		}
 

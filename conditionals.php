@@ -90,14 +90,14 @@ require_once( NINJA_FORMS_CON_DIR."/includes/display/field-class-filter.php" );
 function ninja_forms_conditional_compare($param1, $param2, $operator){
 	switch($operator){
 		case "==":
-			if ( is_array( $param2 ) ) {
-				return in_array( $param1, $param2 );
+			if ( is_array( $param1 ) ) {
+				return in_array( $param2, $param1 );
 			} else {
 				return $param1 == $param2;
 			}
 		case "!=":
-			if ( is_array( $param2 ) ) {
-				if ( in_array( $param1, $param2 ) ) {
+			if ( is_array( $param1 ) ) {
+				if ( in_array( $param2, $param1 ) ) {
 					return false;
 				} else {
 					return true;
