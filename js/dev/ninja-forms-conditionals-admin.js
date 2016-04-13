@@ -6,6 +6,7 @@ _.templateSettings = {
 };
 
 jQuery(document).ready(function($) {
+	console.log( "Loaded" );
 	// Function that searches our criteria params object for an id.
 	nf_cl.getParam = function( param_id ) {
 	    for ( var group in nf_cl.cr_param_groups ) {
@@ -128,8 +129,7 @@ jQuery(document).ready(function($) {
 				var action = '';
 				var connector = '';
 			}
-
-			var tmp = _.template( $( '#tmpl-nf-cl-condition' ).html(), { cond_id: cond_id, action: action, connector: connector } );
+			var tmp = _.template( $( '#tmpl-nf-cl-condition' ).html() )( { cond_id: cond_id, action: action, connector: connector } );
 			$( this.el ).append( tmp );
 			criteriaView.renderCriteriaRows( cond_id );
 		}
@@ -176,7 +176,7 @@ jQuery(document).ready(function($) {
 				var div_id = 'nf_cr_' + cr_id;
 				var data_id = cr_id;
 			}
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, compare: compare, num: num, div_id: div_id, data_id: data_id, cond_id: cond_id } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria' ).html() )( { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, compare: compare, num: num, div_id: div_id, data_id: data_id, cond_id: cond_id } );
 			$( this.conditionEl ).find( '.nf-cl-criteria' ).append( tmp );
 			this.renderCriteriaCompare( cr_id, cr_name, param_groups, selected_param, compare, num, div_id );
 			this.renderCriteriaValue( cr_id, cr_name, param_groups, selected_param, value, num, div_id );
@@ -184,13 +184,13 @@ jQuery(document).ready(function($) {
 
 		renderCriteriaCompare: function( cr_id, cr_name, param_groups, selected_param, compare, num, div_id ) {
 			var span = $( '#' + div_id ).find( '.cr-compare' );
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria-compare' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, compare: compare, nf_cl: nf_cl } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-compare' ).html() )( { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, compare: compare, nf_cl: nf_cl } );
 			$( span ).html( tmp );	
 		},
 
 		renderCriteriaValue: function( cr_id, cr_name, param_groups, selected_param, value, num, div_id ) {
 			var span = $( '#' + div_id ).find( '.cr-value' );
-			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html(), { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, num: num, nf_cl: nf_cl } );
+			var tmp = _.template( $( '#tmpl-nf-cl-criteria-value' ).html() )( { cr_id: cr_id, cr_name: cr_name, param_groups: param_groups, selected_param: selected_param, value: value, num: num, nf_cl: nf_cl } );
 			$( span ).html( tmp );
 			var param = nf_cl.getParam( selected_param );
 			if ( param && param.type == 'date' ) {
