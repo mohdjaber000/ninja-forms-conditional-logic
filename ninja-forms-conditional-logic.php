@@ -62,7 +62,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          * @since 3.0
          * @static
          * @static var array $instance
-         * @return NF_Stripe Highlander Instance
+         * @return NF_ConditionalLogic Highlander Instance
          */
         public static function instance()
         {
