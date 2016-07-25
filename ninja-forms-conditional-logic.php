@@ -162,6 +162,180 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
     NF_ConditionalLogic();
 
+    
+    function nf_cl_add_all_the_filters() {
+        add_filter( 'ninja_forms_from_settings_types', 'nf_cl_add_form_setting_type' );
+        add_filter( 'ninja_forms_localize_forms_settings', 'nf_cl_add_settings' );
+        add_filter( 'nf_admin_enqueue_scripts', 'nf_cl_output_templates' );
+    }
+
+    add_action( 'ninja_forms_loaded', 'nf_cl_add_all_the_filters' );
+
+    function nf_cl_add_form_setting_type( $types ) {
+        $types[ 'conditional_logic' ] = array(
+            'id'                    => 'conditional_logic',
+            'nicename'              => __( 'Conditional Logic', 'ninja-forms-conditional-logic' ),
+        );
+
+        return $types;
+    }
+
+    function nf_cl_add_settings( $form_settings ) {
+        $form_settings[ 'conditional_logic' ] = array(
+            'cl_test'               => array(
+                'name'              => 'cl_test',
+                'type'              => 'cl_condition',
+                'label'             => __( 'Cool Test', 'ninja-forms-conditional-logic' ),
+                'width'             => 'one-half',
+                'group'             => 'primary',
+            ),
+        );
+
+        return $form_settings;
+    }
+
+    function nf_cl_output_templates() {
+        wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+        ?>
+        <script id="nf-tmpl-edit-setting-cl_condition" type="text/template">
+            <div>
+                When <%= renderFieldSelect() %> <%= renderCompSelect() %> Then:
+            </div>
+        </script>
+        <?php
+    }
+
+    /*
+     * Localize our mock conditional logic data
+     */
+    function nf_cl_display_mock_data( $form_id ) {
+        wp_enqueue_script( 'nf-cl-front-end', plugin_dir_url( __FILE__ ) . 'assets/js/min/front-end.js', array( 'nf-front-end' ) );
+        $data = array( 14 => 
+            array(
+                /*
+                 * Show Field
+                 */
+                array(
+                    'when'  => array(
+                        array(
+                            'connector'     => 'AND',
+                            'key'           => 'agree', // Field Key
+                            'key_type'      => 'field',
+                            'comparator'    => 'equal',
+                            'value'         => '1',
+                        ),
+                    ),
+                    'then'  => array(
+                        array(
+                            'trigger'       => 'show_field',
+                            'key'           => 'your_message', // Field Key
+                        ),
+                    ),
+                ),
+
+                /*
+                 * Hide Field
+                 */
+                array(
+                    'when'  => array(
+                        array(
+                            'connector'     => 'AND',
+                            'key'           => 'agree', // Field Key
+                            'key_type'      => 'field',
+                            'comparator'    => 'equal',
+                            'value'         => '1',
+                        ),
+                    ),
+                    'then'  => array(
+                        array(
+                            'trigger'       => 'hide_field',
+                            'key'           => 'html', // Field Key
+                        ),
+                    ),
+                ),
+
+                /*
+                 * Change Value
+                 */
+                // array(
+                //     'when'  => array(
+                //         array(
+                //             'connector'     => 'AND',
+                //             'key'           => 'change_a_value',
+                //             'key_type'      => 'field',
+                //             'comparator'    => 'equal',
+                //             'value'         => '1',
+                //         ),
+                //     ),
+                //     'then'  => array(
+                //         array(
+                //             'trigger'       => 'change_value',
+                //             'key'           => 'listradio', // Field Key
+                //         ),
+                //     ),
+                // ),
+
+                /*
+                 * Select Option
+                 */
+                
+                /*
+                 * Deselect Option
+                 */
+                
+                /*
+                 * Add Option
+                 */
+                
+                /*
+                 * Remove Option
+                 */
+                // array(
+                //  'when'  => array(
+                //      array(
+                //          'connector'     => 'AND',
+                //          'key'           => 'checkbox',
+                //          'key_type'      => 'field',
+                //          'comparator'    => 'equal',
+                //          'value'         => '1',
+                //      ),
+                //  ),
+                //  'then'  => array(
+                //      array(
+                //          'trigger'       => 'select_option',
+                //          'key'           => 'listradio',
+                //          'value'         => 'two',
+                //      ),
+                //  ),
+                // ),
+            ),
+
+            15 => array(
+                array(
+                    'when'  => array(
+                        array(
+                            'connector'     => 'AND',
+                            'key'           => 'checkbox',
+                            'key_type'      => 'field',
+                            'comparator'    => 'equal',
+                            'value'         => '1',
+                        ),
+                    ),
+                    'then'  => array(
+                        array(
+                            'trigger'       => 'change_value',
+                            'key'           => 'textarea',
+                            'value'         => 'Mother Fucker',
+                        ),
+                    ),
+                ),
+            )
+        );
+        wp_localize_script( 'nf-cl-front-end', 'nfCLFrontEnd', $data );
+    }
+
+    add_action( 'ninja_forms_enqueue_scripts', 'nf_cl_display_mock_data' );
+
 }
 
 // TODO: Convert Plugin Settings.
