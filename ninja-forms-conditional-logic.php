@@ -84,8 +84,17 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         {
             add_action( 'admin_init', array( $this, 'setup_license' ) );
 
+            add_action( 'ninja_forms_loaded', array( $this, 'setup_admin' ) );
+
             add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
             add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
+        }
+
+        public function setup_admin()
+        {
+            if( ! is_admin() ) return;
+
+            new NF_ConditionalLogic_Admin_Settings();
         }
 
         public function builder_scripts()
@@ -174,37 +183,6 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
     }
 
     NF_ConditionalLogic();
-
-    
-    function nf_cl_add_all_the_filters() {
-        add_filter( 'ninja_forms_from_settings_types', 'nf_cl_add_form_setting_type' );
-        add_filter( 'ninja_forms_localize_forms_settings', 'nf_cl_add_settings' );
-    }
-
-    add_action( 'ninja_forms_loaded', 'nf_cl_add_all_the_filters' );
-
-    function nf_cl_add_form_setting_type( $types ) {
-        $types[ 'conditional_logic' ] = array(
-            'id'                    => 'conditional_logic',
-            'nicename'              => __( 'Conditional Logic', 'ninja-forms-conditional-logic' ),
-        );
-
-        return $types;
-    }
-
-    function nf_cl_add_settings( $form_settings ) {
-        $form_settings[ 'conditional_logic' ] = array(
-            'cl_test'               => array(
-                'name'              => 'cl_test',
-                'type'              => 'cl_condition',
-                'label'             => __( 'Cool Test', 'ninja-forms-conditional-logic' ),
-                'width'             => 'one-half',
-                'group'             => 'primary',
-            ),
-        );
-
-        return $form_settings;
-    }
 
     /*
      * Localize our mock conditional logic data
