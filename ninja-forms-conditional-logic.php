@@ -206,17 +206,6 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         return $form_settings;
     }
 
-    function nf_cl_output_templates() {
-        wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
-        ?>
-        <script id="nf-tmpl-edit-setting-cl_condition" type="text/template">
-            <div>
-                When <%= renderFieldSelect() %> <%= renderCompSelect() %> Then:
-            </div>
-        </script>
-        <?php
-    }
-
     /*
      * Localize our mock conditional logic data
      */
