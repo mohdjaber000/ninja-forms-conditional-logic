@@ -13,27 +13,12 @@ final class NF_ConditionalLogic_Admin_Settings
 
     public function form_settings_types( $types )
     {
-        $types[ 'conditional_logic' ] = array(
-            'id'       => 'conditional_logic',
-            'nicename' => __( 'Conditional Logic', 'ninja-forms-conditional-logic' ),
-        );
-
-        return $types;
+        return array_merge( $types, NF_ConditionalLogic::config( 'FormSettingsTypes' ) );
     }
 
-    public function form_settings( $form_settings )
+    public function form_settings( $settings )
     {
-        $form_settings[ 'conditional_logic' ] = array(
-            'cl_test'               => array(
-                'name'              => 'cl_test',
-                'type'              => 'cl_condition',
-                'label'             => __( 'Cool Test', 'ninja-forms-conditional-logic' ),
-                'width'             => 'one-half',
-                'group'             => 'primary',
-            ),
-        );
-
-        return $form_settings;
+        return array_merge( $settings, NF_ConditionalLogic::config( 'FormSettings' ) );
     }
 
 } // End Class NF_ConditionalLogic_Admin_Settings
