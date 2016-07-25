@@ -82,7 +82,20 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
         public function __construct()
         {
-            add_action( 'admin_init', array( $this, 'setup_license') );
+            add_action( 'admin_init', array( $this, 'setup_license' ) );
+
+            add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
+            add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
+        }
+
+        public function builder_scripts()
+        {
+            wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+        }
+
+        public function builder_templates()
+        {
+            NF_ConditionalLogic::template( 'builder-edit-settings.html' );
         }
 
         /**
@@ -166,7 +179,6 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
     function nf_cl_add_all_the_filters() {
         add_filter( 'ninja_forms_from_settings_types', 'nf_cl_add_form_setting_type' );
         add_filter( 'ninja_forms_localize_forms_settings', 'nf_cl_add_settings' );
-        add_filter( 'nf_admin_enqueue_scripts', 'nf_cl_output_templates' );
     }
 
     add_action( 'ninja_forms_loaded', 'nf_cl_add_all_the_filters' );
