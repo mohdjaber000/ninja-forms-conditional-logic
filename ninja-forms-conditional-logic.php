@@ -100,6 +100,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public function builder_scripts()
         {
             wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+            wp_enqueue_style( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
         }
 
         public function builder_templates()
@@ -189,7 +190,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
      */
     function nf_cl_display_mock_data( $form_id ) {
         wp_enqueue_script( 'nf-cl-front-end', plugin_dir_url( __FILE__ ) . 'assets/js/min/front-end.js', array( 'nf-front-end' ) );
-        $data = array( 14 => 
+        $data = array( 14 =>
             array(
                 /*
                  * Show Field
@@ -257,15 +258,15 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
                 /*
                  * Select Option
                  */
-                
+
                 /*
                  * Deselect Option
                  */
-                
+
                 /*
                  * Add Option
                  */
-                
+
                 /*
                  * Remove Option
                  */

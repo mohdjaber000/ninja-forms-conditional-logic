@@ -1,0 +1,86 @@
+.nf-condition {
+    //border: 1px solid #333;
+}
+.nf-when {
+    background: #ddd;
+    padding: 10px;
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+    .nf-select,
+    .nf-input {
+        input {
+        }
+    }
+}
+.nf-and,
+.nf-then {
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+    .nf-one-fourth {
+        .fa {
+            font-size: 22px;
+            padding-top: 14px;
+        }
+        &:last-child {
+            width: 4%;
+        }
+    }
+}
+.nf-and {
+    background: #ddd;
+    padding: 0 10px 10px;
+    .nf-one-fourth {
+        width: 23%;
+    }
+    .nf-and-row {
+        padding-left: 20px;
+        &::after {
+            clear: both;
+            content: "";
+            display: block;
+        }
+    }
+}
+.nf-then {
+    background: #fefefe;
+    padding: 10px;
+    .nf-one-fourth {
+        width: 30.5%;
+    }
+    .nf-and-row {
+        &::after {
+            clear: both;
+            content: "";
+            display: block;
+        }
+    }
+}
+.nf-add-and {
+    font-size: 22px;
+    margin-bottom: 5px;
+    padding-left: 35px;
+}
+.nf-add-then {
+    font-size: 22px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+}
+
+
+.nf-one-fourth {
+    float: left;
+    margin-bottom: 15px;
+    padding: 0 2%;
+    width: 25%;
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}

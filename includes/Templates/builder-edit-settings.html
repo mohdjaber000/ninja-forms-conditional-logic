@@ -1,5 +1,46 @@
 <script id="nf-tmpl-edit-setting-cl_condition" type="text/template">
-    <div>
-        When <%= renderFieldSelect() %> <%= renderCompSelect() %> Then:
+    <div class="nf-condition">
+        <div class="nf-when">
+            <div class="nf-condition-label">When</div>
+            <%= renderFieldSelect() %> <%= renderCompSelect() %> <%= renderValueInput() %>
+        </div>
+        <div class="nf-and">
+            <div class="nf-and-row">
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-select"><select><option>AND</option></select><div></div></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-select"><select><option>Field</option></select><div></div></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-select"><select><option>Equals</option></select><div></div></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-input"><input type="text" value=""></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </div>
+            </div>
+            <i class="fa fa-plus-circle nf-add-and" aria-hidden="true"></i>
+        </div>
+        <div class="nf-then">
+            <div class="nf-condition-label">Then</div>
+            <div class="nf-and-row">
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-select"><select><option>Field</option></select><div></div></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-select"><select><option>Equals</option></select><div></div></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <label class="nf-input"><input type="text" value=""></label>
+                </div>
+                <div class="nf-setting nf-one-fourth">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </div>
+            </div>
+            <i class="fa fa-plus-circle nf-add-then" aria-hidden="true"></i>
+        </div>
     </div>
 </script>

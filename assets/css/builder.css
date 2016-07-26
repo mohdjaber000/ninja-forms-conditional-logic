@@ -1,0 +1,66 @@
+.nf-when {
+  background: #ddd;
+  padding: 10px; }
+  .nf-when::after {
+    clear: both;
+    content: "";
+    display: block; }
+
+.nf-and::after,
+.nf-then::after {
+  clear: both;
+  content: "";
+  display: block; }
+
+.nf-and .nf-one-fourth .fa,
+.nf-then .nf-one-fourth .fa {
+  font-size: 22px;
+  padding-top: 14px; }
+
+.nf-and .nf-one-fourth:last-child,
+.nf-then .nf-one-fourth:last-child {
+  width: 4%; }
+
+.nf-and {
+  background: #ddd;
+  padding: 0 10px 10px; }
+  .nf-and .nf-one-fourth {
+    width: 23%; }
+  .nf-and .nf-and-row {
+    padding-left: 20px; }
+    .nf-and .nf-and-row::after {
+      clear: both;
+      content: "";
+      display: block; }
+
+.nf-then {
+  background: #fefefe;
+  padding: 10px; }
+  .nf-then .nf-one-fourth {
+    width: 30.5%; }
+  .nf-then .nf-and-row::after {
+    clear: both;
+    content: "";
+    display: block; }
+
+.nf-add-and {
+  font-size: 22px;
+  margin-bottom: 5px;
+  padding-left: 35px; }
+
+.nf-add-then {
+  font-size: 22px;
+  margin-bottom: 5px;
+  padding-left: 15px; }
+
+.nf-one-fourth {
+  float: left;
+  margin-bottom: 15px;
+  padding: 0 2%;
+  width: 25%; }
+  .nf-one-fourth::after {
+    clear: both;
+    content: "";
+    display: block; }
+
+/*# sourceMappingURL=builder.css.map */
