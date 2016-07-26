@@ -35,10 +35,10 @@
     .nf-one-fourth {
         .fa {
             font-size: 22px;
-            padding-top: 14px;
+            padding-top: 15px;
         }
-        &:last-child {
-            width: 4%;
+        &:first-child {
+            width: 7.5%;
         }
     }
 }
@@ -49,7 +49,6 @@
         width: 23%;
     }
     .nf-and-row {
-        padding-left: 20px;
         &::after {
             clear: both;
             content: "";
@@ -74,12 +73,12 @@
 .nf-add-and {
     font-size: 22px;
     margin-bottom: 5px;
-    padding-left: 35px;
+    padding-left: 12px;
 }
 .nf-add-then {
     font-size: 22px;
     margin-bottom: 5px;
-    padding-left: 15px;
+    padding-left: 12px;
 }
 
 
