@@ -1,5 +1,9 @@
 .nf-condition {
     //border: 1px solid #333;
+    margin-top: 20px;
+}
+.nf-condition-label {
+    margin-bottom: 10px;
 }
 .nf-when {
     background: #ddd;
@@ -13,6 +17,12 @@
     .nf-input {
         input {
         }
+    }
+}
+.nf-when-controls {
+    float: right;
+    .fa {
+        font-size: 22px;
     }
 }
 .nf-and,

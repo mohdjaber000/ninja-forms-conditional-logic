@@ -1,7 +1,14 @@
 <script id="nf-tmpl-edit-setting-cl_condition" type="text/template">
+    <a class="nf-add-new nf-add-new-condition" title="Add New Condition" href="#" data-drawerid="addField">Add new condition</a>
     <div class="nf-condition">
         <div class="nf-when">
-            <div class="nf-condition-label">When</div>
+            <div class="nf-condition-label">
+                When
+                <div class="nf-when-controls">
+                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </div>
+            </div>
             <%= renderFieldSelect() %> <%= renderCompSelect() %> <%= renderValueInput() %>
         </div>
         <div class="nf-and">

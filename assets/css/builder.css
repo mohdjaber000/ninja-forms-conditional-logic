@@ -1,3 +1,9 @@
+.nf-condition {
+  margin-top: 20px; }
+
+.nf-condition-label {
+  margin-bottom: 10px; }
+
 .nf-when {
   background: #ddd;
   padding: 10px; }
@@ -5,6 +11,11 @@
     clear: both;
     content: "";
     display: block; }
+
+.nf-when-controls {
+  float: right; }
+  .nf-when-controls .fa {
+    font-size: 22px; }
 
 .nf-and::after,
 .nf-then::after {
