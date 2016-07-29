@@ -8,7 +8,7 @@
 define( [ 'models/conditionCollection' ], function( ConditionCollection ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function( formModel ) {
-			var collection = new ConditionCollection( nfCLFrontEnd[ formModel.get( 'id' ) ], { formModel: formModel } );
+			var collection = new ConditionCollection( formModel.get( 'conditions' ), { formModel: formModel } );
 		}
 	});
 

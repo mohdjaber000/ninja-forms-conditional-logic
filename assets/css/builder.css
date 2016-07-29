@@ -4,10 +4,10 @@
 .nf-condition-label {
   margin-bottom: 10px; }
 
-.nf-when {
+.nf-when-container {
   background: #ddd;
   padding: 10px; }
-  .nf-when::after {
+  .nf-when-container::after {
     clear: both;
     content: "";
     display: block; }
@@ -17,37 +17,37 @@
   .nf-when-controls .fa {
     font-size: 22px; }
 
-.nf-and::after,
-.nf-then::after {
+.nf-and-container::after,
+.nf-then-container::after {
   clear: both;
   content: "";
   display: block; }
 
-.nf-and .nf-one-fourth .fa,
-.nf-then .nf-one-fourth .fa {
+.nf-and-container .nf-one-fourth .fa,
+.nf-then-container .nf-one-fourth .fa {
   font-size: 22px;
   padding-top: 15px; }
 
-.nf-and .nf-one-fourth:first-child,
-.nf-then .nf-one-fourth:first-child {
+.nf-and-container .nf-one-fourth:first-child,
+.nf-then-container .nf-one-fourth:first-child {
   width: 7.5%; }
 
-.nf-and {
+.nf-and-container {
   background: #ddd;
   padding: 0 10px 10px; }
-  .nf-and .nf-one-fourth {
+  .nf-and-container .nf-one-fourth {
     width: 23%; }
-  .nf-and .nf-and-row::after {
+  .nf-and-container .nf-and::after {
     clear: both;
     content: "";
     display: block; }
 
-.nf-then {
+.nf-then-container {
   background: #fefefe;
   padding: 10px; }
-  .nf-then .nf-one-fourth {
+  .nf-then-container .nf-one-fourth {
     width: 30.5%; }
-  .nf-then .nf-and-row::after {
+  .nf-then-container .nf-then::after {
     clear: both;
     content: "";
     display: block; }
