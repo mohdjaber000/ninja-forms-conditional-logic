@@ -1,17 +1,17 @@
 /**
- * Collection view for our and statements
+ * Collection view for our when collection
  *
  * @package Ninja Forms Conditional Logic
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/andItem', 'views/firstWhenItem' ], function( AndItem, FirstWhenItem ) {
+define( [ 'views/whenItem', 'views/firstWhenItem' ], function( WhenItem, FirstWhenItem ) {
 	var view = Marionette.CollectionView.extend({
 		getChildView: function( item ) {
 			if ( item.collection.first() == item ) {
 				return FirstWhenItem;
 			} else {
-				return AndItem;
+				return WhenItem;
 			}
 			
 		},

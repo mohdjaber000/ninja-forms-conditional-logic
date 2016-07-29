@@ -11,6 +11,7 @@ define( [], function() {
 			this.listenTo( nfRadio.channel( 'conditions' ), 'init:model', this.addTemplateHelpers );
 			this.listenTo( nfRadio.channel( 'conditions' ), 'init:thenModel', this.addTemplateHelpers );
 			this.listenTo( nfRadio.channel( 'conditions' ), 'init:whenModel', this.addTemplateHelpers );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'init:elseModel', this.addTemplateHelpers );
 			
 		},
 

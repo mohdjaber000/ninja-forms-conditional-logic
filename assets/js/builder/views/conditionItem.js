@@ -5,12 +5,13 @@
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/andCollection', 'views/thenCollection' ], function( AndCollectionView, ThenCollectionView ) {
+define( [ 'views/whenCollection', 'views/thenCollection', 'views/elseCollection' ], function( WhenCollectionView, ThenCollectionView, ElseCollectionView ) {
 	var view = Marionette.LayoutView.extend({
 		template: "#nf-tmpl-condition",
 		regions: {
 			'and': '.nf-and-region',
-			'then': '.nf-then-region'
+			'then': '.nf-then-region',
+			'else': '.nf-else-region'
 		},
 
 		initialize: function() {
@@ -27,17 +28,19 @@ define( [ 'views/andCollection', 'views/thenCollection' ], function( AndCollecti
 
 		onRender: function() {
 			var whenDiv = jQuery( this.el ).find( '.nf-when' );
-			this.and.show( new AndCollectionView( { collection: this.model.get( 'when' ), whenDiv: whenDiv, conditionModel: this.model } ) );
+			this.and.show( new WhenCollectionView( { collection: this.model.get( 'when' ), whenDiv: whenDiv, conditionModel: this.model } ) );
 			if ( ! this.model.get( 'collapsed' ) ) {
 				this.then.show( new ThenCollectionView( { collection: this.model.get( 'then' ) } ) );
+				this.else.show( new ElseCollectionView( { collection: this.model.get( 'else' ) } ) );
 			}
 		},
 
 		events: {
 			'click .nf-delete-condition': 'clickDelete',
 			'click .nf-collapse-condition': 'clickCollapse',
-			'click .nf-add-and': 'clickAddAnd',
-			'click .nf-add-then': 'clickAddThen'
+			'click .nf-add-and': 'clickAddWhen',
+			'click .nf-add-then': 'clickAddThen',
+			'click .nf-add-else': 'clickAddElse'
 		},
 
 		clickDelete: function( e ) {
@@ -48,12 +51,16 @@ define( [ 'views/andCollection', 'views/thenCollection' ], function( AndCollecti
 			nfRadio.channel( 'conditions' ).trigger( 'click:collapseCondition', e, this.model );
 		},
 
-		clickAddAnd: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'click:addAnd', e, this.model );
+		clickAddWhen: function( e ) {
+			nfRadio.channel( 'conditions' ).trigger( 'click:addWhen', e, this.model );
 		},
 
 		clickAddThen: function( e ) {
 			nfRadio.channel( 'conditions' ).trigger( 'click:addThen', e, this.model );
+		},
+
+		clickAddElse: function( e ) {
+			nfRadio.channel( 'conditions' ).trigger( 'click:addElse', e, this.model );
 		}
 	});
 

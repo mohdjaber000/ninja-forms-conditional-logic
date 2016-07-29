@@ -10,10 +10,12 @@ define( [], function() {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteCondition', this.deleteCondition );
 			this.listenTo( nfRadio.channel( 'conditions' ), 'click:collapseCondition', this.collapseCondition );
-			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteAnd', this.deleteAnd );
-			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteThen', this.deleteAnd );
-			this.listenTo( nfRadio.channel( 'conditions' ), 'click:addAnd', this.addAnd );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteWhen', this.deleteItem );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteThen', this.deleteItem );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'click:deleteElse', this.deleteItem );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'click:addWhen', this.addWhen );
 			this.listenTo( nfRadio.channel( 'conditions' ), 'click:addThen', this.addThen );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'click:addElse', this.addElse );
 		},
 
 		deleteCondition: function( e, conditionModel ) {
@@ -32,23 +34,15 @@ define( [], function() {
 			nfRadio.channel( 'app' ).request( 'update:db' );
 		},
 
-		deleteAnd: function( e, andModel ) {
-			andModel.collection.remove( andModel );
+		deleteItem: function( e, itemModel ) {
+			itemModel.collection.remove( itemModel );
 
 			// Set our 'clean' status to false so that we get a notice to publish changes
 			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );
 			nfRadio.channel( 'app' ).request( 'update:db' );
 		},
 
-		deleteThen: function( e, thenModel ) {
-			thenModel.collection.remove( thenModel );
-
-			// Set our 'clean' status to false so that we get a notice to publish changes
-			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );
-			nfRadio.channel( 'app' ).request( 'update:db' );
-		},
-
-		addAnd: function( e, conditionModel ) {
+		addWhen: function( e, conditionModel ) {
 			conditionModel.get( 'when' ).add( {} );
 
 			// Set our 'clean' status to false so that we get a notice to publish changes
@@ -58,6 +52,14 @@ define( [], function() {
 
 		addThen: function( e, conditionModel ) {
 			conditionModel.get( 'then' ).add( {} );
+
+			// Set our 'clean' status to false so that we get a notice to publish changes
+			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );
+			nfRadio.channel( 'app' ).request( 'update:db' );
+		},
+
+		addElse: function( e, conditionModel ) {
+			conditionModel.get( 'else' ).add( {} );
 
 			// Set our 'clean' status to false so that we get a notice to publish changes
 			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );

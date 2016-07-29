@@ -13,7 +13,7 @@ define( [ 'models/whenCollection', 'models/whenModel' ], function( WhenCollectio
 
 		addNew: function( e ) {
 			var conditionCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'conditions' );
-			conditionCollection.add( { when: [ {} ], then: [ {} ] } );
+			conditionCollection.add( { when: [ {} ], then: [ {} ], else: [] } );
 
 			// Set our 'clean' status to false so that we get a notice to publish changes
 			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );

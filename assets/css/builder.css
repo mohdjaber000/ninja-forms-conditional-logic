@@ -5,7 +5,7 @@
   margin-bottom: 10px; }
 
 .nf-when-container {
-  background: #ddd;
+  background: #D3D3D3;
   padding: 10px; }
   .nf-when-container::after {
     clear: both;
@@ -18,22 +18,25 @@
     font-size: 22px; }
 
 .nf-and-container::after,
-.nf-then-container::after {
+.nf-then-container::after,
+.nf-else-container::after {
   clear: both;
   content: "";
   display: block; }
 
 .nf-and-container .nf-one-fourth .fa,
-.nf-then-container .nf-one-fourth .fa {
+.nf-then-container .nf-one-fourth .fa,
+.nf-else-container .nf-one-fourth .fa {
   font-size: 22px;
   padding-top: 15px; }
 
 .nf-and-container .nf-one-fourth:first-child,
-.nf-then-container .nf-one-fourth:first-child {
+.nf-then-container .nf-one-fourth:first-child,
+.nf-else-container .nf-one-fourth:first-child {
   width: 7.5%; }
 
 .nf-and-container {
-  background: #ddd;
+  background: #D3D3D3;
   padding: 0 10px 10px; }
   .nf-and-container .nf-one-fourth {
     width: 23%; }
@@ -52,12 +55,27 @@
     content: "";
     display: block; }
 
+.nf-else-container {
+  background: #ddd;
+  padding: 10px; }
+  .nf-else-container .nf-one-fourth {
+    width: 30.5%; }
+  .nf-else-container .nf-else::after {
+    clear: both;
+    content: "";
+    display: block; }
+
 .nf-add-and {
   font-size: 22px;
   margin-bottom: 5px;
   padding-left: 12px; }
 
 .nf-add-then {
+  font-size: 22px;
+  margin-bottom: 5px;
+  padding-left: 12px; }
+
+.nf-add-else {
   font-size: 22px;
   margin-bottom: 5px;
   padding-left: 12px; }

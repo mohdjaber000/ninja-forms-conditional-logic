@@ -35,6 +35,15 @@
                 </div>
                 <i class="fa fa-plus-circle nf-add-then" aria-hidden="true"></i>
             </div>
+
+            <div class="nf-else-container">
+                <div class="nf-condition-label">Otherwise</div>
+                <div class="nf-else-region">
+                    <!-- ELSE Region -->
+                </div>
+                <i class="fa fa-plus-circle nf-add-else" aria-hidden="true"></i>
+            </div>
+
         <%
         }
         %>
@@ -97,6 +106,31 @@
     <div class="nf-then">
         <div class="nf-setting nf-one-fourth">
             <i class="fa fa-minus-circle nf-delete-then" aria-hidden="true"></i>
+        </div>
+        <div class="nf-setting nf-one-fourth">
+            <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
+        </div>
+        <div class="nf-setting nf-one-fourth">
+            <label class="nf-select">
+                <select data-id="trigger" class="setting">
+                    <option value="">-- Select One</option>
+                    <option value="show_field" <%= ( 'show_field' == trigger ) ? 'selected="selected"' : '' %>>Show Field</option>
+                    <option value="hide_field" <%= ( 'hide_field' == trigger ) ? 'selected="selected"' : '' %>>Hide Field</option>
+                    <option value="change_value" <%= ( 'change_value' == trigger ) ? 'selected="selected"' : '' %>>Change Value</option>
+                </select>
+                <div></div>
+            </label>
+        </div>
+        <div class="nf-setting nf-one-fourth">
+            <label class="nf-input"><input type="text" data-id="value" class="setting" value="<%= value %>"></label>
+        </div>
+    </div>
+</script>
+
+<script id="nf-tmpl-else-item" type="text/template">
+    <div class="nf-else">
+        <div class="nf-setting nf-one-fourth">
+            <i class="fa fa-minus-circle nf-delete-else" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>

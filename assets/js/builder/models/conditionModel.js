@@ -5,7 +5,7 @@
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'models/whenCollection', 'models/thenCollection' ], function( WhenCollection, ThenCollection ) {
+define( [ 'models/whenCollection', 'models/thenCollection', 'models/elseCollection' ], function( WhenCollection, ThenCollection, ElseCollection ) {
 	var model = Backbone.Model.extend( {
 		defaults: {
 			collapsed: false
@@ -14,6 +14,7 @@ define( [ 'models/whenCollection', 'models/thenCollection' ], function( WhenColl
 		initialize: function() {
 			this.set( 'when', new WhenCollection( this.get( 'when' ) ) );
 			this.set( 'then', new ThenCollection( this.get( 'then' ) ) );
+			this.set( 'else', new ElseCollection( this.get( 'else' ) ) );
 
 			nfRadio.channel( 'conditions' ).trigger( 'init:model', this );
 		}
