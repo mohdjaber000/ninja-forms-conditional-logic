@@ -14,7 +14,29 @@ define( [], function() {
 		updateSetting: function( e, dataModel ) {
 			var value = jQuery( e.target ).val();
 			var id = jQuery( e.target ).data( 'id' );
+			var before = dataModel.get( id );
+
 			dataModel.set( id, value );
+
+			var after = value;
+
+			var changes = {
+				attr: id,
+				before: before,
+				after: after
+			};
+
+			var data = {
+				conditionModel: dataModel.collection.options.conditionModel
+			}
+
+			var label = {
+				object: 'Condition',
+				label: 'Condition',
+				change: 'Changed ' + id + ' from ' + before + ' to ' + after
+			};
+
+			nfRadio.channel( 'changes' ).request( 'register:change', 'changeSetting', dataModel, changes, label, data );
 
 			// Set our 'clean' status to false so that we get a notice to publish changes
 			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );

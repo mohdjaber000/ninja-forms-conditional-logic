@@ -11,15 +11,15 @@ define( [], function( ) {
 
 		events: {
 			'change .setting': 'changeSetting',
-			'click .nf-delete-then': 'clickDelete'
+			'click .nf-remove-then': 'clickRemove'
 		},
 
 		changeSetting: function( e ) {
 			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model )
 		},
 
-		clickDelete: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'click:deleteThen', e, this.model );
+		clickRemove: function( e ) {
+			nfRadio.channel( 'conditions' ).trigger( 'click:removeThen', e, this.model );
 		}
 	});
 

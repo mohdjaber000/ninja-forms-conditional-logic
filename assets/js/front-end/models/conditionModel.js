@@ -35,37 +35,23 @@ define( [ 'models/whenCollection' ], function( WhenCollection ) {
 			}
 
 			if ( status ) {
-				var msg = 'pass';
+			   	/*
+			 	 * Send out a request for each of our "then" statements.
+			 	 */
+				_.each( this.get( 'then' ), function( then, index ) {
+					nfRadio.channel( 'condition:trigger' ).request( then.trigger, this, then );
+				}, this );			 
 			} else {
-				var msg = 'fail';
+				/*
+				 * Send out a request for each of our "else" statements.
+				 */
+				_.each( this.get( 'else' ), function( elseData, index ) {
+					nfRadio.channel( 'condition:trigger' ).request( elseData.trigger, this, elseData );
+				}, this );
 			}
 
-			/*
-			 * Send out a request for each of our "then" statements.
-			 */
-			_.each( this.get( 'then' ), function( then, index ) {
-				nfRadio.channel( 'nf_cl_' + then.trigger ).request( msg, this, then );
-			}, this );
 
-			/*
-			 * We want to send to opposite of our "then" status to our "else" statements.
-			 * i.e. if "else" was true, we want to send false to "else", indicating that they should undo themselves.
-			 */
 
-			status = ! status;
-
-			if ( status ) {
-				var msg = 'pass';
-			} else {
-				var msg = 'fail';
-			}
-
-			/*
-			 * Send out a request for each of our "else" statements.
-			 */
-			_.each( this.get( 'else' ), function( elseData, index ) {
-				nfRadio.channel( 'nf_cl_' + elseData.trigger ).request( msg, this, elseData );
-			}, this );
 		}
 	} );
 	

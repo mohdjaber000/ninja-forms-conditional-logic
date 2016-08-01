@@ -8,11 +8,8 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'nf_cl_hide_field' ).reply( 'pass', this.hideField, this );
-			nfRadio.channel( 'nf_cl_hide_field' ).reply( 'fail', this.showField, this );
-
-			nfRadio.channel( 'nf_cl_show_field' ).reply( 'pass', this.showField, this );
-			nfRadio.channel( 'nf_cl_show_field' ).reply( 'fail', this.hideField, this );
+			nfRadio.channel( 'condition:trigger' ).reply( 'hide_field', this.hideField, this );
+			nfRadio.channel( 'condition:trigger' ).reply( 'show_field', this.showField, this );
 		},
 
 		hideField: function( conditionModel, then ) {

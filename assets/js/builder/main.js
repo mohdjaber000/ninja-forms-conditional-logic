@@ -1,6 +1,6 @@
 var nfRadio = Backbone.Radio;
 
-require( [ 'controllers/templateHelpers', 'controllers/returnChildView', 'models/conditionCollection', 'views/drawerHeader', 'controllers/newCondition', 'controllers/updateSettings', 'controllers/clickControls' ], function( TemplateHelpers, ReturnChildView, ConditionCollection, DrawerHeaderView, NewCondition, UpdateSettings, ClickControls ) {
+require( [ 'controllers/templateHelpers', 'controllers/returnChildView', 'models/conditionCollection', 'views/drawerHeader', 'controllers/newCondition', 'controllers/updateSettings', 'controllers/clickControls', 'controllers/undo' ], function( TemplateHelpers, ReturnChildView, ConditionCollection, DrawerHeaderView, NewCondition, UpdateSettings, ClickControls, Undo ) {
 
 	var NFConditionalLogic = Marionette.Application.extend( {
 
@@ -14,6 +14,7 @@ require( [ 'controllers/templateHelpers', 'controllers/returnChildView', 'models
 			new NewCondition();
 			new UpdateSettings();
 			new ClickControls();
+			new Undo();
 
 			nfRadio.channel( 'conditional_logic' ).reply( 'get:drawerHeaderView', this.test, this );
 		},

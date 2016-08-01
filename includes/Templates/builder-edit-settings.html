@@ -6,7 +6,7 @@
                 When
                 <div class="nf-when-controls">
                     <i class="fa fa-chevron-circle-<%= ( collapsed ) ? 'down' : 'up' %> nf-collapse-condition" aria-hidden="true"></i>
-                    <i class="fa fa-minus-circle nf-delete-condition" aria-hidden="true"></i>
+                    <i class="fa fa-minus-circle nf-remove-condition" aria-hidden="true"></i>
                 </div>
             </div>
             <div class="nf-when">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="nf-else-container">
-                <div class="nf-condition-label">Otherwise</div>
+                <div class="nf-condition-label">If The Condition Is Not Met</div>
                 <div class="nf-else-region">
                     <!-- ELSE Region -->
                 </div>
@@ -75,7 +75,7 @@
 <script id="nf-tmpl-and-item" type="text/template">
     <div class="nf-and">
         <div class="nf-setting nf-one-fourth">
-            <i class="fa fa-minus-circle nf-delete-and" aria-hidden="true"></i>
+            <i class="fa fa-minus-circle nf-remove-and" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
@@ -105,7 +105,7 @@
 <script id="nf-tmpl-then-item" type="text/template">
     <div class="nf-then">
         <div class="nf-setting nf-one-fourth">
-            <i class="fa fa-minus-circle nf-delete-then" aria-hidden="true"></i>
+            <i class="fa fa-minus-circle nf-remove-then" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
@@ -130,7 +130,7 @@
 <script id="nf-tmpl-else-item" type="text/template">
     <div class="nf-else">
         <div class="nf-setting nf-one-fourth">
-            <i class="fa fa-minus-circle nf-delete-else" aria-hidden="true"></i>
+            <i class="fa fa-minus-circle nf-remove-else" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>

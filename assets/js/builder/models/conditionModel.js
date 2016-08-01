@@ -12,9 +12,9 @@ define( [ 'models/whenCollection', 'models/thenCollection', 'models/elseCollecti
 		},
 
 		initialize: function() {
-			this.set( 'when', new WhenCollection( this.get( 'when' ) ) );
-			this.set( 'then', new ThenCollection( this.get( 'then' ) ) );
-			this.set( 'else', new ElseCollection( this.get( 'else' ) ) );
+			this.set( 'when', new WhenCollection( this.get( 'when' ), { conditionModel: this } ) );
+			this.set( 'then', new ThenCollection( this.get( 'then' ), { conditionModel: this } ) );
+			this.set( 'else', new ElseCollection( this.get( 'else' ), { conditionModel: this } ) );
 
 			nfRadio.channel( 'conditions' ).trigger( 'init:model', this );
 		}

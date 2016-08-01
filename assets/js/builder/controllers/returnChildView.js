@@ -8,10 +8,10 @@
 define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'cl_condition' ).reply( 'get:settingChildView', this.testChildView );
+			nfRadio.channel( 'cl_condition' ).reply( 'get:settingChildView', this.getChildView );
 		},
 
-		testChildView: function( settingModel ) {
+		getChildView: function( settingModel ) {
 			return ConditionCollection;
 		}
 

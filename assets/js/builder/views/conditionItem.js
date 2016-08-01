@@ -36,15 +36,15 @@ define( [ 'views/whenCollection', 'views/thenCollection', 'views/elseCollection'
 		},
 
 		events: {
-			'click .nf-delete-condition': 'clickDelete',
+			'click .nf-remove-condition': 'clickRemove',
 			'click .nf-collapse-condition': 'clickCollapse',
 			'click .nf-add-and': 'clickAddWhen',
 			'click .nf-add-then': 'clickAddThen',
 			'click .nf-add-else': 'clickAddElse'
 		},
 
-		clickDelete: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'click:deleteCondition', e, this.model );
+		clickRemove: function( e ) {
+			nfRadio.channel( 'conditions' ).trigger( 'click:removeCondition', e, this.model );
 		},
 
 		clickCollapse: function( e ) {

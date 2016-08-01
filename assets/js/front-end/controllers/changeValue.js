@@ -8,7 +8,7 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'nf_cl_change_value' ).reply( 'pass', this.changeValue, this );
+			nfRadio.channel( 'condition:trigger' ).reply( 'change_value', this.changeValue, this );
 		},
 
 		changeValue: function( conditionModel, then ) {

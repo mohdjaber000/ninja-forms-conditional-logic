@@ -8,11 +8,9 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'nf_cl_select_option' ).reply( 'pass', this.selectOption, this );
-			nfRadio.channel( 'nf_cl_select_option' ).reply( 'fail', this.deselectOption, this );
+			nfRadio.channel( 'condition:trigger' ).reply( 'select_option', this.selectOption, this );
 
-			nfRadio.channel( 'nf_cl_deselect_option' ).reply( 'pass', this.deselectOption, this );
-			nfRadio.channel( 'nf_cl_deselect_option' ).reply( 'fail', this.selectOption, this );
+			nfRadio.channel( 'condition:trigger' ).reply( 'deselect_option', this.deselectOption, this );
 		},
 
 		selectOption: function( conditionModel, then ) {
