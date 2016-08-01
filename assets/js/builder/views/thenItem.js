@@ -15,7 +15,8 @@ define( [], function( ) {
 		},
 
 		changeSetting: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model )
+			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model );
+			nfRadio.channel( 'conditions' ).trigger( 'change:then', e, this.model );
 		},
 
 		clickRemove: function( e ) {
