@@ -18,6 +18,8 @@ define( [], function() {
 		addTemplateHelpers: function( model ) {
 			model.set( 'renderFieldSelect', this.renderFieldSelect );
 			model.set( 'renderComparatorSelect', this.renderComparatorSelect );
+			model.set( 'renderThenValue', this.renderThenValue );
+			model.set( 'renderElseValue', this.renderThenValue );
 		},
 
 		renderFieldSelect: function( currentValue ) {
@@ -36,6 +38,32 @@ define( [], function() {
 			 */
 			var template = _.template( jQuery( '#nf-tmpl-comparator-select' ).html() );
 			return template( { comparator: comparator } );
+		},
+
+		renderThenValue: function( key, trigger, value ) {
+			/*
+			 * Use a template to get our value
+			 *
+			 * TODO: This should be much more dynamic.
+			 * At the moment, we manually check to see if we are doing a "change_value" or similar trigger.
+			 */
+			if ( trigger != 'change_value' && trigger != 'select_option' && trigger != 'deselect_option' ) {
+				return '';
+			}
+
+			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
+			var defaultHTML = template( { value: value } );
+
+			/*
+			 * Send out a radio request for an html value on a channel based upon the field type.
+			 *
+			 * Get our field by key
+			 */
+			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+			var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, trigger, value ) || defaultHTML;
+
+			return html;
+
 		}
 	});
 

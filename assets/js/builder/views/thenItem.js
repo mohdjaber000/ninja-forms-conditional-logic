@@ -9,6 +9,10 @@ define( [], function( ) {
 	var view = Marionette.ItemView.extend({
 		template: "#nf-tmpl-then-item",
 
+		initialize: function() {
+			this.listenTo( this.model, 'change', this.render );
+		},
+
 		events: {
 			'change .setting': 'changeSetting',
 			'click .nf-remove-then': 'clickRemove'

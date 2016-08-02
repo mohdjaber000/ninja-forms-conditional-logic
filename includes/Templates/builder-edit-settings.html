@@ -61,7 +61,9 @@
         </label>
     </div>
     <div class="nf-setting nf-one-third">
-        <label class="nf-input"><input type="text" data-id="value" class="setting" value="<%= value %>"></label>
+        <label class="nf-input">
+            <input type="text" data-id="value" class="setting" value="<%= value %>">
+        </label>
     </div>
 </script>
 
@@ -96,7 +98,9 @@
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-input"><input type="text" data-id="value" class="setting" value="<%= value %>"></label>
+            <label class="nf-input">
+                <input type="text" data-id="value" class="setting" value="<%= value %>">
+            </label>
         </div>
     </div>
     
@@ -117,12 +121,16 @@
                     <option value="show_field" <%= ( 'show_field' == trigger ) ? 'selected="selected"' : '' %>>Show Field</option>
                     <option value="hide_field" <%= ( 'hide_field' == trigger ) ? 'selected="selected"' : '' %>>Hide Field</option>
                     <option value="change_value" <%= ( 'change_value' == trigger ) ? 'selected="selected"' : '' %>>Change Value</option>
+                    <option value="select_option" <%= ( 'select_option' == trigger ) ? 'selected="selected"' : '' %>>Select Option</option>
+                    <option value="deselect_option" <%= ( 'deselect_option' == trigger ) ? 'selected="selected"' : '' %>>De-Select Option</option>
                 </select>
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-input"><input type="text" data-id="value" class="setting" value="<%= value %>"></label>
+            <label class="nf-input">
+                <%= renderThenValue( key, trigger, value ) %>
+            </label>
         </div>
     </div>
 </script>
@@ -142,12 +150,16 @@
                     <option value="show_field" <%= ( 'show_field' == trigger ) ? 'selected="selected"' : '' %>>Show Field</option>
                     <option value="hide_field" <%= ( 'hide_field' == trigger ) ? 'selected="selected"' : '' %>>Hide Field</option>
                     <option value="change_value" <%= ( 'change_value' == trigger ) ? 'selected="selected"' : '' %>>Change Value</option>
+                    <option value="select_option" <%= ( 'select_option' == trigger ) ? 'selected="selected"' : '' %>>Select Option</option>
+                    <option value="deselect_option" <%= ( 'deselect_option' == trigger ) ? 'selected="selected"' : '' %>>De-Select Option</option>
                 </select>
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-input"><input type="text" data-id="value" class="setting" value="<%= value %>"></label>
+            <label class="nf-input">
+                <%= renderElseValue( key, trigger, value ) %>
+            </label>
         </div>
     </div>
 </script>
@@ -192,7 +204,41 @@
         <%
         }
         %>
-
     </select>
+</script>
 
+<script id="nf-tmpl-cl-value-default" type="text/template">
+    <input type="text" data-id="value" class="setting" value="<%= value %>">
+</script>
+
+<script id="nf-tmpl-cl-value-textarea" type="text/template">
+    <textarea data-id="value" class="setting"><%= value %></textarea>
+</script>
+
+<script id="nf-tmpl-cl-value-checkbox" type="text/template">
+    <label class="nf-select">
+        <select data-id="value" class="setting">
+            <option value="">-- Select One</option>
+            <option value="1" <%= ( 1 == value ) ? 'selected="selected"': '' %>>Checked</option>
+            <option value="0" <%= ( 0 === value ) ? 'selected="selected"': '' %>>Unchecked</option>
+        </select>
+        <div></div>
+    </label>
+</script>
+
+<script id="nf-tmpl-cl-value-listcheckbox" type="text/template">
+    <label class="nf-select">
+        <select data-id="value" class="setting">
+            <option value="">-- Select One</option>
+            <%
+            _.each( options, function( option ) {
+                %>
+                    <option value="<%= option.value %>" <%= ( option.value === value ) ? 'selected="selected"': '' %>><%= option.label %></option>
+                <%
+            } );
+            %>
+            
+        </select>
+        <div></div>
+    </label>
 </script>

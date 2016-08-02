@@ -28,7 +28,6 @@ define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
 			}
 
 		}
-
 	});
 
 	return controller;
