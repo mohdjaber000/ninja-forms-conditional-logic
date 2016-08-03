@@ -12,7 +12,7 @@ define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:valueInput', this.getCheckboxValue );
-			nfRadio.channel( 'conditions-listcheckbox' ).reply( 'get:valueInput', this.getListCheckboxValue );
+			nfRadio.channel( 'conditions-list' ).reply( 'get:valueInput', this.getListValue );
 		},
 
 		getCheckboxValue: function( key, trigger, value ) {
@@ -20,11 +20,10 @@ define( [], function() {
 			return template( { value: value } );
 		},
 
-		getListCheckboxValue: function( key, trigger, value ) {
+		getListValue: function( key, trigger, value ) {
 			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
 			var options = fieldModel.get( 'options' );
-
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-listcheckbox' ).html() );
+			var template = _.template( jQuery( '#nf-tmpl-cl-value-list' ).html() );
 			return template( { options: options, value: value } );
 		},
 

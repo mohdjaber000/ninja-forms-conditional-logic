@@ -12,7 +12,7 @@ define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:comparators', this.getCheckboxComparators );
-			nfRadio.channel( 'conditions-listcheckbox' ).reply( 'get:comparators', this.getListCheckboxComparators );
+			nfRadio.channel( 'conditions-list' ).reply( 'get:comparators', this.getListComparators );
 		},
 
 		getCheckboxComparators: function( defaultComparators ) {
@@ -29,7 +29,7 @@ define( [], function() {
 			}
 		},
 
-		getListCheckboxComparators: function( defaultComparators ) {
+		getListComparators: function( defaultComparators ) {
 			return {
 				has: {
 					label: 'Has Selected',

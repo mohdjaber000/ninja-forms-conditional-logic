@@ -66,17 +66,28 @@ define( [], function() {
 					value: 'less'
 				}
 			};
-			/*
-			 * Send out a radio request for an html value on a channel based upon the field type.
-			 *
-			 * Get our field by key
-			 */
-			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-			if ( 'undefined' != typeof fieldModel ) {
-				var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
+
+			if ( key ) {
+				/*
+				 * Send out a radio request for an html value on a channel based upon the field type.
+				 *
+				 * Get our field by key
+				 * Get our field type model
+				 *
+				 * Send out a message on the type channel
+				 * If we don't get a response, send a message out on the parent type channel
+				 */
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
+				
+				var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators );
+				if ( ! comparators ) {
+					comparators = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
+				}				
 			} else {
 				var comparators = defaultComparators;
 			}
+
 
 			/*
 			 * Use a template to get our comparator select
@@ -102,17 +113,28 @@ define( [], function() {
 					value: 'change_value'
 				}
 			};
-			/*
-			 * Send out a radio request for an html value on a channel based upon the field type.
-			 *
-			 * Get our field by key
-			 */
-			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-			if ( 'undefined' != typeof fieldModel ) {
-				var triggers = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
+
+			if ( key ) {
+				/*
+				 * Send out a radio request for an html value on a channel based upon the field type.
+				 *
+				 * Get our field by key
+				 * Get our field type model
+				 *
+				 * Send out a message on the type channel
+				 * If we don't get a response, send a message out on the parent type channel
+				 */
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
+				
+				var triggers = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:triggers', defaultTriggers );
+				if ( ! triggers ) {
+					triggers = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
+				}
 			} else {
 				var triggers = defaultTriggers;
 			}
+
 
 			/*
 			 * Use a template to get our comparator select
@@ -128,14 +150,23 @@ define( [], function() {
 			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
 			var defaultHTML = template( { value: value } );
 
-			/*
-			 * Send out a radio request for an html value on a channel based upon the field type.
-			 *
-			 * Get our field by key
-			 */
-			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-			if ( 'undefined' != typeof fieldModel ) {
-				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, comparator, value ) || defaultHTML;
+			if ( key ) {
+				/*
+				 * Send out a radio request for an html value on a channel based upon the field type.
+				 *
+				 * Get our field by key
+				 * Get our field type model
+				 *
+				 * Send out a message on the type channel
+				 * If we don't get a response, send a message out on the parent type channel
+				 */
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
+				
+				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, comparator, value );
+				if ( ! html ) {
+					html = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:valueInput', key, comparator, value ) || defaultHTML;
+				}
 			} else {
 				var html = defaultHTML;
 			}
@@ -162,16 +193,28 @@ define( [], function() {
 			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
 			var defaultHTML = template( { value: value } );
 
-			/*
-			 * Send out a radio request for an html value on a channel based upon the field type.
-			 *
-			 * Get our field by key
-			 */
-			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-			var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, trigger, value ) || defaultHTML;
+			if ( key ) {
+				/*
+				 * Send out a radio request for an html value on a channel based upon the field type.
+				 *
+				 * Get our field by key
+				 * Get our field type model
+				 *
+				 * Send out a message on the type channel
+				 * If we don't get a response, send a message out on the parent type channel
+				 */
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
+				
+				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, trigger, value );
+				if ( ! html ) {
+					html = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:valueInput', key, trigger, value ) || defaultHTML;
+				}
+			} else {
+				var html = defaultHTML;
+			}
 
 			return html;
-
 		}
 	});
 

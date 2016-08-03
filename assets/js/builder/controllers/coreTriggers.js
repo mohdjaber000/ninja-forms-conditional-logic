@@ -12,7 +12,7 @@ define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:triggers', this.getCheckboxTriggers );
-			nfRadio.channel( 'conditions-listcheckbox' ).reply( 'get:triggers', this.getListCheckboxTriggers );
+			nfRadio.channel( 'conditions-list' ).reply( 'get:triggers', this.getListTriggers );
 		},
 
 		getCheckboxTriggers: function( defaultTriggers ) {
@@ -29,7 +29,7 @@ define( [], function() {
 			}
 		},
 
-		getListCheckboxTriggers: function( defaultTriggers ) {
+		getListTriggers: function( defaultTriggers ) {
 			var triggers = _.extend( defaultTriggers, {
 				select_option: {
 					label: 'Select Option',
