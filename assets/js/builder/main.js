@@ -18,7 +18,7 @@ require( [ 'controllers/loadControllers', 'models/conditionCollection' ], functi
 			 */
 			var conditions = nfRadio.channel( 'settings' ).request( 'get:setting', 'conditions' );
 
-			if ( conditions && false === conditions instanceof Backbone.Collection ) {
+			if ( false === conditions instanceof Backbone.Collection ) {
 				conditions = new ConditionCollection( conditions );
 				nfRadio.channel( 'settings' ).request( 'update:setting', 'conditions', conditions, true );
 			}
