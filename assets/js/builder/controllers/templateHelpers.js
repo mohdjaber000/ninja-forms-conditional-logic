@@ -17,7 +17,9 @@ define( [], function() {
 
 		addTemplateHelpers: function( model ) {
 			model.set( 'renderFieldSelect', this.renderFieldSelect );
-			model.set( 'renderComparatorSelect', this.renderComparatorSelect );
+			model.set( 'renderComparators', this.renderComparators );
+			model.set( 'renderTriggers', this.renderTriggers );
+			model.set( 'renderWhenValue', this.renderWhenValue );
 			model.set( 'renderThenValue', this.renderThenValue );
 			model.set( 'renderElseValue', this.renderThenValue );
 		},
@@ -32,12 +34,113 @@ define( [], function() {
 			return template( { calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
 		},
 
-		renderComparatorSelect: function( comparator ) {
+		renderComparators: function( key, currentComparator ) {
+			var defaultComparators = {
+				equal: {
+					label: 'Equals',
+					value: 'equal'
+				},
+
+				notequal: {
+					label: 'Does Not Equal',
+					value: 'notequal'
+				},
+
+				contains: {
+					label: 'Contains',
+					value: 'contains'
+				},
+
+				notcontains: {
+					label: 'Does Not Contain',
+					value: 'notcontains'
+				},
+
+				greater: {
+					label: 'Greater Than',
+					value: 'greater'
+				},
+
+				less: {
+					label: 'Less Than',
+					value: 'less'
+				}
+			};
+			/*
+			 * Send out a radio request for an html value on a channel based upon the field type.
+			 *
+			 * Get our field by key
+			 */
+			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+			if ( 'undefined' != typeof fieldModel ) {
+				var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
+			} else {
+				var comparators = defaultComparators;
+			}
+
 			/*
 			 * Use a template to get our comparator select
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-comparator-select' ).html() );
-			return template( { comparator: comparator } );
+			var template = _.template( jQuery( '#nf-tmpl-cl-comparators' ).html() );
+			return template( { comparators: comparators, currentComparator: currentComparator } );
+		},
+
+		renderTriggers: function( key, currentTrigger, value ) {
+			var defaultTriggers = {
+				show_field: {
+					label: 'Show Field',
+					value: 'show_field'
+				},
+
+				hide_field: {
+					label: 'Hide Field',
+					value: 'hide_field'
+				},
+
+				change_value: {
+					label: 'Change Value',
+					value: 'change_value'
+				}
+			};
+			/*
+			 * Send out a radio request for an html value on a channel based upon the field type.
+			 *
+			 * Get our field by key
+			 */
+			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+			if ( 'undefined' != typeof fieldModel ) {
+				var triggers = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
+			} else {
+				var triggers = defaultTriggers;
+			}
+
+			/*
+			 * Use a template to get our comparator select
+			 */
+			var template = _.template( jQuery( '#nf-tmpl-cl-triggers' ).html() );
+			return template( { triggers: triggers, currentTrigger: currentTrigger } );
+		},
+
+		renderWhenValue: function( key, comparator, value ) {
+			/*
+			 * Use a template to get our value
+			 */
+			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
+			var defaultHTML = template( { value: value } );
+
+			/*
+			 * Send out a radio request for an html value on a channel based upon the field type.
+			 *
+			 * Get our field by key
+			 */
+			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+			if ( 'undefined' != typeof fieldModel ) {
+				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, comparator, value ) || defaultHTML;
+			} else {
+				var html = defaultHTML;
+			}
+			
+			return html;
 		},
 
 		renderThenValue: function( key, trigger, value ) {
@@ -47,7 +150,12 @@ define( [], function() {
 			 * TODO: This should be much more dynamic.
 			 * At the moment, we manually check to see if we are doing a "change_value" or similar trigger.
 			 */
-			if ( trigger != 'change_value' && trigger != 'select_option' && trigger != 'deselect_option' ) {
+			if ( trigger != 'change_value'
+				&& trigger != 'select_option'
+				&& trigger != 'deselect_option'
+				&& trigger != 'show_option'
+				&& trigger != 'hide_option' 
+			) {
 				return '';
 			}
 

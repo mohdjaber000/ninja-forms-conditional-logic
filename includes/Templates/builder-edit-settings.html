@@ -56,13 +56,13 @@
     </div> 
     <div class="nf-setting nf-one-third">
         <label class="nf-select">
-            <%= renderComparatorSelect( comparator ) %>
+            <%= renderComparators( key, comparator ) %>
             <div></div>
         </label>
     </div>
     <div class="nf-setting nf-one-third">
         <label class="nf-input">
-            <input type="text" data-id="value" class="setting" value="<%= value %>">
+            <%= renderWhenValue( key, comparator, value ) %>
         </label>
     </div>
 </script>
@@ -93,13 +93,13 @@
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <%= renderComparatorSelect( comparator ) %>
+                <%= renderComparators( key, comparator ) %>
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-input">
-                <input type="text" data-id="value" class="setting" value="<%= value %>">
+                <%= renderWhenValue( key, comparator, value ) %>
             </label>
         </div>
     </div>
@@ -116,14 +116,7 @@
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <select data-id="trigger" class="setting">
-                    <option value="">-- Select One</option>
-                    <option value="show_field" <%= ( 'show_field' == trigger ) ? 'selected="selected"' : '' %>>Show Field</option>
-                    <option value="hide_field" <%= ( 'hide_field' == trigger ) ? 'selected="selected"' : '' %>>Hide Field</option>
-                    <option value="change_value" <%= ( 'change_value' == trigger ) ? 'selected="selected"' : '' %>>Change Value</option>
-                    <option value="select_option" <%= ( 'select_option' == trigger ) ? 'selected="selected"' : '' %>>Select Option</option>
-                    <option value="deselect_option" <%= ( 'deselect_option' == trigger ) ? 'selected="selected"' : '' %>>De-Select Option</option>
-                </select>
+                <%= renderTriggers( key, trigger, value ) %>
                 <div></div>
             </label>
         </div>
@@ -141,18 +134,14 @@
             <i class="fa fa-minus-circle nf-remove-else" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
+            <label class="nf-select">
+                <%= renderFieldSelect( key ) %>
+                <div></div>
+            </label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <select data-id="trigger" class="setting">
-                    <option value="">-- Select One</option>
-                    <option value="show_field" <%= ( 'show_field' == trigger ) ? 'selected="selected"' : '' %>>Show Field</option>
-                    <option value="hide_field" <%= ( 'hide_field' == trigger ) ? 'selected="selected"' : '' %>>Hide Field</option>
-                    <option value="change_value" <%= ( 'change_value' == trigger ) ? 'selected="selected"' : '' %>>Change Value</option>
-                    <option value="select_option" <%= ( 'select_option' == trigger ) ? 'selected="selected"' : '' %>>Select Option</option>
-                    <option value="deselect_option" <%= ( 'deselect_option' == trigger ) ? 'selected="selected"' : '' %>>De-Select Option</option>
-                </select>
+                <%= renderTriggers( key, trigger, value ) %>
                 <div></div>
             </label>
         </div>
@@ -162,17 +151,6 @@
             </label>
         </div>
     </div>
-</script>
-
-<script id="nf-tmpl-comparator-select" type="text/template">
-    <select data-id="comparator" class="setting">
-        <option value="">-- Select One</option>
-        <option value="equal" <%= ( 'equal' == comparator ) ? 'selected="selected"' : '' %>>Equals</option>
-        <option value="notequal" <%= ( 'notequal' == comparator ) ? 'selected="selected"' : '' %>>Does Not Equal</option>
-        <option value="contains" <%= ( 'contains' == comparator ) ? 'selected="selected"' : '' %>>Contains</option>
-        <option value="greater" <%= ( 'greater' == comparator ) ? 'selected="selected"' : '' %>>Greater Than</option>
-        <option value="less" <%= ( 'less' == comparator ) ? 'selected="selected"' : '' %>>Less Than</option>
-    </select>
 </script>
 
 <script id="nf-tmpl-field-select" type="text/template">
@@ -203,6 +181,19 @@
             </optgroup>
         <%
         }
+        %>
+    </select>
+</script>
+
+<script id="nf-tmpl-cl-comparators" type="text/template">
+    <select data-id="comparator" class="setting">
+        <option value="">-- Select One</option>
+        <%
+        _.each( comparators, function( comparator ) {
+            %>
+            <option value="<%= comparator.value %>" <%= ( comparator.value == currentComparator ) ? 'selected="selected"' : '' %>><%= comparator.label %></option>
+            <%
+        } );
         %>
     </select>
 </script>
@@ -241,4 +232,17 @@
         </select>
         <div></div>
     </label>
+</script>
+
+<script id="nf-tmpl-cl-triggers" type="text/template">
+    <select data-id="trigger" class="setting">
+        <option value="">-- Select One</option>
+        <%
+            _.each( triggers, function( trigger ) {
+                %>
+                <option value="<%= trigger.value %>" <%= ( trigger.value == currentTrigger ) ? 'selected="selected"' : '' %>><%= trigger.label %></option>
+                <%
+            } );
+        %>
+    </select>
 </script>

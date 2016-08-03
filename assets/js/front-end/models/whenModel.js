@@ -46,14 +46,26 @@ define( [], function() {
 				return a != b;
 			},
 			'contains': function( a, b ) {
-				/*
-				 * If our b value has quotes in it, we want to find that exact word or phrase.
-				 */
-				if ( b.indexOf( '"' ) >= 0 ) {
-					b = b.replace( /['"]+/g, '' );
-					return new RegExp("\\b" + b + "\\b").test( a );
+				if ( jQuery.isArray( a ) ) {
+					/*
+					 * If a is an array, then we're searching for an index.
+					 */
+					return a.indexOf( b ) >= 0;
+				} else {
+					/*
+					 * If a is a string, then we're searching for a string position.
+					 *
+					 * If our b value has quotes in it, we want to find that exact word or phrase.
+					 */
+					if ( b.indexOf( '"' ) >= 0 ) {
+						b = b.replace( /['"]+/g, '' );
+						return new RegExp("\\b" + b + "\\b").test( a );
+					}
+					return a.toLowerCase().indexOf( b.toLowerCase() ) >= 0; 				
 				}
-				return a.toLowerCase().indexOf( b.toLowerCase() ) >= 0; 
+			},
+			'notcontains': function( a, b ) {
+				return ! this.contains( a, b );
 			},
 			'greater': function( a, b ) {
 				return parseFloat( a ) > parseFloat( b );

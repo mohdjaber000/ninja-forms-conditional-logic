@@ -18,10 +18,6 @@ define( [], function( ) {
 			'click .nf-remove-else': 'clickRemove'
 		},
 
-		onRender: function() {
-			console.log( 'render!' );
-		},
-
 		changeSetting: function( e ) {
 			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model )
 		},

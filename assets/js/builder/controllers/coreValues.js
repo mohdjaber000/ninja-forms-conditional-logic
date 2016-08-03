@@ -11,14 +11,8 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'conditions-textarea' ).reply( 'get:valueInput', this.getTextareaValue );
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:valueInput', this.getCheckboxValue );
 			nfRadio.channel( 'conditions-listcheckbox' ).reply( 'get:valueInput', this.getListCheckboxValue );
-		},
-
-		getTextareaValue: function( key, trigger, value ) {
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-textarea' ).html() );
-			return template( { value: value } );
 		},
 
 		getCheckboxValue: function( key, trigger, value ) {

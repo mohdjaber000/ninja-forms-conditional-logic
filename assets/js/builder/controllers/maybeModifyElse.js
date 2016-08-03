@@ -15,15 +15,21 @@ define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
 
 		maybeAddElse: function( e, thenModel ) {
 			var opposite = false;
-			if ( 'show_field' == jQuery( e.target ).val() ) {
+			/*
+			 * TODO: Make this more dynamic.
+			 * Currently, show and hide are hard-coded here.
+			 */
+			var trigger = jQuery( e.target ).val();
+			if ( 'show_field' == trigger ) {
 				opposite = 'hide_field';
-			} else if ( 'hide_field' == jQuery( e.target ).val() ) {
+			} else if ( 'hide_field' == trigger ) {
 				opposite = 'show_field';
 			}
+
 			if ( opposite ) {
 				var conditionModel = thenModel.collection.options.conditionModel
 				if( 'undefined' == typeof conditionModel.get( 'else' ).findWhere( { 'key': thenModel.get( 'key' ), 'trigger': opposite } ) ) {
-					conditionModel.get( 'else' ).add( { 'key': thenModel.get( 'key' ), 'trigger': opposite } );
+					conditionModel.get( 'else' ).add( { key: thenModel.get( 'key' ), trigger: opposite } );
 				}
 			}
 

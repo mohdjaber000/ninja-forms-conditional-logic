@@ -9,8 +9,8 @@ define( [], function( ) {
 	var view = Marionette.ItemView.extend({
 		template: "#nf-tmpl-and-item",
 
-		onRender: function() {
-			// console.log( this.model );
+		initialize: function() {
+			this.listenTo( this.model, 'change', this.render );
 		},
 		
 		events: {
