@@ -15,7 +15,7 @@ define( [], function() {
 		},
 
 		initialize: function() {
-			nfRadio.channel( 'conditions' ).trigger( 'init:thenModel', this );
+			nfRadio.channel( 'conditions' ).trigger( 'init:whenModel', this );
 		}
 	} );
 	

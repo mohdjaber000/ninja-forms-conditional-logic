@@ -18,7 +18,8 @@ define( [
 	'controllers/coreValues',
 	'controllers/coreComparators',
 	'controllers/coreTriggers',
-	'controllers/getDrawerHeader'
+	'controllers/getDrawerHeader',
+	'controllers/trackKeyChanges'
 
 	], function(
 
@@ -34,7 +35,8 @@ define( [
 	CoreValues,
 	CoreComparators,
 	CoreTriggers,
-	GetDrawerHeader
+	GetDrawerHeader,
+	TrackKeyChanges
 
 	) {
 	var controller = Marionette.Object.extend( {
@@ -50,6 +52,7 @@ define( [
 			new CoreComparators();
 			new CoreTriggers();
 			new GetDrawerHeader();
+			new TrackKeyChanges();
 		}
 	});
 

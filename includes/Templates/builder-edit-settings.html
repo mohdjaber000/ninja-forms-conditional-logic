@@ -222,10 +222,9 @@
         <select data-id="value" class="setting">
             <option value="">-- Select One</option>
             <%
-            _.each( options, function( option ) {
-                if ( 'undefined' == typeof option || 'undefined' == typeof option.value ) { return false }
-                %>
-                    <option value="<%= option.value %>" <%= ( option.value === value ) ? 'selected="selected"': '' %>><%= option.label %></option>
+            _.each( options.models, function( option ) {
+            %>
+                <option value="<%= option.get( 'value' ) %>" <%= ( option.get( 'value' ) === value ) ? 'selected="selected"': '' %>><%= option.get( 'label' ) %></option>
                 <%
             } );
             %>
