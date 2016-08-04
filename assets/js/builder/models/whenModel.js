@@ -12,7 +12,8 @@ define( [], function() {
 			key: '',
 			comparator: '',
 			value: '',
-			type: 'field'
+			type: 'field',
+			modelType: 'when'
 		},
 
 		initialize: function() {

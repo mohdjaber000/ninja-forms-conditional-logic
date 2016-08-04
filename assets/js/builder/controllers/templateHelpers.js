@@ -16,7 +16,7 @@ define( [], function() {
 		},
 
 		addTemplateHelpers: function( model ) {
-			model.set( 'renderFieldSelect', this.renderFieldSelect );
+			model.set( 'renderKeySelect', this.renderKeySelect );
 			model.set( 'renderComparators', this.renderComparators );
 			model.set( 'renderTriggers', this.renderTriggers );
 			model.set( 'renderWhenValue', this.renderWhenValue );
@@ -24,14 +24,14 @@ define( [], function() {
 			model.set( 'renderElseValue', this.renderThenValue );
 		},
 
-		renderFieldSelect: function( currentValue ) {
+		renderKeySelect: function( currentValue, modelType ) {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
 			/*
 			 * Use a template to get our field select
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-field-select' ).html() );
-			return template( { calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
+			var template = _.template( jQuery( '#nf-tmpl-cl-key-select' ).html() );
+			return template( { modelType: modelType, calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
 		},
 
 		renderComparators: function( type, key, currentComparator ) {

@@ -52,7 +52,7 @@
 
 <script id="nf-tmpl-first-when-item" type="text/template">
     <div class="nf-setting nf-one-third">
-        <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
+        <label class="nf-select"><%= renderKeySelect( key, modelType ) %><div></div></label>
     </div> 
     <div class="nf-setting nf-one-third">
         <label class="nf-select">
@@ -89,7 +89,7 @@
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
+            <label class="nf-select"><%= renderKeySelect( key, modelType ) %><div></div></label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
@@ -112,7 +112,7 @@
             <i class="fa fa-minus-circle nf-remove-then" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-select"><%= renderFieldSelect( key ) %><div></div></label>
+            <label class="nf-select"><%= renderKeySelect( key, modelType ) %><div></div></label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
@@ -135,7 +135,7 @@
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <%= renderFieldSelect( key ) %>
+                <%= renderKeySelect( key, modelType ) %>
                 <div></div>
             </label>
         </div>
@@ -153,7 +153,7 @@
     </div>
 </script>
 
-<script id="nf-tmpl-field-select" type="text/template">
+<script id="nf-tmpl-cl-key-select" type="text/template">
     <select data-id="key" class="setting">
         <option value="">-- Select One</option>
         <optgroup label="Fields">
@@ -167,7 +167,7 @@
             %>
         </optgroup>
         <%
-        if ( 0 != calcCollection.models.length ) {
+        if ( 'when' == modelType && 0 != calcCollection.models.length ) {
         %>
             <optgroup label="Calculations">
             <%

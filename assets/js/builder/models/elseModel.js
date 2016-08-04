@@ -11,7 +11,8 @@ define( [], function() {
 			key: '',
 			trigger: '',
 			value: '',
-			type: 'field'
+			type: 'field',
+			modelType: 'else'
 		},
 
 		initialize: function() {
