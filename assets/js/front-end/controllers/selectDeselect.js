@@ -15,23 +15,47 @@ define( [], function() {
 
 		selectOption: function( conditionModel, then ) {
 			/*
-			 * Our value won't be an array, but our list field values are stored as arrays.
-			 * We need to put our then.value into an array.
+			 * Get our field model and set this option's "selected" property to 1
 			 */
-			var tmp = _.clone( then );
-			tmp.value = [ tmp.value ];
-						
+			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
+			var options = targetFieldModel.get( 'options' );
+			var option = _.find( options, { value: then.value } );
+			option.selected = 1;
+			targetFieldModel.set( 'options', options );
 			/*
-			 * select_option is an alias for change_value, so we just send out a radio message for that.
+			 * Re render our field
 			 */
-			nfRadio.channel( 'condition:trigger' ).request( 'change_value', conditionModel, tmp );
+			targetFieldModel.trigger( 'reRender', targetFieldModel );
 		},
 
 		deselectOption: function( conditionModel, then ) {
+			/*
+			 * When we are trying to deselect our option, we need to change it's "selected" property to 0 AND change its value.
+			 */
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
+
+			/*
+			 * Set "selected" to 0.
+			 */
+			var options = targetFieldModel.get( 'options' );
+			var option = _.find( options, { value: then.value } );
+			option.selected = 0;
+			targetFieldModel.set( 'options', options );
+
+			/*
+			 * Update our value
+			 */
 			var currentValue = targetFieldModel.get( 'value' );
-			currentValue = _.without( currentValue, then.value );
+			if ( _.isArray( currentValue ) ) {
+				currentValue = _.without( currentValue, then.value );
+			} else {
+				currentValue = '';
+			}
 			targetFieldModel.set( 'value', currentValue );
+
+			/*
+			 * Re render our field
+			 */
 			targetFieldModel.trigger( 'reRender', targetFieldModel );
 		},
 

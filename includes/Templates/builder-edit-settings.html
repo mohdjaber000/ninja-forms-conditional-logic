@@ -223,6 +223,7 @@
             <option value="">-- Select One</option>
             <%
             _.each( options, function( option ) {
+                if ( 'undefined' == typeof option || 'undefined' == typeof option.value ) { return false }
                 %>
                     <option value="<%= option.value %>" <%= ( option.value === value ) ? 'selected="selected"': '' %>><%= option.label %></option>
                 <%

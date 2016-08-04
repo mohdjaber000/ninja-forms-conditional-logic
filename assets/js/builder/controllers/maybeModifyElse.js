@@ -17,13 +17,22 @@ define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
 			var opposite = false;
 			/*
 			 * TODO: Make this more dynamic.
-			 * Currently, show and hide are hard-coded here.
+			 * Currently, show, hide, show option, and hide option are hard-coded here.
 			 */
 			var trigger = jQuery( e.target ).val();
-			if ( 'show_field' == trigger ) {
-				opposite = 'hide_field';
-			} else if ( 'hide_field' == trigger ) {
-				opposite = 'show_field';
+			switch( trigger ) {
+				case 'show_field':
+					opposite = 'hide_field';
+					break;
+				case 'hide_field':
+					opposite = 'show_field';
+					break;
+				case 'show_option':
+					// opposite = 'hide_option';
+					break;
+				case 'hide_option':
+					// opposite = 'show_option';
+					break;
 			}
 
 			if ( opposite ) {
@@ -32,7 +41,6 @@ define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
 					conditionModel.get( 'else' ).add( { key: thenModel.get( 'key' ), trigger: opposite } );
 				}
 			}
-
 		}
 	});
 

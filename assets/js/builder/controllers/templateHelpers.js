@@ -27,6 +27,7 @@ define( [], function() {
 		renderFieldSelect: function( currentValue ) {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
+			fieldCollection.sort();
 			/*
 			 * Use a template to get our field select
 			 */

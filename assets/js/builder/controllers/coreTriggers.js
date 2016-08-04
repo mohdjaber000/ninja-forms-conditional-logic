@@ -11,22 +11,8 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:triggers', this.getCheckboxTriggers );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:triggers', this.getListTriggers );
-		},
-
-		getCheckboxTriggers: function( defaultTriggers ) {
-			return {
-				is: {
-					label: 'Is',
-					value: 'equal'
-				},
-
-				isnot: {
-					label: 'Is Not',
-					value: 'notequal'
-				}
-			}
+			nfRadio.channel( 'conditions-submit' ).reply( 'get:triggers', this.getSubmitTriggers );
 		},
 
 		getListTriggers: function( defaultTriggers ) {
@@ -57,6 +43,9 @@ define( [], function() {
 			return triggers;
 		},
 
+		getSubmitTriggers: function( defaultTriggers ) {
+			return _.omit( defaultTriggers, 'change_value' );
+		}
 
 	});
 
