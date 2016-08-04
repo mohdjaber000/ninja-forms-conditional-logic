@@ -16,6 +16,10 @@ define( [], function() {
 			var id = jQuery( e.target ).data( 'id' );
 			var before = dataModel.get( id );
 
+			if ( jQuery( e.target ).find( ':selected' ).data( 'type' ) ) {
+				dataModel.set( 'type', jQuery( e.target ).find( ':selected' ).data( 'type' ) );
+			}
+
 			dataModel.set( id, value );
 
 			var after = value;

@@ -5,15 +5,15 @@ require( [ 'controllers/initCollection', 'controllers/showHide', 'controllers/sh
 	var NFConditionalLogic = Marionette.Application.extend( {
 
 		initialize: function( options ) {
-			this.listenTo( nfRadio.channel( 'form' ), 'loaded', this.initCollection );
+			this.listenTo( nfRadio.channel( 'form' ), 'after:loaded', this.loadControllers );
 		},
 
-		initCollection: function( formModel ) {
+		loadControllers: function( formModel ) {
 			new ShowHide();
 			new ShowHideOption();
 			new ChangeValue();
 			new SelectDeselect();
-			new InitCollection( formModel );			
+			new InitCollection( formModel );
 		},
 
 		onStart: function() {

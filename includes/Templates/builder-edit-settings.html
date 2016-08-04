@@ -56,13 +56,13 @@
     </div> 
     <div class="nf-setting nf-one-third">
         <label class="nf-select">
-            <%= renderComparators( key, comparator ) %>
+            <%= renderComparators( type, key, comparator ) %>
             <div></div>
         </label>
     </div>
     <div class="nf-setting nf-one-third">
         <label class="nf-input">
-            <%= renderWhenValue( key, comparator, value ) %>
+            <%= renderWhenValue( type, key, comparator, value ) %>
         </label>
     </div>
 </script>
@@ -93,13 +93,13 @@
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <%= renderComparators( key, comparator ) %>
+                <%= renderComparators( type, key, comparator ) %>
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-input">
-                <%= renderWhenValue( key, comparator, value ) %>
+                <%= renderWhenValue( type, key, comparator, value ) %>
             </label>
         </div>
     </div>
@@ -161,7 +161,7 @@
             _.each( fieldCollection.models, function( fieldModel ) {
                 var selected = ( fieldModel.get( 'key' ) == currentValue ) ? 'selected="selected"' : '';
                 %>
-                <option value="<%= fieldModel.get( 'key' ) %>" <%= selected %>><%= fieldModel.get( 'label' ) %></option>
+                <option value="<%= fieldModel.get( 'key' ) %>" <%= selected %> data-type="field"><%= fieldModel.get( 'label' ) %></option>
                 <%
             } );
             %>
@@ -174,7 +174,7 @@
             _.each( calcCollection.models, function( calcModel ) {
                 var selected = ( calcModel.get( 'name' ) == currentValue ) ? 'selected="selected"' : '';
                 %>
-                <option value="<%= calcModel.get( 'name' ) %>" <%= selected %>><%= calcModel.get( 'name' ) %></option>
+                <option value="<%= calcModel.get( 'name' ) %>" <%= selected %> data-type="calc"><%= calcModel.get( 'name' ) %></option>
                 <%
             } );
             %>

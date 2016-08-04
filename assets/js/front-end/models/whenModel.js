@@ -1,34 +1,59 @@
 define( [], function() {
 	var model = Backbone.Model.extend( {
 		initialize: function( models, options ) {
-			// Get our field model
-			var fieldModel = nfRadio.channel( 'form-' + options.condition.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', this.get( 'key' ) );
-			// When we change the value of our field, update our compare status.
-			fieldModel.on( 'change:value', this.updateCompare, this );
-			// When we keyup in our field, maybe update our compare status.
-			this.listenTo( nfRadio.channel( 'field-' + fieldModel.get( 'id' ) ), 'keyup:field', this.maybeUpdateCompare );
-			// Update our compare status.
-			this.updateCompare( fieldModel );
-
 			/*
-			 * TODO: This should be moved to the show_field/hide_field file because it is specific to showing and hiding.
-			 * Create a radio message here so that the specific JS file can hook into whenModel init.
+			 * Our key could be a field or a calc.
+			 * We need to setup a listener on either the field or calc model for changes.
 			 */
-			fieldModel.on( 'change:visible', this.updateCompare, this );
+
+			if ( 'calc' == this.get( 'type' ) ) { // We have a calculation key
+				/*
+				 * Get our calc model
+				 */
+				var calcModel = nfRadio.channel( 'form-' + this.collection.options.condition.collection.formModel.get( 'id' ) ).request( 'get:calc', this.get( 'key' ) );
+				/*
+				 * When we update our calculation, update our compare
+				 */
+				this.listenTo( calcModel, 'change:value', this.updateCalcCompare );
+			} else { // We have a field key
+				// Get our field model
+				var fieldModel = nfRadio.channel( 'form-' + options.condition.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', this.get( 'key' ) );
+				// When we change the value of our field, update our compare status.
+				fieldModel.on( 'change:value', this.updateFieldCompare, this );
+				// When we keyup in our field, maybe update our compare status.
+				this.listenTo( nfRadio.channel( 'field-' + fieldModel.get( 'id' ) ), 'keyup:field', this.maybeupdateFieldCompare );
+				// Update our compare status.
+				this.updateFieldCompare( fieldModel );
+
+				/*
+				 * TODO: This should be moved to the show_field/hide_field file because it is specific to showing and hiding.
+				 * Create a radio message here so that the specific JS file can hook into whenModel init.
+				 */
+				fieldModel.on( 'change:visible', this.updateFieldCompare, this );
+			}
 		},
 
-		maybeUpdateCompare: function( el, fieldModel, keyCode ) {
+		updateCalcCompare: function( calcModel ) {
+			this.updateCompare( calcModel.get( 'value' ) );
+		},
+
+		maybeupdateFieldCompare: function( el, fieldModel, keyCode ) {
 			var fieldValue = jQuery( el ).val();
-			this.updateCompare( fieldModel, null, fieldValue );
+			this.updateFieldCompare( fieldModel, null, fieldValue );
 		},
 
-		updateCompare: function( fieldModel, val, fieldValue ) {
+		updateCompare: function( value ) {
+			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
+			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this.get( 'value' ) );
+			this.set( 'status', status );
+		},
+
+		updateFieldCompare: function( fieldModel, val, fieldValue ) {
 			if ( _.isEmpty( fieldValue ) ) {
 				fieldValue = fieldModel.get( 'value' );
 			}
-			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
-			var status = this.compareValues[ this.get( 'comparator' ) ]( fieldValue, this.get( 'value' ) );
-			this.set( 'status', status );
+			
+			this.updateCompare( fieldValue );
 			
 			/*
 			 * TODO: This should be moved to the show_field/hide_field file because it is specific to showing and hiding.
@@ -72,6 +97,12 @@ define( [], function() {
 			},
 			'less': function( a, b ) {
 				return parseFloat( a ) < parseFloat( b );
+			},
+			'greaterequal': function( a, b ) {
+				return parseFloat( a ) > parseFloat( b ) || parseFloat( a ) == parseFloat( b );
+			},
+			'lessequal': function( a, b ) {
+				return parseFloat( a ) < parseFloat( b ) || parseFloat( a ) == parseFloat( b );
 			}
 		} 
 	} );

@@ -11,7 +11,8 @@ define( [], function() {
 			connector: 'AND',
 			key: '',
 			comparator: '',
-			value: ''
+			value: '',
+			type: 'field'
 		},
 
 		initialize: function() {

@@ -10,7 +10,8 @@ define( [], function() {
 		defaults: {
 			key: '',
 			trigger: '',
-			value: ''
+			value: '',
+			type: 'field'
 		},
 
 		initialize: function() {

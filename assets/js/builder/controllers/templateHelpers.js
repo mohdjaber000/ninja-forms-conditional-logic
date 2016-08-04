@@ -27,7 +27,6 @@ define( [], function() {
 		renderFieldSelect: function( currentValue ) {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
-			fieldCollection.sort();
 			/*
 			 * Use a template to get our field select
 			 */
@@ -35,7 +34,7 @@ define( [], function() {
 			return template( { calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
 		},
 
-		renderComparators: function( key, currentComparator ) {
+		renderComparators: function( type, key, currentComparator ) {
 			var defaultComparators = {
 				equal: {
 					label: 'Equals',
@@ -70,25 +69,42 @@ define( [], function() {
 
 			if ( key ) {
 				/*
-				 * Send out a radio request for an html value on a channel based upon the field type.
-				 *
-				 * Get our field by key
-				 * Get our field type model
-				 *
-				 * Send out a message on the type channel
-				 * If we don't get a response, send a message out on the parent type channel
+				 * This could be a field or a calculation key. If it's a calc key, get the calc model.
 				 */
-				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
-				
-				var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators );
-				if ( ! comparators ) {
-					comparators = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
-				}				
+				if ( 'calc' == type ) {
+					var comparators = _.omit( defaultComparators, 'contains', 'notcontains' );
+					_.extend( comparators, {
+						lessequal: {
+							label: 'Less Than or Equal',
+							value: 'lessequal'
+						},
+
+						greaterequal: {
+							label: 'Greater Than or Equal',
+							value: 'greaterequal'
+						}
+					} );
+				} else {
+					/*
+					 * Send out a radio request for an html value on a channel based upon the field type.
+					 *
+					 * Get our field by key
+					 * Get our field type model
+					 *
+					 * Send out a message on the type channel
+					 * If we don't get a response, send a message out on the parent type channel
+					 */
+					var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+					var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
+					
+					var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators );
+					if ( ! comparators ) {
+						comparators = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
+					}	
+				}
 			} else {
 				var comparators = defaultComparators;
 			}
-
 
 			/*
 			 * Use a template to get our comparator select
@@ -144,14 +160,17 @@ define( [], function() {
 			return template( { triggers: triggers, currentTrigger: currentTrigger } );
 		},
 
-		renderWhenValue: function( key, comparator, value ) {
+		renderWhenValue: function( type, key, comparator, value ) {
 			/*
 			 * Use a template to get our value
 			 */
 			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
 			var defaultHTML = template( { value: value } );
 
-			if ( key ) {
+			/*
+			 * If we have a key and it's not a calc, get our field type based HTML.
+			 */
+			if ( key && 'calc' != type ) {
 				/*
 				 * Send out a radio request for an html value on a channel based upon the field type.
 				 *

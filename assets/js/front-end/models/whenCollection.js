@@ -3,7 +3,7 @@ define( ['models/whenModel'], function( WhenModel ) {
 		model: WhenModel,
 
 		initialize: function( models, options ) {
-			
+			this.options = options;
 		}
 	} );
 	return collection;
