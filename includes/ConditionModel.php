@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Condition Model
+ *
+ * This class handles the processing of an individual form condition.
+ *
+ * @package     Ninja Forms - Conditional Logic
+ * @subpackage  Conditions
+ * @author      Kyle B. Johnson
+ * @copyright   Copyright (c) 2016, The WP Ninjas
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       3.0.0
+ */
+
 final class NF_ConditionalLogic_ConditionModel
 {
     private $when;
@@ -37,7 +50,8 @@ final class NF_ConditionalLogic_ConditionModel
     private function trigger( $trigger )
     {
         $field = $this->fields->get_field( $trigger[ 'key' ] );
-        $this->{ $trigger[ 'trigger' ] }( $field );
+
+        NF_ConditionalLogic()->trigger( $trigger[ 'trigger' ] )->process( $field );
     }
 
     /*
@@ -51,24 +65,4 @@ final class NF_ConditionalLogic_ConditionModel
         return ( false !== strpos( $comparison, $value ) );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Triggers
-    |--------------------------------------------------------------------------
-    */
-
-    public function show_field( $field )
-    {
-        if( $field->get_setting( 'value' ) ) return;
-
-        $submitted_value = $field->get_setting( 'submitted_value' );
-        $field->update_setting( 'value', $submitted_value );
-    }
-
-    public function hide_field( &$field )
-    {
-        $value = $field->get_setting( 'value' );
-        $field->update_setting( 'value', false );
-        $field->update_setting( 'submitted_value', $value );
-    }
 }

@@ -54,6 +54,14 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public static $url = '';
 
         /**
+         * Condition Triggers
+         *
+         * @since 3.0
+         * @var array
+         */
+        public $triggers = array();
+
+        /**
          * Main Plugin Instance
          *
          * Insures that only one instance of a plugin class exists in memory at any one
@@ -78,6 +86,8 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
                  */
                 spl_autoload_register(array(self::$instance, 'autoloader'));
             }
+
+            return self::$instance;
         }
 
         public function __construct()
@@ -95,6 +105,8 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public function init()
         {
             new NF_ConditionalLogic_Submission();
+
+            self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
         }
 
         public function setup_admin()
@@ -172,6 +184,16 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             if ( ! class_exists( 'NF_Extension_Updater' ) ) return;
 
             new NF_Extension_Updater( self::NAME, self::VERSION, self::AUTHOR, __FILE__, self::SLUG );
+        }
+
+        /*
+         * API
+         */
+
+        public function trigger( $key )
+        {
+            if( ! isset( $this->triggers[ $key ] ) ) return false;
+            return $this->triggers[ $key ][ 'instance' ];
         }
     }
 
