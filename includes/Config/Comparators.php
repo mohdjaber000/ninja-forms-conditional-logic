@@ -29,7 +29,7 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
     'contains' => array(
         'key'      => 'contains',
         'label'    => __( 'Contains', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_Contains()
     ),
 
     'notcontains' => array(

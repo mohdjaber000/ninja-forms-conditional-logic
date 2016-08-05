@@ -40,6 +40,14 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public $triggers = array();
 
         /**
+         * Condition Comparators
+         *
+         * @since 3.0
+         * @var array
+         */
+        public $comparators = array();
+
+        /**
          * NF_ConditionalLogic constructor.
          */
         public function __construct()
@@ -63,6 +71,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             new NF_ConditionalLogic_Submission();
 
             self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
+            self::$instance->comparators = NF_ConditionalLogic::config( 'Comparators' );
         }
 
         public function setup_admin()
@@ -99,6 +108,20 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         | Internal API Methods
         |--------------------------------------------------------------------------
         */
+
+        /**
+         * Comparator
+         *
+         * @since 3.0.0
+         * @param $key
+         * @return NF_ConditionalLogic_Comparator
+         * @throws Exception
+         */
+        public function comparator( $key )
+        {
+            if( isset( $this->comparators[ $key ] ) ) return $this->comparators[ $key ][ 'instance' ];
+            throw new Exception( 'Comparator does not exist.' );
+        }
 
         /**
          * Trigger
