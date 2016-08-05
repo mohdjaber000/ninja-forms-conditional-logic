@@ -26,4 +26,16 @@ return apply_filters( 'ninja_forms_conditional_logic_triggers', array(
         'instance' => new NF_ConditionalLogic_Triggers_ShowField()
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Change Value
+    |--------------------------------------------------------------------------
+    */
+
+    'change_value' => array(
+        'key'      => 'change_value',
+        'label'    => __( 'Change Value', 'ninja-forms-conditional-logic' ),
+        'instance' => ''
+    ),
+
 ));
