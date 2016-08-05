@@ -82,12 +82,19 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
         public function __construct()
         {
+            add_action( 'init', array( $this, 'init' ) );
+
             add_action( 'admin_init', array( $this, 'setup_license' ) );
 
             add_action( 'ninja_forms_loaded', array( $this, 'setup_admin' ) );
 
             add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
             add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
+        }
+
+        public function init()
+        {
+            new NF_ConditionalLogic_Submission();
         }
 
         public function setup_admin()
