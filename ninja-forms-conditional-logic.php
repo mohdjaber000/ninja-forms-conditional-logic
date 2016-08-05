@@ -91,12 +91,13 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          * Trigger
          *
          * @param $key
-         * @return bool | NF_ConditionalLogic_Trigger
+         * @return NF_ConditionalLogic_Trigger
+         * @throws Exception
          */
         public function trigger( $key )
         {
-            if( ! isset( $this->triggers[ $key ] ) ) return false;
-            return $this->triggers[ $key ][ 'instance' ];
+            if( isset( $this->triggers[ $key ] ) ) return $this->triggers[ $key ][ 'instance' ];
+            throw new Exception( 'Trigger does not exist.' );
         }
 
         /*
