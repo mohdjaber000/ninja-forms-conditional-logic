@@ -32,6 +32,80 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         const PREFIX  = 'NF_ConditionalLogic';
 
         /**
+         * Condition Triggers
+         *
+         * @since 3.0
+         * @var array
+         */
+        public $triggers = array();
+
+        /**
+         * NF_ConditionalLogic constructor.
+         */
+        public function __construct()
+        {
+            // WordPress Hooks
+            add_action( 'init', array( $this, 'init' ) );
+            add_action( 'admin_init', array( $this, 'setup_license' ) );
+
+            // Ninja Forms Hooks
+            add_action( 'ninja_forms_loaded', array( $this, 'setup_admin' ) );
+
+            // Ninja Forms Admin Hooks
+            add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
+            add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
+        }
+
+        public function init()
+        {
+            new NF_ConditionalLogic_Submission();
+
+            self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
+        }
+
+        public function setup_admin()
+        {
+            if( ! is_admin() ) return;
+
+            new NF_ConditionalLogic_Admin_Settings();
+        }
+
+        public function builder_scripts()
+        {
+            wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+            wp_enqueue_style( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
+        }
+
+        public function builder_templates()
+        {
+            NF_ConditionalLogic::template( 'builder-edit-settings.html' );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Internal API Methods
+        |--------------------------------------------------------------------------
+        */
+
+        /**
+         * Trigger
+         *
+         * @param $key
+         * @return bool | NF_ConditionalLogic_Trigger
+         */
+        public function trigger( $key )
+        {
+            if( ! isset( $this->triggers[ $key ] ) ) return false;
+            return $this->triggers[ $key ][ 'instance' ];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Plugin Properties and Methods
+        |--------------------------------------------------------------------------
+        */
+
+        /**
          * @var NF_ConditionalLogic
          * @since 3.0
          */
@@ -52,14 +126,6 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          * @var string $url
          */
         public static $url = '';
-
-        /**
-         * Condition Triggers
-         *
-         * @since 3.0
-         * @var array
-         */
-        public $triggers = array();
 
         /**
          * Main Plugin Instance
@@ -88,43 +154,6 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             }
 
             return self::$instance;
-        }
-
-        public function __construct()
-        {
-            add_action( 'init', array( $this, 'init' ) );
-
-            add_action( 'admin_init', array( $this, 'setup_license' ) );
-
-            add_action( 'ninja_forms_loaded', array( $this, 'setup_admin' ) );
-
-            add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
-            add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
-        }
-
-        public function init()
-        {
-            new NF_ConditionalLogic_Submission();
-
-            self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
-        }
-
-        public function setup_admin()
-        {
-            if( ! is_admin() ) return;
-
-            new NF_ConditionalLogic_Admin_Settings();
-        }
-
-        public function builder_scripts()
-        {
-            wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
-            wp_enqueue_style( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
-        }
-
-        public function builder_templates()
-        {
-            NF_ConditionalLogic::template( 'builder-edit-settings.html' );
         }
 
         /**
@@ -175,25 +204,16 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             }
         }
 
-        /*
-         * Required methods for all extension.
+        /**
+         * Setup License
+         *
+         * Registers the plugin with the extension updater.
          */
-
         public function setup_license()
         {
             if ( ! class_exists( 'NF_Extension_Updater' ) ) return;
 
             new NF_Extension_Updater( self::NAME, self::VERSION, self::AUTHOR, __FILE__, self::SLUG );
-        }
-
-        /*
-         * API
-         */
-
-        public function trigger( $key )
-        {
-            if( ! isset( $this->triggers[ $key ] ) ) return false;
-            return $this->triggers[ $key ][ 'instance' ];
         }
     }
 
