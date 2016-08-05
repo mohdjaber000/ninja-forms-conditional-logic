@@ -64,7 +64,10 @@ final class NF_ConditionalLogic_ConditionModel
 
     public function show_field( $field )
     {
+        if( $field->get_setting( 'value' ) ) return;
 
+        $submitted_value = $field->get_setting( 'submitted_value' );
+        $field->update_setting( 'value', $submitted_value );
     }
 
     public function hide_field( &$field )
