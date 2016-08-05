@@ -11,13 +11,13 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
     'equal' => array(
         'key'      => 'equal',
         'label'    => __( 'Equals', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_Equal()
     ),
 
     'notequal' => array(
         'key'      => 'notequal',
         'label'    => __( 'Does Not Equal', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_NotEqual()
     ),
 
     /*
@@ -35,7 +35,7 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
     'notcontains' => array(
         'key'      => 'notcontains',
         'label'    => __( 'Does Not Contain', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_NotContains()
     ),
 
     /*
@@ -47,13 +47,13 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
     'greater' => array(
         'key'      => 'greater',
         'label'    => __( 'Greater Than', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_Greater()
     ),
 
     'less' => array(
         'key'      => 'less',
         'label'    => __( 'Less Than', 'ninja-forms-conditional-logic' ),
-        'instance' => ''
+        'instance' => new NF_ConditionalLogic_Comparators_Less()
     ),
 
 ));
