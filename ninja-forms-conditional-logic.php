@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: Ninja Forms - Conditional Logic
-Plugin URI: http://ninjaforms.com
-Description: Conditional form logic add-on for Ninja Forms.
-Version: 3.0.0
-Author: The WP Ninjas
-Author URI: http://ninjaforms.com
-Text Domain: ninja-forms-conditionals
-Domain Path: /lang/
-*/
+ * Plugin Name: Ninja Forms - Conditional Logic
+ * Plugin URI: https://ninjaforms.com/extensions/conditional-logic/
+ * Description: Conditional form logic add-on for Ninja Forms.
+ * Version: 3.0.0
+ * Author: The WP Ninjas
+ * Author URI: https://ninjaforms.com
+ * Text Domain: ninja-forms-conditionals
+ * Domain Path: /lang/
+ */
 
 if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) || get_option( 'ninja_forms_load_deprecated', FALSE ) ) {
 
