@@ -90,6 +90,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         /**
          * Trigger
          *
+         * @since 3.0.0
          * @param $key
          * @return NF_ConditionalLogic_Trigger
          * @throws Exception
