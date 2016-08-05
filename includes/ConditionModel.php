@@ -15,11 +15,6 @@ final class NF_ConditionalLogic_ConditionModel
         $this->fields = $fieldsCollection;
     }
 
-    public function __call( $name, $arguments )
-    {
-        call_user_func_array( array( $this, $name ), $arguments );
-    }
-
     public function process()
     {
         array_walk( $this->when, array( $this, 'compare' ) );
