@@ -289,4 +289,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
 }
 
-// TODO: Convert Plugin Settings.
+add_filter( 'ninja_forms_after_upgrade_field', 'ninja_forms_conditional_logic_upgrade_field_settings' );
+function ninja_forms_conditional_logic_upgrade_field_settings( $form_data ){
+    return $form_data;
+}
