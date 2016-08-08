@@ -39,7 +39,7 @@ final class NF_ConditionalLogic_ConditionModel
     private function compare( &$when )
     {
         $field_value = $this->fields->get_field( $when[ 'key' ] )->get_setting( 'value' );
-        $when[ 'result' ] = $this->{ $when[ 'comparator' ] }( $field_value, $when[ 'value' ] );
+        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $field_value, $when[ 'value' ] );
     }
 
     private function evaluate( $current, $when )
@@ -52,17 +52,6 @@ final class NF_ConditionalLogic_ConditionModel
         $field = $this->fields->get_field( $trigger[ 'key' ] );
 
         NF_ConditionalLogic()->trigger( $trigger[ 'trigger' ] )->process( $field );
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Comparisons
-    |--------------------------------------------------------------------------
-    */
-
-    public function contains( $comparison, $value )
-    {
-        return ( false !== strpos( $comparison, $value ) );
     }
 
 }

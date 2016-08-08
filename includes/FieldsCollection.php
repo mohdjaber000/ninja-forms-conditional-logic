@@ -29,7 +29,8 @@ final class NF_ConditionalLogic_FieldsCollection
         foreach( $this->fields as $field ){
             $fields[] = array(
                 'id' => $field->get_id(),
-                'value' => $field->get_setting( 'value' )
+                'value' => $field->get_setting( 'value' ),
+                'conditionally_required' => $field->get_setting( 'conditionally_required' )
             );
         }
         return $fields;

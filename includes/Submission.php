@@ -5,6 +5,7 @@ final class NF_ConditionalLogic_Submission
     public function __construct()
     {
         add_filter( 'ninja_forms_submit_data', array( $this, 'submission' ) );
+        add_filter( 'ninja_forms_pre_validate_field_settings', array( $this, 'pre_validate_field_settings' ) );
     }
 
     public function submission( $data )
@@ -19,5 +20,16 @@ final class NF_ConditionalLogic_Submission
         $data[ 'fields' ] = $fieldsCollection->to_array();
 
         return $data;
+    }
+
+    public function pre_validate_field_settings( $field_settings )
+    {
+        if( ! isset( $field_settings[ 'conditionally_required' ] ) ) return $field_settings;
+
+        $field_settings[ 'required' ] = $field_settings[ 'conditionally_required' ];
+
+        unset( $field_settings[ 'conditionally_required' ] );
+
+        return $field_settings;
     }
 }
