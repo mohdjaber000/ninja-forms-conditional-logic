@@ -7,7 +7,7 @@
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
+define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'conditions' ), 'change:then', this.maybeAddElse );

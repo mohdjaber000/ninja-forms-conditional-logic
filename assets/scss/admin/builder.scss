@@ -5,7 +5,7 @@
 .nf-condition-label {
     margin-bottom: 10px;
 }
-.nf-when-container {
+.nf-first-when-container {
     background: #D3D3D3;
     padding: 10px;
     &::after {
@@ -25,7 +25,7 @@
         font-size: 22px;
     }
 }
-.nf-and-container,
+.nf-when-container,
 .nf-then-container,
 .nf-else-container {
     &::after {
@@ -43,13 +43,13 @@
         }
     }
 }
-.nf-and-container {
+.nf-when-container {
     background: #D3D3D3;
     padding: 0 10px 10px;
     .nf-one-fourth {
         width: 23%;
     }
-    .nf-and {
+    .nf-when {
         &::after {
             clear: both;
             content: "";
@@ -85,7 +85,7 @@
         }
     }
 }
-.nf-add-and {
+.nf-add-when {
     font-size: 22px;
     margin-bottom: 5px;
     padding-left: 12px;

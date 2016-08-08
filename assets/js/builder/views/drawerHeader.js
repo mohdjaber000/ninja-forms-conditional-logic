@@ -7,7 +7,7 @@
  */
 define( [], function( ) {
 	var view = Marionette.ItemView.extend({
-		template: "#nf-tmpl-drawer-header",
+		template: "#nf-tmpl-cl-advanced-drawer-header",
 
 		events: {
 			'click .nf-add-new': 'clickAddNew'

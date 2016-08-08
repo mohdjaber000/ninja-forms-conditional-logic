@@ -30,8 +30,14 @@ define( [], function() {
 				after: after
 			};
 
+			/*
+			 * The "Advanced" domain uses a collection of conditions, while the "Actions" domain uses a single collection.
+			 * Here, if we don't have a collection property, then dataModel must be our conditionModel.
+			 */
+			var conditionModel = ( 'undefined' == typeof dataModel.collection ) ? dataModel : dataModel.collection.options.conditionModel;
+
 			var data = {
-				conditionModel: dataModel.collection.options.conditionModel
+				conditionModel: conditionModel
 			}
 
 			var label = {

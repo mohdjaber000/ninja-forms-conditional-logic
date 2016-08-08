@@ -20,8 +20,7 @@ define( [], function() {
 			model.set( 'renderComparators', this.renderComparators );
 			model.set( 'renderTriggers', this.renderTriggers );
 			model.set( 'renderWhenValue', this.renderWhenValue );
-			model.set( 'renderThenValue', this.renderThenValue );
-			model.set( 'renderElseValue', this.renderThenValue );
+			model.set( 'renderItemValue', this.renderItemValue );
 		},
 
 		renderKeySelect: function( currentValue, modelType ) {
@@ -194,7 +193,7 @@ define( [], function() {
 			return html;
 		},
 
-		renderThenValue: function( key, trigger, value ) {
+		renderItemValue: function( key, trigger, value ) {
 			/*
 			 * Use a template to get our value
 			 *

@@ -1,13 +1,13 @@
 /**
- * Collection view for our else statements
+ * Collection view for our then statements
  *
  * @package Ninja Forms Conditional Logic
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/elseItem' ], function( ElseItem ) {
+define( [ 'views/advanced/thenItem' ], function( ThenItem ) {
 	var view = Marionette.CollectionView.extend({
-		childView: ElseItem,
+		childView: ThenItem,
 
 		initialize: function( options ) {
 

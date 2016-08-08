@@ -5,11 +5,11 @@
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/whenCollection', 'views/thenCollection', 'views/elseCollection' ], function( WhenCollectionView, ThenCollectionView, ElseCollectionView ) {
+define( [ 'views/advanced/whenCollection', 'views/advanced/thenCollection', 'views/advanced/elseCollection' ], function( WhenCollectionView, ThenCollectionView, ElseCollectionView ) {
 	var view = Marionette.LayoutView.extend({
-		template: "#nf-tmpl-condition",
+		template: "#nf-tmpl-cl-advanced-condition",
 		regions: {
-			'and': '.nf-and-region',
+			'when': '.nf-when-region',
 			'then': '.nf-then-region',
 			'else': '.nf-else-region'
 		},
@@ -27,8 +27,8 @@ define( [ 'views/whenCollection', 'views/thenCollection', 'views/elseCollection'
 		},
 
 		onRender: function() {
-			var whenDiv = jQuery( this.el ).find( '.nf-when' );
-			this.and.show( new WhenCollectionView( { collection: this.model.get( 'when' ), whenDiv: whenDiv, conditionModel: this.model } ) );
+			var firstWhenDiv = jQuery( this.el ).find( '.nf-first-when' );
+			this.when.show( new WhenCollectionView( { collection: this.model.get( 'when' ), firstWhenDiv: firstWhenDiv, conditionModel: this.model } ) );
 			if ( ! this.model.get( 'collapsed' ) ) {
 				this.then.show( new ThenCollectionView( { collection: this.model.get( 'then' ) } ) );
 				this.else.show( new ElseCollectionView( { collection: this.model.get( 'else' ) } ) );
@@ -38,7 +38,7 @@ define( [ 'views/whenCollection', 'views/thenCollection', 'views/elseCollection'
 		events: {
 			'click .nf-remove-condition': 'clickRemove',
 			'click .nf-collapse-condition': 'clickCollapse',
-			'click .nf-add-and': 'clickAddWhen',
+			'click .nf-add-when': 'clickAddWhen',
 			'click .nf-add-then': 'clickAddThen',
 			'click .nf-add-else': 'clickAddElse'
 		},

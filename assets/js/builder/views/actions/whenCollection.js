@@ -1,18 +1,19 @@
 /**
- * Collection view for our then statements
+ * Collection view for our when collection
  *
  * @package Ninja Forms Conditional Logic
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/thenItem' ], function( ThenItem ) {
+define( [ 'views/actions/whenItem' ], function( WhenItem ) {
 	var view = Marionette.CollectionView.extend({
-		childView: ThenItem,
+		childView: WhenItem,
 
 		initialize: function( options ) {
 
 		}
-	});
+
+	} );
 
 	return view;
 } );

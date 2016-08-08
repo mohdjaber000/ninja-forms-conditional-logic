@@ -7,7 +7,7 @@
  */
 define( [], function( ) {
 	var view = Marionette.ItemView.extend({
-		template: "#nf-tmpl-else-item",
+		template: "#nf-tmpl-cl-trigger-item",
 
 		initialize: function() {
 			this.listenTo( this.model, 'change', this.render );
@@ -15,15 +15,16 @@ define( [], function( ) {
 
 		events: {
 			'change .setting': 'changeSetting',
-			'click .nf-remove-else': 'clickRemove'
+			'click .nf-remove-then': 'clickRemove'
 		},
 
 		changeSetting: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model )
+			nfRadio.channel( 'conditions' ).trigger( 'change:setting', e, this.model );
+			nfRadio.channel( 'conditions' ).trigger( 'change:then', e, this.model );
 		},
 
 		clickRemove: function( e ) {
-			nfRadio.channel( 'conditions' ).trigger( 'click:removeElse', e, this.model );
+			nfRadio.channel( 'conditions' ).trigger( 'click:removeThen', e, this.model );
 		}
 	});
 

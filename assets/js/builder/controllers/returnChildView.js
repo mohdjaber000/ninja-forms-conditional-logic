@@ -5,14 +5,19 @@
  * @copyright (c) 2016 WP Ninjas
  * @since 3.0
  */
-define( [ 'views/conditionCollection' ], function( ConditionCollection ) {
+define( [ 'views/advanced/conditionCollection', 'views/actions/conditionLayout' ], function( AdvancedView, ActionsView ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			nfRadio.channel( 'cl_condition' ).reply( 'get:settingChildView', this.getChildView );
+			nfRadio.channel( 'advanced_conditions' ).reply( 'get:settingChildView', this.getAdvancedChildView );
+			nfRadio.channel( 'action_conditions' ).reply( 'get:settingChildView', this.getActionChildView );
 		},
 
-		getChildView: function( settingModel ) {
-			return ConditionCollection;
+		getAdvancedChildView: function( settingModel ) {
+			return AdvancedView;
+		},
+
+		getActionChildView: function( settingModel ) {
+			return ActionsView;
 		}
 
 	});

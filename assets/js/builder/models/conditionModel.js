@@ -8,7 +8,9 @@
 define( [ 'models/whenCollection', 'models/thenCollection', 'models/elseCollection' ], function( WhenCollection, ThenCollection, ElseCollection ) {
 	var model = Backbone.Model.extend( {
 		defaults: {
-			collapsed: false
+			collapsed: false,
+			process: 1,
+			connector: 'all'
 		},
 
 		initialize: function() {

@@ -7,7 +7,7 @@
  */
 define( [], function( ) {
 	var view = Marionette.ItemView.extend({
-		template: "#nf-tmpl-and-item",
+		template: "#nf-tmpl-cl-actions-condition-when",
 
 		initialize: function() {
 			this.listenTo( this.model, 'change', this.render );
@@ -15,7 +15,7 @@ define( [], function( ) {
 		
 		events: {
 			'change .setting': 'changeSetting',
-			'click .nf-remove-and': 'clickRemove'
+			'click .nf-remove-when': 'clickRemove'
 		},
 
 		changeSetting: function( e ) {

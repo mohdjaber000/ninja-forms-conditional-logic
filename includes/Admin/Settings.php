@@ -13,12 +13,12 @@ final class NF_ConditionalLogic_Admin_Settings
 
     public function form_settings_types( $types )
     {
-        return array_merge( $types, NF_ConditionalLogic::config( 'FormSettingsTypes' ) );
+        return array_merge( $types, NF_ConditionalLogic::config( 'AdvancedSettingsTypes' ) );
     }
 
     public function form_settings( $settings )
     {
-        return array_merge( $settings, NF_ConditionalLogic::config( 'FormSettings' ) );
+        return array_merge( $settings, NF_ConditionalLogic::config( 'AdvancedSettings' ) );
     }
 
 } // End Class NF_ConditionalLogic_Admin_Settings

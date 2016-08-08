@@ -52,6 +52,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             add_action( 'ninja_forms_loaded', array( $this, 'setup_admin' ) );
 
             // Ninja Forms Admin Hooks
+            add_filter( 'ninja_forms_field_settings_groups', array( $this, 'register_settings_groups' ) );
             add_filter( 'ninja_forms_action_settings', array( $this, 'register_action_settings' ) );
             add_filter( 'ninja_forms_actions_settings_all', array( $this, 'action_settings_all' ) );
             add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
@@ -72,6 +73,11 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             new NF_ConditionalLogic_Admin_Settings();
         }
 
+        public function register_settings_groups( $settings_groups )
+        {
+            return array_merge( $settings_groups, self::config( 'ActionSettingsGroups' ) );
+        }
+
         public function register_action_settings( $action_settings )
         {
             return array_merge( $action_settings, self::config( 'ActionSettings' ) );
@@ -79,7 +85,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
         public function action_settings_all( $settings_all )
         {
-            array_push( $settings_all, 'foo' ); // TODO: Add registered settings names.
+            array_push( $settings_all, 'conditions' ); // TODO: Add registered settings names.
             return $settings_all;
         }
 
