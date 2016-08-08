@@ -62,6 +62,9 @@
     padding: 10px;
     .nf-one-fourth {
         width: 30.5%;
+        &:first-child {
+            padding-left: 12px;
+        }
     }
     .nf-then {
         &::after {
@@ -76,6 +79,9 @@
     padding: 10px;
     .nf-one-fourth {
         width: 30.5%;
+        &:first-child {
+            padding-left: 12px;
+        }
     }
     .nf-else {
         &::after {
@@ -85,20 +91,19 @@
         }
     }
 }
-.nf-add-when {
-    font-size: 22px;
-    margin-bottom: 5px;
-    padding-left: 12px;
-}
-.nf-add-then {
-    font-size: 22px;
-    margin-bottom: 5px;
-    padding-left: 12px;
-}
+.nf-add-when,
+.nf-add-then,
 .nf-add-else {
+    color: #2BAAE7;
+    cursor: pointer;
     font-size: 22px;
     margin-bottom: 5px;
     padding-left: 12px;
+}
+.nf-remove-then,
+.nf-remove-else {
+    color: red;
+    cursor: pointer;
 }
 
 
@@ -111,5 +116,36 @@
         clear: both;
         content: "";
         display: block;
+    }
+}
+
+.nf-condition.actions {
+    .nf-when-container {
+        padding: 20px;
+    }
+    .nf-one-third {
+        width: 40%;
+        &:nth-child(2) {
+            width: 20%;
+        }
+        &.action-when-label {
+            padding-top: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+    .nf-one-fourth {
+        width: 30.8%;
+        &:first-child {
+            width: 7.5%;
+        }
+    }
+    .nf-when {
+        &::after {
+            clear: both;
+            content: "";
+            display: block;
+        }
     }
 }
