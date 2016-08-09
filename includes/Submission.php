@@ -4,11 +4,14 @@ final class NF_ConditionalLogic_Submission
 {
     public function __construct()
     {
-        add_filter( 'ninja_forms_submit_data', array( $this, 'submission' ) );
-        add_filter( 'ninja_forms_pre_validate_field_settings', array( $this, 'pre_validate_field_settings' ) );
+        add_filter( 'ninja_forms_submit_data', array( $this, 'parse_fields' ) );
+        add_filter( 'ninja_forms_pre_validate_field_settings', array( $this, 'before_validate_field' ) );
+
+        add_filter( 'ninja_forms_submission_actions', array( $this, 'parse_actions' ), 10, 2 );
+        add_filter( 'ninja_forms_submission_actions_preview', array( $this, 'parse_actions' ), 10, 2 );
     }
 
-    public function submission( $data )
+    public function parse_fields( $data )
     {
         $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
 
@@ -22,7 +25,7 @@ final class NF_ConditionalLogic_Submission
         return $data;
     }
 
-    public function pre_validate_field_settings( $field_settings )
+    public function before_validate_field( $field_settings )
     {
         if( ! isset( $field_settings[ 'conditionally_required' ] ) ) return $field_settings;
 
@@ -32,4 +35,31 @@ final class NF_ConditionalLogic_Submission
 
         return $field_settings;
     }
+
+    public function parse_actions( $actions, $form_data )
+    {
+        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $form_data[ 'fields' ] );
+
+        array_walk( $actions, array( $this, 'parse_action' ), $fieldsCollection );
+
+        return $actions;
+    }
+
+    public function parse_action( &$action, $key, $fieldsCollection )
+    {
+        $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
+        $condition = new NF_ConditionalLogic_ConditionModel( $action_condition, $fieldsCollection );
+        $result = $condition->process();
+
+        if( 1 != $action_condition[ 'process' ] ) {
+            $result = ! $result;
+        }
+
+        if( is_object( $action ) ){
+            $action->update_setting( 'active', $result );
+        } else {
+            $action[ 'settings' ][ 'active' ] = $result;
+        }
+    }
+
 }
