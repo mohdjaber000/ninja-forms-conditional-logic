@@ -1,4 +1,5 @@
 .nf-condition {
+  border: 1px solid #aaa;
   margin-top: 20px; }
 
 .nf-condition-label {
@@ -15,6 +16,7 @@
 .nf-when-controls {
   float: right; }
   .nf-when-controls .fa {
+    color: #2BAAE7;
     font-size: 22px; }
 
 .nf-when-container::after,
@@ -79,7 +81,8 @@
   padding-left: 12px; }
 
 .nf-remove-then,
-.nf-remove-else {
+.nf-remove-else,
+.nf-remove-when {
   color: red;
   cursor: pointer; }
 
