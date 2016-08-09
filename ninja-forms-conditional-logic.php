@@ -290,11 +290,80 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 }
 
 function ninja_forms_conditional_logic_upgrade_field_settings( $form_data ){
+    /*
+     * Create a copy of our fields array that we can destroy with impunity.
+     */
+    $fields = $form_data[ 'fields' ];
+    $return = ninja_forms_extract_conditions( $fields, array() );
+
     echo "<pre>";
-    print_r( $form_data );
+    print_r( $return[ 'conditions' ] );
     echo "</pre>";
     die();
 
     return $form_data;
 }
-add_filter( 'ninja_forms_after_upgrade_field', 'ninja_forms_conditional_logic_upgrade_field_settings' );
+
+add_filter( 'ninja_forms_after_upgrade_settings', 'ninja_forms_conditional_logic_upgrade_field_settings' );
+
+/**
+ * Rather than loop through our array, we'll use a recursive function to update everything.
+ * @since  3.0
+ * @param  array  $fields     fields array that gets modified as we recurse.
+ * @param  array  $conditions array of conditions.
+ * @param  array  $all_fields array of fields.
+ * @return array         
+ */
+function ninja_forms_extract_conditions( $fields, $conditions, $all_fields ) {
+    /*
+     * Pop the first field off of our array and check to see if it has any conditions.
+     */
+    $field = array_shift( $fields );
+
+    if ( isset ( $field[ 'conditional' ] ) && ! empty( $field[ 'conditional' ] ) ) {
+        /*
+         * If we have conditions, replace references to field IDs with their respective keys 
+         */
+        array_walk( $field[ 'conditional' ], 'ninja_forms_convert_condition_keys', 'kevin' );
+
+        /*
+         * Add our field conditional to our conditions array var.
+         */
+        $conditions = array_merge( $conditions, $field[ 'conditional' ] );
+    }
+
+    /*
+     * Remove the conditional settings from this field.
+     */
+    unset( $field[ 'conditional' ] );
+
+    /*
+     * Add our field to our all fields var.
+     */
+    $all_fields[] = $field;
+
+    /*
+     * If there aren't any more fields, we are at the end of our array.
+     * return our conditions and all fields vars.
+     */
+    if ( 0 == count( $fields ) ) {
+        return array( 'conditions' => $conditions, 'fields' => $all_fields );
+    }
+
+    /*
+     * Recurse.
+     */
+    return ninja_forms_extract_conditions( $fields, $conditions, $all_fields );
+}
+
+function ninja_forms_convert_condition_keys( &$condition, $key, &$extra ) {
+    array_walk( $condition[ 'cr' ], 'ninja_forms_convert_criteria_keys', $extra );
+}
+
+function ninja_forms_convert_criteria_keys( &$cr, $key, &$extra ) {
+    /*
+     * Replace our field ID with the appropriate key.
+     */
+    $cr[ 'field' ] = $extra;
+    $extra = 'james';
+}
