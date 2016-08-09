@@ -17,7 +17,10 @@
   float: right; }
   .nf-when-controls .fa {
     color: #2BAAE7;
+    cursor: pointer;
     font-size: 22px; }
+    .nf-when-controls .fa.nf-remove-condition {
+      color: red; }
 
 .nf-when-container::after,
 .nf-then-container::after,
