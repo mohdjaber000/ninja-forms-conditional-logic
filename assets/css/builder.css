@@ -1,4 +1,5 @@
 .nf-condition {
+  border: 1px solid #aaa;
   margin-top: 20px; }
 
 .nf-condition-label {
@@ -15,7 +16,11 @@
 .nf-when-controls {
   float: right; }
   .nf-when-controls .fa {
+    color: #2BAAE7;
+    cursor: pointer;
     font-size: 22px; }
+    .nf-when-controls .fa.nf-remove-condition {
+      color: red; }
 
 .nf-when-container::after,
 .nf-then-container::after,
@@ -50,6 +55,8 @@
   padding: 10px; }
   .nf-then-container .nf-one-fourth {
     width: 30.5%; }
+    .nf-then-container .nf-one-fourth:first-child {
+      padding-left: 12px; }
   .nf-then-container .nf-then::after {
     clear: both;
     content: "";
@@ -60,25 +67,27 @@
   padding: 10px; }
   .nf-else-container .nf-one-fourth {
     width: 30.5%; }
+    .nf-else-container .nf-one-fourth:first-child {
+      padding-left: 12px; }
   .nf-else-container .nf-else::after {
     clear: both;
     content: "";
     display: block; }
 
-.nf-add-when {
-  font-size: 22px;
-  margin-bottom: 5px;
-  padding-left: 12px; }
-
-.nf-add-then {
-  font-size: 22px;
-  margin-bottom: 5px;
-  padding-left: 12px; }
-
+.nf-add-when,
+.nf-add-then,
 .nf-add-else {
+  color: #2BAAE7;
+  cursor: pointer;
   font-size: 22px;
   margin-bottom: 5px;
   padding-left: 12px; }
+
+.nf-remove-then,
+.nf-remove-else,
+.nf-remove-when {
+  color: red;
+  cursor: pointer; }
 
 .nf-one-fourth {
   float: left;
@@ -89,5 +98,28 @@
     clear: both;
     content: "";
     display: block; }
+
+.nf-condition.actions .nf-when-container {
+  padding: 20px; }
+
+.nf-condition.actions .nf-one-third {
+  width: 40%; }
+  .nf-condition.actions .nf-one-third:nth-child(2) {
+    width: 20%; }
+  .nf-condition.actions .nf-one-third.action-when-label {
+    padding-top: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold; }
+
+.nf-condition.actions .nf-one-fourth {
+  width: 30.8%; }
+  .nf-condition.actions .nf-one-fourth:first-child {
+    width: 7.5%; }
+
+.nf-condition.actions .nf-when::after {
+  clear: both;
+  content: "";
+  display: block; }
 
 /*# sourceMappingURL=builder.css.map */

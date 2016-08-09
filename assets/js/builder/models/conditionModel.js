@@ -10,7 +10,10 @@ define( [ 'models/whenCollection', 'models/thenCollection', 'models/elseCollecti
 		defaults: {
 			collapsed: false,
 			process: 1,
-			connector: 'all'
+			connector: 'all',
+			when: [ {} ],
+			then: [ {} ],
+			else: []
 		},
 
 		initialize: function() {

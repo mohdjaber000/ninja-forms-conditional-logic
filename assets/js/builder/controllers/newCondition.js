@@ -13,7 +13,7 @@ define( [ 'models/whenCollection', 'models/whenModel' ], function( WhenCollectio
 
 		addNew: function( e ) {
 			var conditionCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'conditions' );
-			var conditionModel = conditionCollection.add( { when: [ {} ], then: [ {} ], else: [] } );
+			var conditionModel = conditionCollection.add( {} );
 
 			// Add our condition addition to our change log.
 			var label = {
