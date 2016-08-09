@@ -2,9 +2,9 @@ define( [], function() {
 	var model = Backbone.Model.extend( {
 		initialize: function( models, options ) {
 			/*
-			 * If our key is empty, don't do anything else.
+			 * If our key, comparator, or value is empty, don't do anything else.
 			 */
-			if ( ! this.get( 'key' ) ) return;
+			if ( ! this.get( 'key' ) || ! this.get( 'comparator' ) || ! this.get( 'value' ) ) return;
 
 			/*
 			 * Our key could be a field or a calc.
