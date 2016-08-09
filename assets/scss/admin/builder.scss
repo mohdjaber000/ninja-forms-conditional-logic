@@ -23,7 +23,11 @@
     float: right;
     .fa {
         color: #2BAAE7;
+        cursor: pointer;
         font-size: 22px;
+        &.nf-remove-condition {
+            color: red;
+        }
     }
 }
 .nf-when-container,
