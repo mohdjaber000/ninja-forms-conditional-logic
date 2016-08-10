@@ -84,7 +84,7 @@ final class NF_ConditionalLogic_Conversion
 	 * @param  array  $all_fields array of fields.
 	 * @return array
 	 */
-	function extract_field_conditions( $fields, $conditions, $all_fields )
+	function extract_field_conditions( $fields, $all_fields )
 	{
 	    /*
 	     * Pop the first field off of our array and check to see if it has any conditions.
@@ -120,7 +120,7 @@ final class NF_ConditionalLogic_Conversion
 	    /*
 	     * Recurse.
 	     */
-	    return $this->extract_field_conditions( $fields, $conditions, $all_fields );
+	    return $this->extract_field_conditions( $fields, $all_fields );
 	}
 
 	/**
