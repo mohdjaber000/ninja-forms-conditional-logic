@@ -48,6 +48,10 @@ final class NF_ConditionalLogic_Submission
     public function parse_action( &$action, $key, $fieldsCollection )
     {
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
+
+        unset( $action_condition[ 'then' ] );
+        unset( $action_condition[ 'else' ] );
+
         $condition = new NF_ConditionalLogic_ConditionModel( $action_condition, $fieldsCollection );
         $result = $condition->process();
 
