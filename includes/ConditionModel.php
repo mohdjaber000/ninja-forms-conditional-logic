@@ -41,15 +41,18 @@ final class NF_ConditionalLogic_ConditionModel
     {
         array_walk( $this->when, array( $this, 'compare' ) );
         $result = array_reduce( $this->when, array( $this, 'evaluate' ), true );
-        $trigger = ( $result ) ? $this->then : $this->else;
-        array_map( array( $this, 'trigger' ), $trigger );
+
+        $triggers = ( $result ) ? $this->then : $this->else;
+        array_map( array( $this, 'trigger' ), $triggers );
 
         return $result;
     }
 
     private function compare( &$when )
     {
-        $field_value = $this->fields->get_field( $when[ 'key' ] )->get_setting( 'value' );
+        if( ! $when[ 'key' ] ) return;
+        $fieldModel = $this->fields->get_field( $when[ 'key' ] );
+        $field_value = $fieldModel->get_setting( 'value' );
         $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $field_value, $when[ 'value' ] );
     }
 
