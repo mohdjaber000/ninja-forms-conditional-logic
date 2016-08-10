@@ -53,6 +53,7 @@ final class NF_ConditionalLogic_Conversion
 	        $new_condition[ 'connector' ] = ( 'and' == $old_condition[ 'connector' ] ) ? 'all' : 'any';
 	        $connector = ( 'all' == $new_condition[ 'connector' ] ) ? 'AND' : 'OR';
 	        $new_condition[ 'when' ] = $this->extract_when( $old_condition[ 'criteria' ], array(), $connector );
+
 	        $this->current_action[ 'conditions' ] = $new_condition;
 	    }
 
