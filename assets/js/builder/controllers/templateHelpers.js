@@ -94,12 +94,16 @@ define( [], function() {
 					 * If we don't get a response, send a message out on the parent type channel
 					 */
 					var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-					var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
-					
-					var comparators = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:comparators', defaultComparators );
-					if ( ! comparators ) {
-						comparators = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:comparators', defaultComparators ) || defaultComparators;
-					}	
+
+					if( fieldModel ) {
+						var comparators = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:comparators', defaultComparators);
+						if (!comparators) {
+							var typeModel = nfRadio.channel('fields').request('get:type', fieldModel.get('type'));
+							comparators = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:comparators', defaultComparators) || defaultComparators;
+						}
+					} else {
+						var comparators = defaultComparators;
+					}
 				}
 			} else {
 				var comparators = defaultComparators;
@@ -180,11 +184,15 @@ define( [], function() {
 				 * If we don't get a response, send a message out on the parent type channel
 				 */
 				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
-				
-				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, comparator, value );
-				if ( ! html ) {
-					html = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:valueInput', key, comparator, value ) || defaultHTML;
+
+				if( fieldModel ) {
+					var html = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:valueInput', key, comparator, value);
+					if (!html) {
+						var typeModel = nfRadio.channel('fields').request('get:type', fieldModel.get('type'));
+						html = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:valueInput', key, comparator, value) || defaultHTML;
+					}
+				} else {
+					html = defaultHTML;
 				}
 			} else {
 				var html = defaultHTML;
