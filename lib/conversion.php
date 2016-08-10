@@ -5,7 +5,8 @@ final class NF_ConditionalLogic_Conversion
 	public $known_keys = array();
 	
 	public $fields = array();
-	public $conditions = array();
+	public $actions = array();
+	public $field_conditions = array();
 
 	public $current_id = 0;
 	public $current_field;
@@ -17,23 +18,62 @@ final class NF_ConditionalLogic_Conversion
 
     function upgrade_field_settings( $form_data )
     {
-    	/*
-	     * Create a copy of our fields array that we can destroy with impunity.
-	     */
-	    $fields = $form_data[ 'fields' ];
+	    $this->actions = $form_data[ 'actions' ];
 	    $this->fields = $form_data[ 'fields' ];
-
-	    $all_fields = $this->extract_conditions( $fields, array() );
-
+	    
+	    $all_actions = $this->extract_action_conditions( $this->actions, array() );
+	    $all_fields = $this->extract_field_conditions( $this->fields, array() );
+	    
+	    $form_data[ 'actions' ] = $all_actions;
 	    $form_data[ 'fields' ] = $all_fields;
-	    $form_data[ 'settings' ][ 'conditions' ] = $this->conditions;
+	    $form_data[ 'settings' ][ 'conditions' ] = $this->field_conditions;
 
 	    // echo "<pre>";
-	    // print_r( $this->conditions );
+	    // print_r( $form_data[ 'actions' ] );
 	    // echo "</pre>";
 	    // die();
 
 	    return $form_data;
+    }
+
+    function extract_action_conditions( $actions, $all_actions ) {
+    	/*
+	     * Pop the first action off of our array and check to see if it has any conditions.
+	     */
+	    $this->current_action = array_shift( $actions );
+
+	    if ( isset ( $this->current_action[ 'conditions' ] ) && ! empty( $this->current_action[ 'conditions' ] ) ) {
+	        /*
+	         * If we have a condition, convert it for 3.0.
+	         */	        
+	        $old_condition = $this->current_action[ 'conditions' ][ 0 ];
+
+	        $new_condition = array();
+	        $new_condition[ 'process' ] = ( 'process' == $old_condition[ 'action' ] ) ? 1 : 0;
+	        $new_condition[ 'connector' ] = ( 'and' == $old_condition[ 'connector' ] ) ? 'all' : 'any';
+	        $connector = ( 'all' == $new_condition[ 'connector' ] ) ? 'AND' : 'OR';
+	        $new_condition[ 'when' ] = $this->extract_when( $old_condition[ 'criteria' ], array(), $connector );
+	        $this->current_action[ 'conditions' ] = $new_condition;
+	    }
+
+	    /*
+	     * Add our action to our all actions var.
+	     */
+	    $all_actions[] = $this->current_action;
+	    $this->current_action = array();
+
+	    /*
+	     * If there aren't any more actions, we are at the end of our array.
+	     * return our conditions and all actions vars.
+	     */
+	    if ( 0 == count( $actions ) ) {
+	        return $all_actions;
+	    }
+
+	    /*
+	     * Recurse.
+	     */
+	    return $this->extract_action_conditions( $actions, $all_actions );
     }
 
     /**
@@ -44,7 +84,7 @@ final class NF_ConditionalLogic_Conversion
 	 * @param  array  $all_fields array of fields.
 	 * @return array
 	 */
-	function extract_conditions( $fields, $conditions, $all_fields )
+	function extract_field_conditions( $fields, $conditions, $all_fields )
 	{
 	    /*
 	     * Pop the first field off of our array and check to see if it has any conditions.
@@ -55,13 +95,13 @@ final class NF_ConditionalLogic_Conversion
 	        /*
 	         * If we have conditions, add them to the new condition array we are building.
 	         */
-	        array_walk( $this->current_field[ 'conditional' ], array( $this, 'walk_conditions' ) );
+	        array_walk( $this->current_field[ 'conditional' ], array( $this, 'update_field_conditions' ) );
 	    }
 
 	    /*
 	     * Remove the conditional settings from this field.
 	     */
-	    unset( $field[ 'conditional' ] );
+	    unset( $this->current_field[ 'conditional' ] );
 
 	    /*
 	     * Add our field to our all fields var.
@@ -80,18 +120,18 @@ final class NF_ConditionalLogic_Conversion
 	    /*
 	     * Recurse.
 	     */
-	    return $this->extract_conditions( $fields, $conditions, $all_fields );
+	    return $this->extract_field_conditions( $fields, $conditions, $all_fields );
 	}
 
 	/**
-	 * Step through each field condition and update our $this->conditions with each.
+	 * Step through each field condition and update our $this->field_conditions with each.
 	 * 
 	 * @since  3.0
 	 * @param  array  	$field_condition  	2.9.x Field Condition
 	 * @param  int  	$index              array index
 	 * @return void
 	 */
-	function walk_conditions( $field_condition )
+	function update_field_conditions( $field_condition )
 	{
 		/*
 		 * Convert criteria to the 'when' statement of our condition.
@@ -107,7 +147,7 @@ final class NF_ConditionalLogic_Conversion
 		/*
 		 * Check to see if this when statement exists already.
 		 */
-		$condition_index = $this->find_when( $when, $this->conditions );
+		$condition_index = $this->find_when( $when, $this->field_conditions );
 
 		/*
 		 * If it does, add this field's then/else.
@@ -115,12 +155,12 @@ final class NF_ConditionalLogic_Conversion
 		 * If it doesn't, add a new condition using this field's when/then/else.
 		 */
 		if ( false !== $condition_index ) {
-			$this->conditions[ $condition_index ][ 'then' ][] = $then;
+			$this->field_conditions[ $condition_index ][ 'then' ][] = $then;
 			if ( ! empty ( $else ) ) {
-				$this->conditions[ $condition_index ][ 'else' ][] = $else;
+				$this->field_conditions[ $condition_index ][ 'else' ][] = $else;
 			}
 		} else {
-			$this->conditions[] = array(
+			$this->field_conditions[] = array(
 				'when' 			=> $when,
 				'then' 			=> array( $then	),
 				'else'			=> array( $else ),
@@ -138,18 +178,23 @@ final class NF_ConditionalLogic_Conversion
 	 * @param  string  	$connector 	2.9.x connector var
 	 * @return array
 	 */
-	function extract_when( $cr_array, $when, $connector )
+	function extract_when( $cr_array, $when, $connector = '' )
 	{
 		$cr = array_shift( $cr_array );
 		/*
 		 * Replace our field target with the appropriate key
+		 *
+		 * This criterion could contain either a 'field' key or a 'param' key.
 		 */
-		$cr[ 'field' ] = $this->get_key( $cr[ 'field' ] );
+
+		$field_id = ( isset ( $cr[ 'field' ] ) ) ? $cr[ 'field' ] : $cr[ 'param' ];
+		$field_key = $this->get_key( $field_id );
+		$comparator = ( isset ( $cr[ 'operator' ] ) ) ? $cr[ 'operator' ] : $cr[ 'compare' ];
 		
 		$when[] = array(
 			'connector'		=> strtoupper( $connector ),
-			'key'			=> $cr[ 'field' ],
-			'comparator'	=> $this->convert_comparator( $cr[ 'operator' ] ),
+			'key'			=> $field_key,
+			'comparator'	=> $this->convert_comparator( $comparator ),
 			'value'			=> $this->convert_value( $cr[ 'value' ] ),
 		);
 	
@@ -287,6 +332,10 @@ final class NF_ConditionalLogic_Conversion
 				return 'equal';
 			case '!=':
 				return 'notequal';
+			case '<':
+				return 'less';
+			case '>':
+				return 'greater';
 			default:
 				return $comparator;
 		}
