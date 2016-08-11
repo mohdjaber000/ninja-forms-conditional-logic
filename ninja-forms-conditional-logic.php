@@ -142,7 +142,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public function trigger( $key )
         {
             if( isset( $this->triggers[ $key ] ) ) return $this->triggers[ $key ][ 'instance' ];
-            throw new Exception( 'Trigger does not exist.' );
+            return false;
         }
 
         /*

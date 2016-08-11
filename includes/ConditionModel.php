@@ -58,6 +58,7 @@ final class NF_ConditionalLogic_ConditionModel
 
     private function evaluate( $current, $when )
     {
+        if( ! isset( $when[ 'result' ] ) ) return true;
         return ( 'AND' == $when[ 'connector' ] ) ? $current && $when[ 'result' ] : $current || $when[ 'result' ];
     }
 
@@ -65,7 +66,11 @@ final class NF_ConditionalLogic_ConditionModel
     {
         $field = $this->fields->get_field( $trigger[ 'key' ] );
 
-        NF_ConditionalLogic()->trigger( $trigger[ 'trigger' ] )->process( $field );
+        $triggerModel = NF_ConditionalLogic()->trigger( $trigger[ 'trigger' ] );
+
+        if( ! $triggerModel ) return;
+
+        $triggerModel->process( $field );
     }
 
 }
