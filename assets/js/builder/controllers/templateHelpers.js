@@ -184,8 +184,6 @@ define( [], function() {
 			/*
 			 * If we have a key and it's not a calc, get our field type based HTML.
 			 */
-			console.log( 'DEBUG: Key is ' + key );
-			console.log( 'DEBUG: Type is ' + type );
 			if( 'date' == type ) {
 				var date_template = _.template( jQuery( '#nf-tmpl-cl-value-date' ).html() );
 				html = date_template( { value: value } );
