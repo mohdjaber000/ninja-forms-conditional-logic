@@ -50,10 +50,21 @@ final class NF_ConditionalLogic_ConditionModel
 
     private function compare( &$when )
     {
-        if( ! $when[ 'key' ] ) return;
-        $fieldModel = $this->fields->get_field( $when[ 'key' ] );
-        $field_value = $fieldModel->get_setting( 'value' );
-        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $field_value, $when[ 'value' ] );
+        switch( $when[ 'type' ] ){
+            case 'field':
+                if( ! $when[ 'key' ] ) return;
+                $fieldModel = $this->fields->get_field($when['key']);
+                $value = $fieldModel->get_setting('value');
+                break;
+            case 'date':
+                $value = current_time( 'm/d/Y');
+                break;
+            default:
+                // Type not identified.
+                return;
+        }
+
+        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $value, $when[ 'value' ] );
     }
 
     private function evaluate( $current, $when )
