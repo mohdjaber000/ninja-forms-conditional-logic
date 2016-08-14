@@ -83,6 +83,17 @@ define( [], function() {
 							value: 'greaterequal'
 						}
 					} );
+				} else if( 'date' == type ) {
+					var comparators = {
+						before: {
+							label: 'Before',
+							value: 'date_before'
+						},
+						after: {
+							label: 'After',
+							value: 'date_after'
+						}
+					}
 				} else {
 					/*
 					 * Send out a radio request for an html value on a channel based upon the field type.
@@ -173,7 +184,12 @@ define( [], function() {
 			/*
 			 * If we have a key and it's not a calc, get our field type based HTML.
 			 */
-			if ( key && 'calc' != type ) {
+			console.log( 'DEBUG: Key is ' + key );
+			console.log( 'DEBUG: Type is ' + type );
+			if( 'date' == type ) {
+				var date_template = _.template( jQuery( '#nf-tmpl-cl-value-date' ).html() );
+				html = date_template( { value: value } );
+			} else if ( key && 'calc' != type ) {
 				/*
 				 * Send out a radio request for an html value on a channel based upon the field type.
 				 *

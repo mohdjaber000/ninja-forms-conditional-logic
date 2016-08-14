@@ -254,6 +254,10 @@
         <%
         }
         %>
+        <optgroup label="System">
+            <% var selected = ( 'date_submitted' == currentValue ) ? 'selected="selected"' : ''; %>
+            <option value="date_submitted" data-type="date" <%= selected %>>Date Submitted</option>
+        </optgroup>
     </select>
 </script>
 
@@ -304,6 +308,11 @@
         </select>
         <div></div>
     </label>
+</script>
+
+<script id="nf-tmpl-cl-value-date" type="text/template">
+    <!-- Date Value Template -->
+    <input type="text" data-id="value" class="setting" value="<%= value %>" placeholder="date">
 </script>
 
 <script id="nf-tmpl-cl-triggers" type="text/template">
