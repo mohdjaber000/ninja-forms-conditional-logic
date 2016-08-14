@@ -108,7 +108,17 @@ define( [], function() {
 			},
 			'lessequal': function( a, b ) {
 				return parseFloat( a ) < parseFloat( b ) || parseFloat( a ) == parseFloat( b );
-			}
+			},
+			'date_before': function( a, b ) {
+				var date_a = new Date( a );
+				var date_b = new Date( b );
+				return date_a.getTime() < date_b.getTime();
+			},
+			'date_after': function( a, b ) {
+				var date_a = new Date( a );
+				var date_b = new Date( b );
+				return date_a.getTime() > date_b.getTime();
+			},
 		} 
 	} );
 	

@@ -13,6 +13,7 @@ define( [], function() {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:comparators', this.getCheckboxComparators );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:comparators', this.getListComparators );
+			nfRadio.channel( 'conditions-date' ).reply( 'get:comparators', this.getDateComparators );
 		},
 
 		getCheckboxComparators: function( defaultComparators ) {
@@ -43,6 +44,18 @@ define( [], function() {
 			}
 		},
 
+		getDateComparators: function( defaultComparators ) {
+			return {
+				before: {
+					label: 'Before',
+					value: 'date_before'
+				},
+				after: {
+					label: 'After',
+					value: 'date_after'
+				}
+			}
+		},
 
 	});
 
