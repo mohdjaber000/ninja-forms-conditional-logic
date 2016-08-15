@@ -197,6 +197,7 @@ final class NF_ConditionalLogic_Conversion
 			'key'			=> $field_key,
 			'comparator'	=> $this->convert_comparator( $comparator ),
 			'value'			=> $this->convert_value( $cr[ 'value' ] ),
+            'type'          => $this->get_when_type( $field_id )
 		);
 	
 		if ( 0 == count( $cr_array ) ) {
@@ -394,6 +395,16 @@ final class NF_ConditionalLogic_Conversion
 				return 'hide_option';
 		}
 	}
+
+	function get_when_type( $field_id )
+    {
+        foreach( $this->fields as $field ){
+            if( $field_id != $field[ 'id' ] ) continue;
+            return ( 'calc' != $field[ 'type' ] ) ? 'field' : 'calc';
+        }
+
+        return 'field';
+    }
 }
 
 new NF_ConditionalLogic_Conversion();
