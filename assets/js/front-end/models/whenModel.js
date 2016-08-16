@@ -43,7 +43,13 @@ define( [], function() {
 		},
 
 		maybeupdateFieldCompare: function( el, fieldModel, keyCode ) {
-			var fieldValue = jQuery( el ).val();
+
+			if( 'checkbox' == fieldModel.get( 'type' ) ){
+				var fieldValue = ( 'checked' == jQuery( el ).attr( 'checked' ) ) ? 1 : 0;
+			} else {
+				var fieldValue = jQuery( el ).val();
+			}
+
 			this.updateFieldCompare( fieldModel, null, fieldValue );
 		},
 
