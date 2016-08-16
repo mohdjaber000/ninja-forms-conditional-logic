@@ -12,6 +12,7 @@ define( [], function() {
 		},
 
 		updateSetting: function( e, dataModel ) {
+
 			var value = jQuery( e.target ).val();
 			var id = jQuery( e.target ).data( 'id' );
 			var before = dataModel.get( id );
@@ -21,6 +22,13 @@ define( [], function() {
 			}
 
 			dataModel.set( id, value );
+
+			console.log( dataModel.get( 'type' ) );
+			if( 'date' == dataModel.get( 'type' ) ){
+				// TODO: Init Datepicker
+				console.log( jQuery( '.setting-date' ) );
+				new Pikaday({ field: jQuery( '.setting-date' )[0] });
+			}
 
 			var after = value;
 
