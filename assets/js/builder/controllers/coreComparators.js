@@ -53,6 +53,10 @@ define( [], function() {
 				after: {
 					label: 'After',
 					value: 'date_after'
+				},
+				on: {
+					label: 'On',
+					value: 'date_on'
 				}
 			}
 		},

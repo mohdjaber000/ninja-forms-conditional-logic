@@ -57,7 +57,9 @@ final class NF_ConditionalLogic_ConditionModel
                 $value = $fieldModel->get_setting('value');
                 break;
             case 'date':
-                $value = current_time( 'm/d/Y');
+                $value = new DateTime();
+                $date_format = Ninja_Forms()->get_setting( 'date_format' );
+                $when[ 'value' ] = DateTime::createFromFormat( $date_format, $when[ 'value' ] );
                 break;
             default:
                 // Type not identified.

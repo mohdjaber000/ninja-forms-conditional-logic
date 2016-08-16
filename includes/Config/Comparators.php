@@ -74,4 +74,10 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
         'instance' => new NF_ConditionalLogic_Comparators_DateAfter()
     ),
 
+    'date_on' => array(
+        'key'      => 'date_on',
+        'label'    => __( 'On', 'ninja-forms-conditional-logic' ),
+        'instance' => new NF_ConditionalLogic_Comparators_DateOn()
+    ),
+
 ));

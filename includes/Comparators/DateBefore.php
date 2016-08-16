@@ -4,6 +4,6 @@ class NF_ConditionalLogic_Comparators_DateBefore implements NF_ConditionalLogic_
 {
     public function compare( $comparison, $value )
     {
-        return ( strtotime( $comparison ) < strtotime( $value ) );
+        return ( $comparison < $value );
     }
 }

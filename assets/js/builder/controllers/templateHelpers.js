@@ -84,16 +84,7 @@ define( [], function() {
 						}
 					} );
 				} else if( 'date' == type ) {
-					var comparators = {
-						before: {
-							label: 'Before',
-							value: 'date_before'
-						},
-						after: {
-							label: 'After',
-							value: 'date_after'
-						}
-					}
+					var comparators = nfRadio.channel( 'conditions-date' ).request( 'get:comparators' );
 				} else {
 					/*
 					 * Send out a radio request for an html value on a channel based upon the field type.
