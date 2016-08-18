@@ -18,12 +18,12 @@ define( [], function() {
 		getCheckboxComparators: function( defaultComparators ) {
 			return {
 				is: {
-					label: 'Is',
+					label: nfcli18n.coreComparatorsIs,
 					value: 'equal'
 				},
 
 				isnot: {
-					label: 'Is Not',
+					label: nfcli18n.coreComparatorsIsNot,
 					value: 'notequal'
 				}
 			}
@@ -32,12 +32,12 @@ define( [], function() {
 		getListComparators: function( defaultComparators ) {
 			return {
 				has: {
-					label: 'Has Selected',
+					label: nfcli18n.coreComparatorsHasSelected,
 					value: 'contains'
 				},
 
 				hasnot: {
-					label: 'Does Not Have Selected',
+					label: nfcli18n.coreComparatorsDoesNotHaveSelected,
 					value: 'notcontains'
 				}
 			}
