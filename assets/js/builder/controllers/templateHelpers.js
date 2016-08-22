@@ -24,13 +24,14 @@ define( [], function() {
 		},
 
 		renderKeySelect: function( currentValue, modelType ) {
+			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' ).get( 'id' );
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
 			/*
 			 * Use a template to get our field select
 			 */
 			var template = _.template( jQuery( '#nf-tmpl-cl-key-select' ).html() );
-			return template( { modelType: modelType, calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
+			return template( { modelType: modelType, calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue, currentDomain: currentDomain } );
 		},
 
 		renderComparators: function( type, key, currentComparator ) {

@@ -254,10 +254,12 @@
         <%
         }
         %>
+        <% if( 'actions' == currentDomain ) { %>
         <optgroup label="System">
             <% var selected = ( 'date_submitted' == currentValue ) ? 'selected="selected"' : ''; %>
             <option value="date_submitted" data-type="date" <%= selected %>>Date Submitted</option>
         </optgroup>
+        <% } %>
     </select>
 </script>
 
