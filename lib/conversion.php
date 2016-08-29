@@ -42,10 +42,11 @@ final class NF_ConditionalLogic_Conversion
 	     */
 	    $this->current_action = array_shift( $actions );
 
-	    if ( isset ( $this->current_action[ 'conditions' ] ) && ! empty( $this->current_action[ 'conditions' ] ) ) {
+	    if ( isset ( $this->current_action[ 'conditions' ] ) && ! empty( $this->current_action[ 'conditions' ] ) && isset( $this->current_action[ 'conditions' ][ 0 ] ) ) {
+
 	        /*
 	         * If we have a condition, convert it for 3.0.
-	         */	        
+	         */
 	        $old_condition = $this->current_action[ 'conditions' ][ 0 ];
 
 	        $new_condition = array();
