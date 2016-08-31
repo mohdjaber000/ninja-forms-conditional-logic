@@ -26,8 +26,9 @@ define( [], function() {
 			console.log( dataModel.get( 'type' ) );
 			if( 'date' == dataModel.get( 'type' ) ){
 				// TODO: Init Datepicker
-				console.log( jQuery( '.setting-date' ) );
-				new Pikaday({ field: jQuery( '.setting-date' )[0] });
+				if( 'undefined' != typeof Pikaday ) {
+					new Pikaday({field: jQuery('.setting-date')[0]});
+				}
 			}
 
 			var after = value;
