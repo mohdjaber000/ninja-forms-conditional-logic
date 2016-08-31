@@ -24,13 +24,40 @@ define( [], function() {
 		},
 
 		renderKeySelect: function( currentValue, modelType ) {
+			var groups = []
+
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
+			var fieldOptions = fieldCollection.map( function( field ) {
+				return { key: field.get( 'key' ), label: field.get( 'label' ) };
+			} );
+
+			groups.push( { label: 'Fields', type: 'field', options: fieldOptions } );
+			
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
+			/*
+			 * If we are working on a 'when' model and we have calculations, add them to our select options.
+			 */
+			if ( 'when' == modelType && 0 < calcCollection.length ) {
+				var calcOptions = calcCollection.map( function( calc ) {
+					return { key: calc.get( 'key' ), label: calc.get( 'label' ) };
+				} );
+
+				groups.push( { label: 'Calculations', type: 'calc', options: calcOptions } );
+			}
+
+			/*
+			 * Pass our groups through any 'when/then' group filters we have.
+			 */
+			var filters = nfRadio.channel( 'conditions' ).request( 'get:groupFilters' );
+			_.each( filters, function( filter ) {
+				groups = filter( groups, modelType );
+			} );
+
 			/*
 			 * Use a template to get our field select
 			 */
 			var template = _.template( jQuery( '#nf-tmpl-cl-key-select' ).html() );
-			return template( { modelType: modelType, calcCollection: calcCollection, fieldCollection: fieldCollection, currentValue: currentValue } );
+			return template( { groups: groups, currentValue: currentValue } );
 		},
 
 		renderComparators: function( type, key, currentComparator ) {
@@ -116,7 +143,7 @@ define( [], function() {
 			return template( { comparators: comparators, currentComparator: currentComparator } );
 		},
 
-		renderTriggers: function( key, currentTrigger, value ) {
+		renderTriggers: function( type, key, currentTrigger, value ) {
 			var defaultTriggers = {
 				show_field: {
 					label: 'Show Field',
@@ -134,7 +161,7 @@ define( [], function() {
 				}
 			};
 
-			if ( key ) {
+			if ( key && 'field' == type ) {
 				/*
 				 * Send out a radio request for an html value on a channel based upon the field type.
 				 *
@@ -152,7 +179,7 @@ define( [], function() {
 					triggers = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
 				}
 			} else {
-				var triggers = defaultTriggers;
+				var triggers = nfRadio.channel( 'conditions-' + type ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
 			}
 
 
