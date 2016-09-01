@@ -13,6 +13,7 @@ define( [], function() {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:valueInput', this.getCheckboxValue );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:valueInput', this.getListValue );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'render:actionWhenSetting', this.renderDatepicker );
 		},
 
 		getCheckboxValue: function( key, trigger, value ) {
@@ -27,7 +28,22 @@ define( [], function() {
 			return template( { options: options, value: value } );
 		},
 
+		renderDatepicker: function( view ) {
 
+			if( 'date_submitted' != view.model.get( 'key' ) ) return;
+
+			console.log( view );
+
+			var el = jQuery( view.el ).find( '.setting-date' );
+
+			if( 'undefined' != typeof view.pikaday ) view.pikaday.destroy();
+
+			view.pikaday = pikadayResponsive( jQuery( el )[0], {
+				format: nfAdmin.date_format,
+				classes: jQuery( el ).attr( "class" )
+			} );
+
+		},
 	});
 
 	return controller;

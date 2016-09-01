@@ -12,7 +12,11 @@ define( [], function( ) {
 		initialize: function() {
 			this.listenTo( this.model, 'change', this.render );
 		},
-		
+
+		onRender: function() {
+			nfRadio.channel( 'conditions' ).trigger( 'render:actionWhenSetting', this );
+		},
+
 		events: {
 			'change .setting': 'changeSetting',
 			'click .nf-remove-when': 'clickRemove'
