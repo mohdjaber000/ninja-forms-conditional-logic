@@ -13,6 +13,8 @@ final class NF_ConditionalLogic_Submission
 
     public function parse_fields( $data )
     {
+        if( ! isset( $data[ 'settings' ][ 'conditions' ] ) ) return $data;
+
         $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
 
         foreach( $data[ 'settings' ][ 'conditions' ] as $condition ){
@@ -48,6 +50,8 @@ final class NF_ConditionalLogic_Submission
     public function parse_action( &$action, $key, $fieldsCollection )
     {
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
+
+        if( ! $action_condition ) return;
 
         unset( $action_condition[ 'then' ] );
         unset( $action_condition[ 'else' ] );

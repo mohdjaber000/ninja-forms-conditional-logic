@@ -27,6 +27,7 @@ define( [], function() {
 			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' ).get( 'id' );
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
+			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' );
 			/*
 			 * Use a template to get our field select
 			 */
