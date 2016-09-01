@@ -10,7 +10,7 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			// this.listenTo( nfRadio.channel( 'conditions' ), 'change:then', this.maybeAddElse );
+			this.listenTo( nfRadio.channel( 'conditions' ), 'change:then', this.maybeAddElse );
 		},
 
 		maybeAddElse: function( e, thenModel ) {
