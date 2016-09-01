@@ -49,9 +49,6 @@ define( [ 'models/whenCollection' ], function( WhenCollection ) {
 					nfRadio.channel( 'condition:trigger' ).request( elseData.trigger, this, elseData );
 				}, this );
 			}
-
-
-
 		}
 	} );
 	
