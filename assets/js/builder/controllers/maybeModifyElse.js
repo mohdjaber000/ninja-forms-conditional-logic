@@ -38,7 +38,7 @@ define( [], function() {
 			if ( opposite ) {
 				var conditionModel = thenModel.collection.options.conditionModel
 				if( 'undefined' == typeof conditionModel.get( 'else' ).findWhere( { 'key': thenModel.get( 'key' ), 'trigger': opposite } ) ) {
-					conditionModel.get( 'else' ).add( { key: thenModel.get( 'key' ), trigger: opposite } );
+					conditionModel.get( 'else' ).add( { type: thenModel.get( 'type' ), key: thenModel.get( 'key' ), trigger: opposite } );
 				}
 			}
 		}
