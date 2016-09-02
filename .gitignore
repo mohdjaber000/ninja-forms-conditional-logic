@@ -1,3 +1,21 @@
+
+# OS Stuff
+
+# Node Stuff
+node_modules
+
+# IDE Stuff
+
+## phpStorm
+.idea
+
+## SublimeText
+*.sublime-workspace
+*.sublime-project
+
+# Project Stuff
+deploy.sh
+deploy-old.sh
 .idea
 node_modules
 /vendor/
