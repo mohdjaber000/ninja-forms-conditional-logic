@@ -577,12 +577,12 @@
 <?php if( false ): ?>
     <script id="nf-tmpl-cl-value-date" type="text/template">
         <!-- Date Value Template -->
-        <input type="text" data-id="value" class="setting setting-date" value="{{{ value }}}" placeholder="date">
+        <input type="text" data-id="value" class="setting setting-date" value="{{{ value }}}" placeholder="{{{ nfAdmin.dateFormat }}}">
     </script>
 <?php else: ?>
     <script id="nf-tmpl-cl-value-date" type="text/template">
         <!-- Date Value Template -->
-        <input type="text" data-id="value" class="setting setting-date" value="<%= value %>" placeholder="date">
+        <input type="text" data-id="value" class="setting setting-date" value="<%= value %>" placeholder="<%= nfAdmin.dateFormat %>">
     </script>
 <?php endif; ?>
 
