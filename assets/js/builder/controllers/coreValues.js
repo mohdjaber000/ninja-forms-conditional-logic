@@ -36,12 +36,12 @@ define( [], function() {
 
 			var el = jQuery( view.el ).find( '.setting-date' );
 
-			if( 'undefined' != typeof view.pikaday ) view.pikaday.destroy();
-
-			view.pikaday = pikadayResponsive( jQuery( el )[0], {
-				format: nfAdmin.date_format,
-				classes: jQuery( el ).attr( "class" )
-			} );
+			// if( 'undefined' != typeof view.pikaday ) view.pikaday.destroy();
+            //
+			// view.pikaday = pikadayResponsive( jQuery( el )[0], {
+			// 	format: nfAdmin.date_format,
+			// 	classes: jQuery( el ).attr( "class" )
+			// } );
 
 		},
 	});
