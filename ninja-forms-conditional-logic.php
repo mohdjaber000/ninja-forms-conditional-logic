@@ -50,6 +50,14 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public $comparators = array();
 
         /**
+         * Integrations
+         *
+         * @since 3.0
+         * @var array
+         */
+        public $integrations = array();
+
+        /**
          * NF_ConditionalLogic constructor.
          */
         public function __construct()
@@ -72,6 +80,10 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public function init()
         {
             new NF_ConditionalLogic_Submission();
+
+            self::$instance->integrations = array(
+                new NF_ConditionalLogic_Integrations_MultiPart()
+            );
 
             self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
             self::$instance->comparators = NF_ConditionalLogic::config( 'Comparators' );

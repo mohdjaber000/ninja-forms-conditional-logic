@@ -19,8 +19,9 @@ final class NF_ConditionalLogic_ConditionModel
     private $then = array();
     private $else = array();
     private $fields;
+    private $data;
 
-    public function __construct( $condition, &$fieldsCollection )
+    public function __construct( $condition, &$fieldsCollection, $data )
     {
         if( isset( $condition[ 'when' ] ) ) {
             $this->when = $condition[ 'when' ];
@@ -35,6 +36,8 @@ final class NF_ConditionalLogic_ConditionModel
         }
 
         $this->fields = $fieldsCollection;
+
+        $this->data = $data;
     }
 
     public function process()
@@ -64,13 +67,21 @@ final class NF_ConditionalLogic_ConditionModel
 
     private function trigger( $trigger )
     {
-        $field = $this->fields->get_field( $trigger[ 'key' ] );
-
         $triggerModel = NF_ConditionalLogic()->trigger( $trigger[ 'trigger' ] );
 
         if( ! $triggerModel ) return;
 
-        $triggerModel->process( $field );
+        switch( $trigger[ 'type' ] ) {
+            case 'field':
+                $target = $this->fields->get_field( $trigger['key'] );
+                break;
+            default:
+                $target = apply_filters( 'ninja_forms_conditional_logic_trigger_type_' . $trigger[ 'type' ], $trigger[ 'key' ], $this->data );
+        }
+
+        if( ! $target ) return;
+
+        $triggerModel->process( $target, $this->fields, $this->data );
     }
 
 }

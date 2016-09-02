@@ -2,7 +2,7 @@
 
 final class NF_ConditionalLogic_Triggers_ShowField implements NF_ConditionalLogic_Trigger
 {
-    public function process( NF_Database_Models_Field &$field )
+    public function process( &$field, &$fieldCollection, &$data )
     {
         if( $field->get_setting( 'value' ) ) return;
         $submitted_value = $field->get_setting( 'submitted_value' );
