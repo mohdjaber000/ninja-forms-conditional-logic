@@ -34,7 +34,7 @@ define( [], function() {
 			groups.push( { label: 'Fields', type: 'field', options: fieldOptions } );
 			
 			var calcCollection = nfRadio.channel( 'settings' ).request( 'get:setting', 'calculations' );
-			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' );
+
 			/*
 			 * If we are working on a 'when' model and we have calculations, add them to our select options.
 			 */

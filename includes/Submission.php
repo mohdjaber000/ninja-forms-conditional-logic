@@ -18,10 +18,11 @@ final class NF_ConditionalLogic_Submission
         $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
 
         foreach( $data[ 'settings' ][ 'conditions' ] as $condition ){
-            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection );
+            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection, $data );
             $condition->process();
         }
 
+        $fieldsCollection = apply_filters( 'ninja_forms_conditional_logic_parse_fields', $fieldsCollection );
         $data[ 'fields' ] = $fieldsCollection->to_array();
 
         return $data;
