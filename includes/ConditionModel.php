@@ -52,7 +52,7 @@ final class NF_ConditionalLogic_ConditionModel
     {
         switch( $when[ 'type' ] ){
             case 'field':
-                if( ! $when[ 'key' ] ) return;
+                if( ! $when[ 'key' ] || ! $when[ 'comparator' ] ) return;
                 $fieldModel = $this->fields->get_field($when['key']);
                 $value = $fieldModel->get_setting('value');
                 break;
