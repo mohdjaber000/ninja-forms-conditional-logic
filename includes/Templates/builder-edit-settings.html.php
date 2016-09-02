@@ -406,70 +406,38 @@
     <script id="nf-tmpl-cl-key-select" type="text/template">
         <select data-id="key" class="setting">
             <option value="">Select One</option>
-            <optgroup label="Fields">
+            <# _.each( data.groups, function( group ) { #>
+            <optgroup label="{{{ group.label }}}">
                 <#
-                    _.each( fieldCollection.models, function( fieldModel ) {
-                    var selected = ( fieldModel.get( 'key' ) == currentValue ) ? 'selected="selected"' : '';
-                    #>
-                    <option value="<%= fieldModel.get( 'key' ) %>" {{{ selected }}} data-type="field">{{{ fieldModel.get( 'label' ) }}}</option>
-                    <# } ); #>
-            </optgroup>
-            <#
-                if ( 'when' == modelType && 0 != calcCollection.models.length ) {
+                _.each( group.options, function( option ) {
+                var selected = ( option.key == currentValue ) ? 'selected="selected"' : '';
                 #>
-                <optgroup label="Calculations">
-                    <#
-                        _.each( calcCollection.models, function( calcModel ) {
-                        var selected = ( calcModel.get( 'name' ) == currentValue ) ? 'selected="selected"' : '';
-                        #>
-                        <option value="<%= calcModel.get( 'name' ) %>" {{{ selected }}} data-type="calc">{{{ calcModel.get( 'name' ) }}}</option>
-                        <# } ); #>
-                </optgroup>
-                <# } #>
-                    <# if( 'actions' == currentDomain ) { #>
-                        <optgroup label="System">
-                            <# var selected = ( 'date_submitted' == currentValue ) ? 'selected="selected"' : ''; #>
-                                <option value="date_submitted" data-type="date" {{{ selected }}}>Date Submitted</option>
-                        </optgroup>
-                        <# } #>
+                <option value="{{{ option.key }}}" {{{ selected }}} data-type="{{{ group.type }}}">{{{ option.label }}}</option>
+                <# } ); #>
+            </optgroup>
+            <# } ); #>
         </select>
     </script>
 <?php else: ?>
     <script id="nf-tmpl-cl-key-select" type="text/template">
         <select data-id="key" class="setting">
             <option value="">Select One</option>
-            <optgroup label="Fields">
+            <%
+            _.each( groups, function( group ) {
+            %>
+            <optgroup label="<%= group.label %>">
                 <%
-                _.each( fieldCollection.models, function( fieldModel ) {
-                var selected = ( fieldModel.get( 'key' ) == currentValue ) ? 'selected="selected"' : '';
+                _.each( group.options, function( option ) {
+                var selected = ( option.key == currentValue ) ? 'selected="selected"' : '';
                 %>
-                <option value="<%= fieldModel.get( 'key' ) %>" <%= selected %> data-type="field"><%= fieldModel.get( 'label' ) %></option>
+                <option value="<%= option.key %>" <%= selected %> data-type="<%= group.type %>"><%= option.label %></option>
                 <%
                 } );
                 %>
             </optgroup>
             <%
-            if ( 'when' == modelType && 0 != calcCollection.models.length ) {
+            } );
             %>
-            <optgroup label="Calculations">
-                <%
-                _.each( calcCollection.models, function( calcModel ) {
-                var selected = ( calcModel.get( 'name' ) == currentValue ) ? 'selected="selected"' : '';
-                %>
-                <option value="<%= calcModel.get( 'name' ) %>" <%= selected %> data-type="calc"><%= calcModel.get( 'name' ) %></option>
-                <%
-                } );
-                %>
-            </optgroup>
-            <%
-            }
-            %>
-            <% if( 'actions' == currentDomain ) { %>
-            <optgroup label="System">
-                <% var selected = ( 'date_submitted' == currentValue ) ? 'selected="selected"' : ''; %>
-                <option value="date_submitted" data-type="date" <%= selected %>>Date Submitted</option>
-            </optgroup>
-            <% } %>
         </select>
     </script>
 <?php endif; ?>
