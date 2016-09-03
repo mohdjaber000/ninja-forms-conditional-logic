@@ -233,7 +233,7 @@
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
-                    {{{ renderTriggers( key, trigger, value ) }}}
+                    {{{ renderTriggers( type, key, trigger, value ) }}}
                     <div></div>
                 </label>
             </div>
@@ -258,7 +258,7 @@
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
-                    <%= renderTriggers( key, trigger, value ) %>
+                    <%= renderTriggers( type, key, trigger, value ) %>
                     <div></div>
                 </label>
             </div>
