@@ -27,7 +27,12 @@ final class NF_ConditionalLogic_Integrations_MultiPart
 
     public function get_part( $key, $data )
     {
-        $form = Ninja_Forms()->form( $data[ 'form_id' ] )->get();
+        $form = Ninja_Forms()->form( $data['form_id'] )->get();
+
+        if( isset( $data[ 'settings' ][ 'is_preview' ] ) && $data[ 'settings' ][ 'is_preview' ] ){
+            $form_settings = get_user_option( 'nf_form_preview_' . $data['form_id'] );
+            $form->update_settings( $form_settings );
+        }
 
         $formContentData =  $form->get_setting( 'formContentData' );
 
@@ -49,15 +54,26 @@ final class NF_ConditionalLogic_Integrations_MultiPart
         if( ! isset( $part[ 'formContentData' ] ) ) return array();
         $field_keys = array();
         foreach( $part[ 'formContentData' ] as $content ){
-            $field_key = ( is_string( $content ) ) ? $content : self::extract_field_key( $content );
-            array_push( $field_keys, $field_key );
+            if( is_string( $content ) ){
+                array_push( $field_keys, $content );
+            } else {
+                $field_keys = array_merge($field_keys, self::extract_field_keys_from_layout( $content ) );
+            }
         }
         return $field_keys;
     }
 
-    public static function extract_field_key( $content )
+    public static function extract_field_keys_from_layout( $content )
     {
-        return '';
+        if( ! isset( $content[ 'cells' ] ) ) return array();
+
+        $field_keys = array();
+        foreach( $content[ 'cells' ] as $cell ){
+            if( ! isset( $cell[ 'fields' ] ) ) continue;
+            $field_keys = array_merge( $field_keys, $cell[ 'fields' ] );
+        }
+
+        return $field_keys;
     }
 
 
