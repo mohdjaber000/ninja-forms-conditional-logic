@@ -27,9 +27,10 @@ define( [], function() {
 			var groups = []
 
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
-			var fieldOptions = fieldCollection.map( function( field ) {
-				return { key: field.get( 'key' ), label: field.get( 'label' ) };
-			} );
+			var fieldOptions = _.chain( fieldCollection.models )
+				.filter( function( field ) { return ! nfRadio.channel( 'conditions-key-select-field-' + field.get( 'type' ) ).request( 'hide' ) || false; })
+				.map( function( field ) { return { key: field.get( 'key' ), label: field.get( 'label' ) }; })
+				.value();
 
 			groups.push( { label: 'Fields', type: 'field', options: fieldOptions } );
 			
