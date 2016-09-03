@@ -21,7 +21,7 @@ final class NF_ConditionalLogic_ConditionModel
     private $fields;
     private $data;
 
-    public function __construct( $condition, &$fieldsCollection, $data )
+    public function __construct( $condition, &$fieldsCollection, $data = array() )
     {
         if( isset( $condition[ 'when' ] ) ) {
             $this->when = $condition[ 'when' ];
