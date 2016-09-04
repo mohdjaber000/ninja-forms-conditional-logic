@@ -1,5 +1,7 @@
 <?php
 
+if( class_exists( 'NF_ConditionalLogic_Conversion' ) ) return;
+
 final class NF_ConditionalLogic_Conversion
 {
 	public $known_keys = array();
