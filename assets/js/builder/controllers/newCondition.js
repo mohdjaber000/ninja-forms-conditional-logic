@@ -18,7 +18,7 @@ define( [ 'models/whenCollection', 'models/whenModel' ], function( WhenCollectio
 			// Add our condition addition to our change log.
 			var label = {
 				object: 'Condition',
-				label: nfcli18n.newConditionCondition,
+				label: 'Condition',
 				change: 'Added',
 				dashicon: 'plus-alt'
 			};

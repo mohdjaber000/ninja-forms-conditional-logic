@@ -59,39 +59,38 @@ define( [], function() {
 			 * Use a template to get our field select
 			 */
 			var template = _.template( jQuery( '#nf-tmpl-cl-key-select' ).html() );
-
 			return template( { groups: groups, currentValue: currentValue } );
 		},
 
 		renderComparators: function( type, key, currentComparator ) {
 			var defaultComparators = {
 				equal: {
-					label: nfcli18n.templateHelperEquals,
+					label: 'Equals',
 					value: 'equal'
 				},
 
 				notequal: {
-					label: nfcli18n.templateHelperDoesNotEqual,
+					label: 'Does Not Equal',
 					value: 'notequal'
 				},
 
 				contains: {
-					label: nfcli18n.templateHelperContains,
+					label: 'Contains',
 					value: 'contains'
 				},
 
 				notcontains: {
-					label: nfcli18n.templateHelperDoesNotContain,
+					label: 'Does Not Contain',
 					value: 'notcontains'
 				},
 
 				greater: {
-					label:  nfcli18n.templateHelperGreaterThan,
+					label: 'Greater Than',
 					value: 'greater'
 				},
 
 				less: {
-					label: nfcli18n.templateHelperLessThan,
+					label: 'Less Than',
 					value: 'less'
 				}
 			};
@@ -104,12 +103,12 @@ define( [], function() {
 					var comparators = _.omit( defaultComparators, 'contains', 'notcontains' );
 					_.extend( comparators, {
 						lessequal: {
-							label: nfcli18n.templateHelperLessThanOrEqual,
+							label: 'Less Than or Equal',
 							value: 'lessequal'
 						},
 
 						greaterequal: {
-							label: nfcli18n.templateHelperGreaterThanOrEqual,
+							label: 'Greater Than or Equal',
 							value: 'greaterequal'
 						}
 					} );
@@ -149,17 +148,17 @@ define( [], function() {
 		renderTriggers: function( type, key, currentTrigger, value ) {
 			var defaultTriggers = {
 				show_field: {
-					label: nfcli18n.templateHelperShowField,
+					label: 'Show Field',
 					value: 'show_field'
 				},
 
 				hide_field: {
-					label: nfcli18n.templateHelperHideField,
+					label: 'Hide Field',
 					value: 'hide_field'
 				},
 
 				change_value: {
-					label: nfcli18n.templateHelperChangeValue,
+					label: 'Change Value',
 					value: 'change_value'
 				}
 			};

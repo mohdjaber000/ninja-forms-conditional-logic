@@ -28,7 +28,7 @@ define( [], function() {
 
 			var label = {
 				object: 'Condition',
-				label: nfcli18n.clickControlsConditionlabel,
+				label: 'Condition',
 				change: 'Removed',
 				dashicon: 'dismiss'
 			};
@@ -57,7 +57,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - When',
-				label: nfcli18n.clickControlsConditionWhen,
+				label: 'Condition - When',
 				change: 'Removed',
 				dashicon: 'dismiss'
 			};
@@ -78,7 +78,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - Then',
-				label: nfcli18n.clickControlsConditionThen,
+				label: 'Condition - Then',
 				change: 'Removed',
 				dashicon: 'dismiss'
 			};
@@ -99,7 +99,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - Else',
-				label: nfcli18n.clickControlsConditionElse,
+				label: 'Condition - Else',
 				change: 'Removed',
 				dashicon: 'dismiss'
 			};
@@ -129,7 +129,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - When Criteron',
-				label: nfcli18n.clickControlsConditionWhenCriteron,
+				label: 'Condition - When Criteron',
 				change: 'Added',
 				dashicon: 'plus-alt'
 			};
@@ -154,7 +154,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - Do Item',
-				label: nfcli18n.clickControlsConditionDoItem,
+				label: 'Condition - Do Item',
 				change: 'Added',
 				dashicon: 'plus-alt'
 			};
@@ -179,7 +179,7 @@ define( [], function() {
 			
 			var label = {
 				object: 'Condition - Else Item',
-				label: nfcli18n.clickControlsConditionElseItem,
+				label: 'Condition - Else Item',
 				change: 'Added',
 				dashicon: 'plus-alt'
 			};
