@@ -116,10 +116,13 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         {
             wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
             wp_enqueue_style( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
+
+            wp_localize_script( 'nf-cl-builder', 'nfcli18n', self::config( 'i18nCLBuilder' ) );
         }
 
         public function builder_templates()
         {
+
             NF_ConditionalLogic::template( 'builder-edit-settings.html.php' );
         }
 

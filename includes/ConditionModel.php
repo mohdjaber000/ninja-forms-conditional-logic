@@ -36,6 +36,7 @@ final class NF_ConditionalLogic_ConditionModel
         }
 
         $this->fields = $fieldsCollection;
+
         $this->data = $data;
     }
 

@@ -1,4 +1,3 @@
-
 # OS Stuff
 
 # Node Stuff
@@ -16,6 +15,3 @@ node_modules
 # Project Stuff
 deploy.sh
 deploy-old.sh
-.idea
-node_modules
-/vendor/

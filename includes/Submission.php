@@ -23,6 +23,7 @@ final class NF_ConditionalLogic_Submission
         }
 
         $fieldsCollection = apply_filters( 'ninja_forms_conditional_logic_parse_fields', $fieldsCollection );
+
         $data[ 'fields' ] = $fieldsCollection->to_array();
 
         return $data;
