@@ -50,6 +50,14 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public $comparators = array();
 
         /**
+         * Integrations
+         *
+         * @since 3.0
+         * @var array
+         */
+        public $integrations = array();
+
+        /**
          * NF_ConditionalLogic constructor.
          */
         public function __construct()
@@ -72,6 +80,10 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         public function init()
         {
             new NF_ConditionalLogic_Submission();
+
+            self::$instance->integrations = array(
+                new NF_ConditionalLogic_Integrations_MultiPart()
+            );
 
             self::$instance->triggers = NF_ConditionalLogic::config( 'Triggers' );
             self::$instance->comparators = NF_ConditionalLogic::config( 'Comparators' );
@@ -104,12 +116,14 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         {
             wp_enqueue_script( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
             wp_enqueue_style( 'nf-cl-builder', plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
+
             wp_localize_script( 'nf-cl-builder', 'nfcli18n', self::config( 'i18nCLBuilder' ) );
         }
 
         public function builder_templates()
         {
-            NF_ConditionalLogic::template( 'builder-edit-settings.html' );
+
+            NF_ConditionalLogic::template( 'builder-edit-settings.html.php' );
         }
 
         /*

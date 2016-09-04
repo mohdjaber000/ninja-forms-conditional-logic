@@ -14,4 +14,11 @@ node_modules
 
 # Project Stuff
 deploy.sh
+<<<<<<< HEAD
 deploy-old.sh
+=======
+deploy-old.sh
+.idea
+node_modules
+/vendor/
+>>>>>>> master

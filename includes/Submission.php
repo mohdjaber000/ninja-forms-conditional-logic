@@ -13,12 +13,16 @@ final class NF_ConditionalLogic_Submission
 
     public function parse_fields( $data )
     {
+        if( ! isset( $data[ 'settings' ][ 'conditions' ] ) ) return $data;
+
         $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
 
         foreach( $data[ 'settings' ][ 'conditions' ] as $condition ){
-            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection );
+            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection, $data );
             $condition->process();
         }
+
+        $fieldsCollection = apply_filters( 'ninja_forms_conditional_logic_parse_fields', $fieldsCollection );
 
         $data[ 'fields' ] = $fieldsCollection->to_array();
 
@@ -49,6 +53,11 @@ final class NF_ConditionalLogic_Submission
     {
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
 
+<<<<<<< HEAD
+=======
+        if( ! $action_condition ) return;
+
+>>>>>>> master
         unset( $action_condition[ 'then' ] );
         unset( $action_condition[ 'else' ] );
 

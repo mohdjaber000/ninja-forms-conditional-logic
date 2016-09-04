@@ -20,7 +20,8 @@ define( [
 	'controllers/coreTriggers',
 	'controllers/getDrawerHeader',
 	'controllers/trackKeyChanges',
-	'controllers/maybeConvertConditions'
+	'controllers/maybeConvertConditions',
+	'controllers/filters'
 
 	], function(
 
@@ -38,8 +39,8 @@ define( [
 	CoreTriggers,
 	GetDrawerHeader,
 	TrackKeyChanges,
-	MaybeConvertConditions
-
+	MaybeConvertConditions,
+	Filters
 	) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
@@ -56,6 +57,7 @@ define( [
 			new GetDrawerHeader();
 			new TrackKeyChanges();
 			new MaybeConvertConditions();
+			new Filters();
 		}
 	});
 
