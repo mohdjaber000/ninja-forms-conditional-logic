@@ -18,22 +18,22 @@ define( [], function() {
 		getListTriggers: function( defaultTriggers ) {
 			var triggers = _.extend( defaultTriggers, {
 				select_option: {
-					label: 'Select Option',
+					label: nfcli18n.coreTriggersSelectOption,
 					value: 'select_option'
 				},
 
 				deselect_option: {
-					label: 'De-Select Option',
+					label: nfcli18n.coreTriggersSelectOption,
 					value: 'deselect_option'
 				},
 
 				show_option: {
-					label: 'Show Option',
+					label: nfcli18n.coreTriggersShowOption,
 					value: 'show_option'
 				},
 
 				hide_option: {
-					label: 'Hide Option',
+					label: nfcli18n.coreTriggersHideOption,
 					value: 'hide_option'
 				}
 			} );

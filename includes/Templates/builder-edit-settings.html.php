@@ -1,12 +1,29 @@
 <!--
     Template used for adding the "Add Condition" button to the Advanced drawer header.
 -->
-<script id="nf-tmpl-cl-advanced-drawer-header" type="text/template">
-    <header class="nf-drawer-header">
-        <a class="nf-add-new nf-add-new-condition" title="Add New Condition" href="#" data-drawerid="addField">Add new condition</a>
-        <a href="#" title="Done" class="nf-button primary nf-close-drawer" tabindex="-1">Done</a>
-    </header>
-</script>
+<?php if( false ): ?>
+    <script id="nf-tmpl-cl-advanced-drawer-header" type="text/template">
+        <header class="nf-drawer-header">
+            <a class="nf-add-new nf-add-new-condition" title="{{{ nfcli18n.updateSettingsTitleAddNewCondition }}}" href="#" data-drawerid="addField">
+                {{{ nfcli18n.updateSettingsTitleAddNewCondition }}}
+            </a>
+            <a href="#" title="{{{ nfcli18n.builderEditSettingsTitleDone }}}" class="nf-button primary nf-close-drawer" tabindex="-1">
+                {{{ nfcli18n.builderEditSettingsTitleDone }}}
+            </a>
+        </header>
+    </script>
+<?php else: ?>
+    <script id="nf-tmpl-cl-advanced-drawer-header" type="text/template">
+        <header class="nf-drawer-header">
+            <a class="nf-add-new nf-add-new-condition" title="<%= nfcli18n.updateSettingsTitleAddNewCondition %>" href="#" data-drawerid="addField">
+                <%= nfcli18n.updateSettingsTitleAddNewCondition %>
+            </a>
+            <a href="#" title="<%= nfcli18n.builderEditSettingsTitleDone %>" class="nf-button primary nf-close-drawer" tabindex="-1">
+                <%= nfcli18n.builderEditSettingsTitleDone %>
+            </a>
+        </header>
+    </script>
+<?php endif; ?>
 
 
 
@@ -19,7 +36,7 @@
         <div class="nf-condition">
             <div class="nf-first-when-container">
                 <div class="nf-condition-label">
-                    When
+                    {{{ nfcli18n.builderEditSettingsWhen }}}
                     <div class="nf-when-controls">
                         <i class="fa fa-chevron-circle-{{{ ( collapsed ) ? 'down' : 'up' }}} nf-collapse-condition" aria-hidden="true"></i>
                         <i class="fa fa-minus-circle nf-remove-condition" aria-hidden="true"></i>
@@ -39,7 +56,7 @@
             </div>
             <# if ( ! collapsed ) { #>
                 <div class="nf-then-container">
-                    <div class="nf-condition-label">Do</div>
+                    <div class="nf-condition-label">{{{ nfcli18n.builderEditSettingsDo }}</div>
                     <div class="nf-then-region">
                         <!-- THEN Region -->
                     </div>
@@ -47,7 +64,7 @@
                 </div>
 
                 <div class="nf-else-container">
-                    <div class="nf-condition-label">If The Condition Is Not Met</div>
+                    <div class="nf-condition-label">{{{ nfcli18n.builderEditSettingsConditionNotMet }}}</div>
                     <div class="nf-else-region">
                         <!-- ELSE Region -->
                     </div>
@@ -62,7 +79,7 @@
         <div class="nf-condition">
             <div class="nf-first-when-container">
                 <div class="nf-condition-label">
-                    When
+                    <%= nfcli18n.builderEditSettingsWhen %>
                     <div class="nf-when-controls">
                         <i class="fa fa-chevron-circle-<%= ( collapsed ) ? 'down' : 'up' %> nf-collapse-condition" aria-hidden="true"></i>
                         <i class="fa fa-minus-circle nf-remove-condition" aria-hidden="true"></i>
@@ -88,7 +105,7 @@
             if ( ! collapsed ) {
             %>
             <div class="nf-then-container">
-                <div class="nf-condition-label">Do</div>
+                <div class="nf-condition-label"><%= nfcli18n.builderEditSettingsDo %></div>
                 <div class="nf-then-region">
                     <!-- THEN Region -->
                 </div>
@@ -96,7 +113,7 @@
             </div>
 
             <div class="nf-else-container">
-                <div class="nf-condition-label">If The Condition Is Not Met</div>
+                <div class="nf-condition-label"><%= nfcli18n.builderEditSettingsConditionNotMet %></div>
                 <div class="nf-else-region">
                     <!-- ELSE Region -->
                 </div>
@@ -164,8 +181,8 @@
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
                     <select data-id="connector" class="setting">
-                        <option value="AND" {{{ ( 'AND' == connector ) ? 'selected="selected"' : '' }}}>AND</option>
-                        <option value="OR" {{{ ( 'OR' == connector ) ? 'selected="selected"' : '' }}}>OR</option>
+                        <option value="AND" {{{ ( 'AND' == connector ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsAnd }}}</option>
+                        <option value="OR" {{{ ( 'OR' == connector ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsOr }}}</option>
                     </select>
                     <div></div>
                 </label>
@@ -195,8 +212,8 @@
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
                     <select data-id="connector" class="setting">
-                        <option value="AND" <%= ( 'AND' == connector ) ? 'selected="selected"' : '' %>>AND</option>
-                        <option value="OR" <%= ( 'OR' == connector ) ? 'selected="selected"' : '' %>>OR</option>
+                        <option value="AND" <%= ( 'AND' == connector ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsAnd %></option>
+                        <option value="OR" <%= ( 'OR' == connector ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsOr %></option>
                     </select>
                     <div></div>
                 </label>
@@ -286,8 +303,8 @@
                         <label class="nf-select">
                             <select class="condition-setting" data-id="process">
                                 <option>Select One</option>
-                                <option value="1" {{{ ( 1 == process ) ? 'selected="selected"' : '' }}}>Process This</option>
-                                <option value="0" {{{ ( 0 == process ) ? 'selected="selected"' : '' }}}>Don't Process This</option>
+                                <option value="1" {{{ ( 1 == process ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsProcessThis }}}</option>
+                                <option value="0" {{{ ( 0 == process ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsDoNotProcessThis }}}</option>
                             </select>
                             <div></div>
                         </label>
@@ -298,8 +315,8 @@
                     <div class="nf-setting nf-one-third">
                         <label class="nf-select">
                             <select class="condition-setting" data-id="connector">
-                                <option value="all" {{{ ( 'all' == connector ) ? 'selected="selected"' : '' }}}>All</option>
-                                <option value="any" {{{ ( 'any' == connector ) ? 'selected="selected"' : '' }}}>Any</option>
+                                <option value="all" {{{ ( 'all' == connector ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsAll }}}</option>
+                                <option value="any" {{{ ( 'any' == connector ) ? 'selected="selected"' : '' }}}>{{{ nfcli18n.builderEditSettingsAny }}}</option>
                             </select>
                             <div></div>
                         </label>
@@ -322,8 +339,8 @@
                         <label class="nf-select">
                             <select class="condition-setting" data-id="process">
                                 <option>Select One</option>
-                                <option value="1" <%= ( 1 == process ) ? 'selected="selected"' : '' %>>Process This</option>
-                                <option value="0" <%= ( 0 == process ) ? 'selected="selected"' : '' %>>Don't Process This</option>
+                                <option value="1" <%= ( 1 == process ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsProcessThis %></option>
+                                <option value="0" <%= ( 0 == process ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsDoNotProcessThis %></option>
                             </select>
                             <div></div>
                         </label>
@@ -334,8 +351,8 @@
                     <div class="nf-setting nf-one-third">
                         <label class="nf-select">
                             <select class="condition-setting" data-id="connector">
-                                <option value="all" <%= ( 'all' == connector ) ? 'selected="selected"' : '' %>>All</option>
-                                <option value="any" <%= ( 'any' == connector ) ? 'selected="selected"' : '' %>>Any</option>
+                                <option value="all" <%= ( 'all' == connector ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsAll %></option>
+                                <option value="any" <%= ( 'any' == connector ) ? 'selected="selected"' : '' %>><%= nfcli18n.builderEditSettingsAny %></option>
                             </select>
                             <div></div>
                         </label>
@@ -491,8 +508,8 @@
         <label class="nf-select">
             <select data-id="value" class="setting">
                 <option value="">Select One</option>
-                <option value="1" {{{ ( 1 == value ) ? 'selected="selected"': '' }}}>Checked</option>
-                <option value="0" {{{ ( 0 === value ) ? 'selected="selected"': '' }}}>Unchecked</option>
+                <option value="1" {{{ ( 1 == value ) ? 'selected="selected"': '' }}}>{{{ nfcli18n.builderEditSettingsChecked }}}</option>
+                <option value="0" {{{ ( 0 === value ) ? 'selected="selected"': '' }}}>{{{ nfcli18n.builderEditSettingsUnchecked }}}</option>
             </select>
             <div></div>
         </label>
@@ -502,8 +519,8 @@
         <label class="nf-select">
             <select data-id="value" class="setting">
                 <option value="">Select One</option>
-                <option value="1" <%= ( 1 == value ) ? 'selected="selected"': '' %>>Checked</option>
-                <option value="0" <%= ( 0 === value ) ? 'selected="selected"': '' %>>Unchecked</option>
+                <option value="1" <%= ( 1 == value ) ? 'selected="selected"': '' %>><%= nfcli18n.builderEditSettingsChecked %></option>
+                <option value="0" <%= ( 0 === value ) ? 'selected="selected"': '' %>><%= nfcli18n.builderEditSettingsUnchecked %></option>
             </select>
             <div></div>
         </label>
@@ -514,7 +531,7 @@
     <script id="nf-tmpl-cl-value-list" type="text/template">
         <label class="nf-select">
             <select data-id="value" class="setting">
-                <option value="">Select One</option>
+                <option value="">{{{ nfcli18n.builderEditSettingsSelectOne }}}</option>
                 <# _.each( options.models, function( option ) { #>
                     <option value="{{{ option.get( 'value' ) }}}" {{{ ( option.get( 'value' ) === value ) ? 'selected="selected"': '' }}}>{{{ option.get( 'label' ) }}}</option>
                     <# } ); #>
@@ -527,7 +544,7 @@
     <script id="nf-tmpl-cl-value-list" type="text/template">
         <label class="nf-select">
             <select data-id="value" class="setting">
-                <option value="">Select One</option>
+                <option value=""><%= nfcli18n.builderEditSettingsSelectOne %></option>
                 <%
                 _.each( options.models, function( option ) {
                 %>
@@ -557,7 +574,7 @@
 <?php if( false ): ?>
     <script id="nf-tmpl-cl-triggers" type="text/template">
         <select data-id="trigger" class="setting">
-            <option value="">Select One</option>
+            <option value="">{{{ nfcli18n.builderEditSettingsSelectOne }}}</option>
             <# _.each( triggers, function( trigger ) { #>
                 <option value="{{{ trigger.value }}}" {{{ ( trigger.value == currentTrigger ) ? 'selected="selected"' : '' }}}>{{{ trigger.label }}}</option>
                 <# } ); #>
@@ -566,7 +583,7 @@
 <?php else: ?>
     <script id="nf-tmpl-cl-triggers" type="text/template">
         <select data-id="trigger" class="setting">
-            <option value="">Select One</option>
+            <option value=""><%= nfcli18n.builderEditSettingsSelectOne %></option>
             <%
             _.each( triggers, function( trigger ) {
             %>

@@ -65,32 +65,32 @@ define( [], function() {
 		renderComparators: function( type, key, currentComparator ) {
 			var defaultComparators = {
 				equal: {
-					label: 'Equals',
+					label: nfcli18n.templateHelperEquals,
 					value: 'equal'
 				},
 
 				notequal: {
-					label: 'Does Not Equal',
+					label: nfcli18n.templateHelperDoesNotEqual,
 					value: 'notequal'
 				},
 
 				contains: {
-					label: 'Contains',
+					label: nfcli18n.templateHelperContains,
 					value: 'contains'
 				},
 
 				notcontains: {
-					label: 'Does Not Contain',
+					label: nfcli18n.templateHelperDoesNotContain,
 					value: 'notcontains'
 				},
 
 				greater: {
-					label: 'Greater Than',
+					label: nfcli18n.templateHelperGreaterThan,
 					value: 'greater'
 				},
 
 				less: {
-					label: 'Less Than',
+					label: nfcli18n.templateHelperLessThan,
 					value: 'less'
 				}
 			};
@@ -103,12 +103,12 @@ define( [], function() {
 					var comparators = _.omit( defaultComparators, 'contains', 'notcontains' );
 					_.extend( comparators, {
 						lessequal: {
-							label: 'Less Than or Equal',
+							label: nfcli18n.templateHelperLessThanOrEqual,
 							value: 'lessequal'
 						},
 
 						greaterequal: {
-							label: 'Greater Than or Equal',
+							label: nfcli18n.templateHelperGreaterThanOrEqual,
 							value: 'greaterequal'
 						}
 					} );
@@ -148,17 +148,17 @@ define( [], function() {
 		renderTriggers: function( type, key, currentTrigger, value ) {
 			var defaultTriggers = {
 				show_field: {
-					label: 'Show Field',
+					label: nfcli18n.templateHelperShowField,
 					value: 'show_field'
 				},
 
 				hide_field: {
-					label: 'Hide Field',
+					label: nfcli18n.templateHelperHideField,
 					value: 'hide_field'
 				},
 
 				change_value: {
-					label: 'Change Value',
+					label: nfcli18n.templateHelperChangeValue,
 					value: 'change_value'
 				}
 			};
