@@ -1,7 +1,9 @@
+<?php $update_templates = version_compare( WPN_Helper::get_plugin_version( 'ninja-forms/ninja-forms.php' ), '3', '>' ); ?>
+
 <!--
     Template used for adding the "Add Condition" button to the Advanced drawer header.
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-advanced-drawer-header" type="text/template">
         <header class="nf-drawer-header">
             <a class="nf-add-new nf-add-new-condition" title="{{{ nfcli18n.updateSettingsTitleAddNewCondition }}}" href="#" data-drawerid="addField">
@@ -30,7 +32,7 @@
 <!--
     Template used for conditions on the Advanced domain.
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-advanced-condition" type="text/template">
         <!-- Condition Layout View -->
         <div class="nf-condition">
@@ -132,7 +134,7 @@
 
     First-When-Item is used for the first "when" statement of a condition.
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-advanced-first-when-item" type="text/template">
         <div class="nf-setting nf-one-third">
             <label class="nf-select">{{{ renderKeySelect( key, modelType ) }}}<div></div></label>
@@ -172,7 +174,7 @@
 <!--
     When/Then/Else templates
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-advanced-when-item" type="text/template">
         <div class="nf-when">
             <div class="nf-setting nf-one-fourth">
@@ -236,7 +238,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-trigger-item" type="text/template">
         <div class="nf-{{{ modelType }}}">
             <div class="nf-setting nf-one-fourth">
@@ -293,7 +295,7 @@
     Templates for our per-action conditions.
     Main condition layout template
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-actions-condition-layout" type="text/template">
         <!-- Condition Layout View -->
         <div class="nf-condition actions">
@@ -370,7 +372,7 @@
 <!--
     Template for our action condition "When" statement.
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-actions-condition-when" type="text/template">
         <div class="nf-setting nf-one-fourth">
             <i class="fa fa-minus-circle nf-remove-when" aria-hidden="true"></i>
@@ -419,7 +421,7 @@
     Values (default and field-specific),
     Triggers
 -->
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-key-select" type="text/template">
         <select data-id="key" class="setting">
             <option value="">Select One</option>
@@ -459,7 +461,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-comparators" type="text/template">
         <select data-id="comparator" class="setting">
             <option value="">Select One</option>
@@ -483,7 +485,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-value-default" type="text/template">
         <input type="text" data-id="value" class="setting" value="{{{ value }}}">
     </script>
@@ -493,7 +495,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-value-textarea" type="text/template">
         <textarea data-id="value" class="setting">{{{ value }}}</textarea>
     </script>
@@ -503,7 +505,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-value-checkbox" type="text/template">
         <label class="nf-select">
             <select data-id="value" class="setting">
@@ -527,7 +529,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-value-list" type="text/template">
         <label class="nf-select">
             <select data-id="value" class="setting">
@@ -559,7 +561,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-value-date" type="text/template">
         <!-- Date Value Template -->
         <input type="text" data-id="value" class="setting setting-date" value="{{{ value }}}" placeholder="date">
@@ -571,7 +573,7 @@
     </script>
 <?php endif; ?>
 
-<?php if( false ): ?>
+<?php if( $update_templates ): ?>
     <script id="nf-tmpl-cl-triggers" type="text/template">
         <select data-id="trigger" class="setting">
             <option value="">{{{ nfcli18n.builderEditSettingsSelectOne }}}</option>
