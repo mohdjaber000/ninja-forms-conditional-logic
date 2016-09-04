@@ -53,11 +53,8 @@ final class NF_ConditionalLogic_Submission
     {
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
 
-<<<<<<< HEAD
-=======
         if( ! $action_condition ) return;
 
->>>>>>> master
         unset( $action_condition[ 'then' ] );
         unset( $action_condition[ 'else' ] );
 
