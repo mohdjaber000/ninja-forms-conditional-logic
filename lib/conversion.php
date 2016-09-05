@@ -184,6 +184,7 @@ final class NF_ConditionalLogic_Conversion
 	 */
 	function extract_when( $cr_array, $when, $connector = '' )
 	{
+		if ( ! is_array( $cr_array ) ) return false;
 		$cr = array_shift( $cr_array );
 		/*
 		 * Replace our field target with the appropriate key
