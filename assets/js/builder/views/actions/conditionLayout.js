@@ -7,7 +7,7 @@
  */
 define( [ 'views/actions/whenCollection' ], function( WhenCollection ) {
 	var view = Marionette.LayoutView.extend( {
-		template: '#nf-tmpl-cl-actions-condition-layout',
+		template: '#tmpl-nf-cl-actions-condition-layout',
 
 		regions: {
 			'when': '.nf-when'

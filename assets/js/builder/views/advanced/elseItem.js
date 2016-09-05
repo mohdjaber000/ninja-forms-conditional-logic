@@ -7,7 +7,7 @@
  */
 define( [], function( ) {
 	var view = Marionette.ItemView.extend({
-		template: "#nf-tmpl-cl-trigger-item",
+		template: "#tmpl-nf-cl-trigger-item",
 
 		initialize: function() {
 			this.listenTo( this.model, 'change', this.render );

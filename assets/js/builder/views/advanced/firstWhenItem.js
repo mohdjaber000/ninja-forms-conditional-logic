@@ -7,7 +7,7 @@
  */
 define( [], function( ) {
 	var view = Marionette.ItemView.extend({
-		template: "#nf-tmpl-cl-advanced-first-when-item",
+		template: "#tmpl-nf-cl-advanced-first-when-item",
 		
 		initialize: function() {
 			this.listenTo( this.model, 'change', this.render );

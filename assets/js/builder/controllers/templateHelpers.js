@@ -58,7 +58,7 @@ define( [], function() {
 			/*
 			 * Use a template to get our field select
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-cl-key-select' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-key-select' );
 			return template( { groups: groups, currentValue: currentValue } );
 		},
 
@@ -141,7 +141,7 @@ define( [], function() {
 			/*
 			 * Use a template to get our comparator select
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-cl-comparators' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-comparators' );
 			return template( { comparators: comparators, currentComparator: currentComparator } );
 		},
 
@@ -188,7 +188,7 @@ define( [], function() {
 			/*
 			 * Use a template to get our comparator select
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-cl-triggers' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-triggers' );
 			return template( { triggers: triggers, currentTrigger: currentTrigger } );
 		},
 
@@ -196,7 +196,7 @@ define( [], function() {
 			/*
 			 * Use a template to get our value
 			 */
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-default' );
 			var defaultHTML = template( { value: value } );
 
 			/*
@@ -246,7 +246,7 @@ define( [], function() {
 				return '';
 			}
 
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-default' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-default' );
 			var defaultHTML = template( { value: value } );
 
 			if ( key ) {

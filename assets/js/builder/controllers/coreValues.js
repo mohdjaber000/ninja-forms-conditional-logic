@@ -16,14 +16,14 @@ define( [], function() {
 		},
 
 		getCheckboxValue: function( key, trigger, value ) {
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-checkbox' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-checkbox' );
 			return template( { value: value } );
 		},
 
 		getListValue: function( key, trigger, value ) {
 			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
 			var options = fieldModel.get( 'options' );
-			var template = _.template( jQuery( '#nf-tmpl-cl-value-list' ).html() );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-list' );
 			return template( { options: options, value: value } );
 		},
 

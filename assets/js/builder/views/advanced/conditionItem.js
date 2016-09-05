@@ -7,7 +7,7 @@
  */
 define( [ 'views/advanced/whenCollection', 'views/advanced/thenCollection', 'views/advanced/elseCollection' ], function( WhenCollectionView, ThenCollectionView, ElseCollectionView ) {
 	var view = Marionette.LayoutView.extend({
-		template: "#nf-tmpl-cl-advanced-condition",
+		template: "#tmpl-nf-cl-advanced-condition",
 		regions: {
 			'when': '.nf-when-region',
 			'then': '.nf-then-region',
