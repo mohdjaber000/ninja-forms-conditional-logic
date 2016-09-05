@@ -15,8 +15,8 @@ final class NF_ConditionalLogic_FieldsCollection
                 $fieldModel->update_setting( 'key', $field[ 'key' ] );
             }
 
-            $settings = $field->get_settings();
-            $field->update_settings( $field, $settings );
+            $settings = $fieldModel->get_settings();
+            $fieldModel->update_settings( $field, $settings );
 
             $this->fields[] = $fieldModel;
         }
