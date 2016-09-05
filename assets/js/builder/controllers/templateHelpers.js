@@ -24,6 +24,10 @@ define( [], function() {
 		},
 
 		renderKeySelect: function( currentValue, modelType ) {
+			
+			console.log( currentValue );
+			console.log( modelType );
+
 			var groups = []
 
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
@@ -59,6 +63,9 @@ define( [], function() {
 			 * Use a template to get our field select
 			 */
 			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-key-select' );
+
+			console.log( 'OUTSIDE' );
+
 			return template( { groups: groups, currentValue: currentValue } );
 		},
 

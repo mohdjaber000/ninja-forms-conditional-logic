@@ -58,7 +58,7 @@
             </div>
             <# if ( ! data.collapsed ) { #>
                 <div class="nf-then-container">
-                    <div class="nf-condition-label">{{{ nfcli18n.builderEditSettingsDo }}</div>
+                    <div class="nf-condition-label">{{{ nfcli18n.builderEditSettingsDo }}}</div>
                     <div class="nf-then-region">
                         <!-- THEN Region -->
                     </div>
@@ -138,19 +138,19 @@
     <script id="tmpl-nf-cl-advanced-first-when-item" type="text/template">
         <div class="nf-setting nf-one-third">
             <label class="nf-select">
-                <# data.renderKeySelect( data.key, data.modelType ) #>
+                {{{ data.renderKeySelect( data.key, data.modelType ) }}}
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-third">
             <label class="nf-select">
-                <# data.renderComparators( data.type, data.key, data.comparator ) #>
+                {{{ data.renderComparators( data.type, data.key, data.comparator ) }}}
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-third">
             <label class="nf-input">
-                <# data.renderWhenValue( data.type, data.key, data.comparator, data.value ) #>
+                {{{ data.renderWhenValue( data.type, data.key, data.comparator, data.value ) }}}
             </label>
         </div>
     </script>
@@ -193,17 +193,17 @@
                 </label>
             </div>
             <div class="nf-setting nf-one-fourth">
-                <label class="nf-select"><# data.renderKeySelect( data.key, data.modelType ) #><div></div></label>
+                <label class="nf-select">{{{ data.renderKeySelect( data.key, data.modelType ) }}}<div></div></label>
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
-                    <# data.renderComparators( data.type, data.key, data.comparator ) #>
+                    {{{ data.renderComparators( data.type, data.key, data.comparator ) }}}
                     <div></div>
                 </label>
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-input">
-                    <# data.renderWhenValue( data.type, data.key, data.comparator, data.value ) #>
+                    {{{ data.renderWhenValue( data.type, data.key, data.comparator, data.value ) }}}
                 </label>
             </div>
         </div>
@@ -249,19 +249,19 @@
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
-                    <# data.renderKeySelect( data.key, data.modelType ) #>
+                    {{{ data.renderKeySelect( data.key, data.modelType ) }}}
                     <div></div>
                 </label>
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-select">
-                    <# data.renderTriggers( data.type, data.key, data.trigger, data.value ) #>
+                    {{{ data.renderTriggers( data.type, data.key, data.trigger, data.value ) }}}
                     <div></div>
                 </label>
             </div>
             <div class="nf-setting nf-one-fourth">
                 <label class="nf-input">
-                    <# data.renderItemValue( data.key, data.trigger, data.value ) #>
+                    {{{ data.renderItemValue( data.key, data.trigger, data.value ) }}}
                 </label>
             </div>
         </div>
@@ -580,7 +580,7 @@
     <script id="tmpl-nf-cl-triggers" type="text/template">
         <select data-id="trigger" class="setting">
             <option value="">{{{ nfcli18n.builderEditSettingsSelectOne }}}</option>
-            <# _.each( triggers, function( trigger ) { #>
+            <# _.each( data.triggers, function( trigger ) { #>
                 <option value="{{{ trigger.value }}}" {{{ ( trigger.value == data.currentTrigger ) ? 'selected="selected"' : '' }}}>{{{ trigger.label }}}</option>
                 <# } ); #>
         </select>
