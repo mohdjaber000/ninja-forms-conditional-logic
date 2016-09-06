@@ -62,7 +62,6 @@ define( [], function() {
 			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-key-select' );
 
 			var tmp = template( { groups: groups, currentValue: currentValue } );
-			console.log( tmp );
 			return tmp;
 		},
 
