@@ -1,6 +1,6 @@
 <?php
 
-// if( class_exists( 'NF_ConditionalLogic_Conversion' ) ) return;
+if( class_exists( 'NF_ConditionalLogic_Conversion', false ) ) return;
 
 final class NF_ConditionalLogic_Conversion
 {
