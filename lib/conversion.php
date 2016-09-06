@@ -253,10 +253,10 @@ final class NF_ConditionalLogic_Conversion
 
 		$value = $this->convert_value( $condition[ 'value' ] );
 
-		$then = array( 'key' => $this->current_field[ 'key' ], 'trigger' => $trigger, 'value' => $value );
+		$then = array( 'key' => $this->current_field[ 'key' ], 'trigger' => $trigger, 'value' => $value, 'type' => 'field' );
 
 		if ( $else_trigger ) {
-			$else = array( 'key' => $this->current_field[ 'key' ], 'trigger' => $else_trigger, 'value' => $value );
+			$else = array( 'key' => $this->current_field[ 'key' ], 'trigger' => $else_trigger, 'value' => $value, 'type' => 'field' );
 		} else {
 			$else = array();
 		}
