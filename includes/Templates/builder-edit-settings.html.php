@@ -381,17 +381,20 @@
             <i class="fa fa-minus-circle nf-remove-when" aria-hidden="true"></i>
         </div>
         <div class="nf-setting nf-one-fourth">
-            <label class="nf-select"><# data.renderKeySelect( data.key, data.modelType ) #><div></div></label>
+            <label class="nf-select">
+                {{{ data.renderKeySelect( data.key, data.modelType ) }}}
+                <div></div>
+            </label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-select">
-                <# data.renderComparators( data.type, data.key, data.comparator ) #>
+                {{{ data.renderComparators( data.type, data.key, data.comparator ) }}}
                 <div></div>
             </label>
         </div>
         <div class="nf-setting nf-one-fourth">
             <label class="nf-input">
-                <# data.renderWhenValue( data.type, data.key, data.comparator, data.value ) #>
+                {{{ data.renderWhenValue( data.type, data.key, data.comparator, data.value ) }}}
             </label>
         </div>
     </script>
