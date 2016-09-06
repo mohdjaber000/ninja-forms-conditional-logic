@@ -25,9 +25,6 @@ define( [], function() {
 
 		renderKeySelect: function( currentValue, modelType ) {
 			
-			console.log( currentValue );
-			console.log( modelType );
-
 			var groups = []
 
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
@@ -64,9 +61,9 @@ define( [], function() {
 			 */
 			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-key-select' );
 
-			console.log( 'OUTSIDE' );
-
-			return template( { groups: groups, currentValue: currentValue } );
+			var tmp = template( { groups: groups, currentValue: currentValue } );
+			console.log( tmp );
+			return tmp;
 		},
 
 		renderComparators: function( type, key, currentComparator ) {
