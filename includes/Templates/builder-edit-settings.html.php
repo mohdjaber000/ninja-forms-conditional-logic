@@ -1,4 +1,4 @@
-<?php $update_templates = version_compare( WPN_Helper::get_plugin_version( 'ninja-forms/ninja-forms.php' ), '3', '>' ); ?>
+<?php $update_templates = version_compare( get_option( 'ninja_forms_version', '0' ), '3', '>' ); ?>
 
 <!--
     Template used for adding the "Add Condition" button to the Advanced drawer header.

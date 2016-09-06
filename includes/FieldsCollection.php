@@ -7,14 +7,17 @@ final class NF_ConditionalLogic_FieldsCollection
     public function __construct( $fields = array() )
     {
         foreach( $fields as $field ){
-            $value = $field[ 'value' ];
+
             $fieldModel = Ninja_Forms()->form()->get_field( $field[ 'id' ] );
+            unset( $field[ 'id' ] );
 
             if( $fieldModel->get_tmp_id() && isset( $field[ 'key' ] ) ){
                 $fieldModel->update_setting( 'key', $field[ 'key' ] );
             }
 
-            $fieldModel->update_setting( 'value', $value );
+            $settings = $fieldModel->get_settings();
+            $fieldModel->update_settings( $field, $settings );
+
             $this->fields[] = $fieldModel;
         }
     }
@@ -33,11 +36,9 @@ final class NF_ConditionalLogic_FieldsCollection
     {
         $fields = array();
         foreach( $this->fields as $field ){
-            $fields[] = array(
-                'id' => ( $field->get_tmp_id() ) ? $field->get_tmp_id() : $field->get_id(),
-                'value' => $field->get_setting( 'value' ),
-                'conditionally_required' => $field->get_setting( 'conditionally_required' )
-            );
+            $settings = $field->get_settings();
+            $settings[ 'id' ] = ( $field->get_tmp_id() ) ? $field->get_tmp_id() : $field->get_id();
+            $fields[] = $settings;
         }
         return $fields;
     }
