@@ -3,7 +3,7 @@
  * Plugin Name: Ninja Forms - Conditional Logic
  * Plugin URI: https://ninjaforms.com/extensions/conditional-logic/
  * Description: Conditional form logic add-on for Ninja Forms.
- * Version: 3.0
+ * Version: 3.0.1
  * Author: The WP Ninjas
  * Author URI: https://ninjaforms.com
  * Text Domain: ninja-forms-conditionals
@@ -36,7 +36,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
      */
     final class NF_ConditionalLogic
     {
-        const VERSION = '3.0';
+        const VERSION = '3.0.1';
         const SLUG    = 'conditional-logic';
         const NAME    = 'Conditional Logic';
         const AUTHOR  = 'The WP Ninjas';
