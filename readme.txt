@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
-Tested up to: 4.2.2
-Stable tag: 3.0.0
+Tested up to: 4.6
+Stable tag: 3.0
 
 License: GPLv2 or later
 
@@ -30,7 +30,7 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Changelog ==
 
-= 3.0.0 () =
+= 3.0 (06 September 2016) =
 
 * Updated with Ninja Forms v3.x compatibility
 * Deprecated Ninja Forms v2.9.x compatible code
