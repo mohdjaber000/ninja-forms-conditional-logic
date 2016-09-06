@@ -1,4 +1,4 @@
-<?php $update_templates = version_compare( get_option( 'ninja_forms_version', '0' ), '3', '>' ); ?>
+<?php $update_templates = version_compare( get_option( 'ninja_forms_version', '0' ), '3.0', '>' ); ?>
 
 <!--
     Template used for adding the "Add Condition" button to the Advanced drawer header.
