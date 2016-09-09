@@ -10,7 +10,9 @@
  * Domain Path: /lang/
  */
 
-require_once 'lib/conversion.php';
+if( ! class_exists( 'NF_ConditionalLogic_Conversion', false ) ) {
+    require_once 'lib/conversion.php';
+}
 
 if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) || get_option( 'ninja_forms_load_deprecated', FALSE ) ) {
 
