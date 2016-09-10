@@ -30,7 +30,7 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Changelog ==
 
-= 3.0.2 (06 September 2016) =
+= 3.0.2 (09 September 2016) =
 
 * Fixed a bug with conversion.
 
