@@ -540,7 +540,7 @@
         <label class="nf-select">
             <select data-id="value" class="setting">
                 <option value="">{{{ nfcli18n.builderEditSettingsSelectOne }}}</option>
-                <# _.each( options.models, function( option ) { #>
+                <# _.each( data.options.models, function( option ) { #>
                     <option value="{{{ option.get( 'value' ) }}}" {{{ ( option.get( 'value' ) === data.value ) ? 'selected="selected"': '' }}}>{{{ option.get( 'label' ) }}}</option>
                     <# } ); #>
 
