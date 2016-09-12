@@ -197,7 +197,7 @@ final class NF_ConditionalLogic_Conversion
 		$when[] = array(
 			'connector'		=> strtoupper( $connector ),
 			'key'			=> $field_key,
-			'comparator'	=> $this->convert_comparator( $comparator ),
+			'comparator'	=> $this->convert_comparator( $comparator, $field_id ),
 			'value'			=> $this->convert_value( $cr[ 'value' ] ),
             'type'          => $this->get_when_type( $field_id )
 		);
@@ -329,13 +329,32 @@ final class NF_ConditionalLogic_Conversion
 	 * @param  string  	$comparator 		2.9.x format comparator
 	 * @return string
 	 */
-	function convert_comparator( $comparator )
+	function convert_comparator( $comparator, $field_id )
 	{
+		$current_id = $this->current_id;
+		$this->current_id = $field_id;
+		$field = array_shift( array_filter( $this->fields, array( $this, 'filter_by_id' ) ) );
+		$this->current_id = $current_id;
+
 		switch ( $comparator ) {
 			case '==':
-				return 'equal';
+				/*
+				 * If we have a list field, we want to use "contains" and "notcontains" instead of "equal" and "notequal"
+				 */
+				if ( 'listselect' == $field[ 'type' ] || 'listradio' == $field[ 'type' ] || 'listcheckbox' == $field[ 'type' ] || 'listmultiselect' == $field[ 'type' ] ) {
+					return 'contains';
+				} else {
+					return 'equal';
+				}
 			case '!=':
-				return 'notequal';
+				/*
+				 * If we have a list field, we want to use "contains" and "notcontains" instead of "equal" and "notequal"
+				 */
+				if ( 'listselect' == $field[ 'type' ] || 'listradio' == $field[ 'type' ] || 'listcheckbox' == $field[ 'type' ] || 'listmultiselect' == $field[ 'type' ] ) {
+					return 'notcontains';
+				} else {
+					return 'notequal';
+				}
 			case '<':
 				return 'less';
 			case '>':
