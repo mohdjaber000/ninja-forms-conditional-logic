@@ -23,6 +23,9 @@ define( [], function() {
 			} else { // We have a field key
 				// Get our field model
 				var fieldModel = nfRadio.channel( 'form-' + options.condition.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', this.get( 'key' ) );
+
+				if( 'undefined' == typeof fieldModel ) return;
+
 				// When we change the value of our field, update our compare status.
 				fieldModel.on( 'change:value', this.updateFieldCompare, this );
 				// When we keyup in our field, maybe update our compare status.

@@ -14,6 +14,9 @@ define( [], function() {
 
 		hideField: function( conditionModel, then ) {
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
+
+			if( 'undefined' == typeof targetFieldModel ) return;
+
 			targetFieldModel.set( 'visible', false );
 			targetFieldModel.trigger( 'change:value', targetFieldModel );
 			nfRadio.channel( 'fields' ).request( 'remove:error', targetFieldModel.get( 'id' ), 'required-error' );
