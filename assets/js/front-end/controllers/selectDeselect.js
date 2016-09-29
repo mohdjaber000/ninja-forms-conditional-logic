@@ -18,10 +18,16 @@ define( [], function() {
 			 * Get our field model and set this option's "selected" property to 1
 			 */
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
+			targetFieldModel.set( 'clean', false ); // Allows for changes to default values.
+
 			var options = targetFieldModel.get( 'options' );
+
 			var option = _.find( options, { value: then.value } );
 			option.selected = 1;
+
 			targetFieldModel.set( 'options', options );
+			targetFieldModel.set( 'value', option.value ); // Propagate the selected option to the model's value.
+
 			/*
 			 * Re render our field
 			 */
