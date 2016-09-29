@@ -3,7 +3,7 @@
  * Plugin Name: Ninja Forms - Conditional Logic
  * Plugin URI: https://ninjaforms.com/extensions/conditional-logic/
  * Description: Conditional form logic add-on for Ninja Forms.
- * Version: 3.0.3
+ * Version: 3.0.5
  * Author: The WP Ninjas
  * Author URI: https://ninjaforms.com
  * Text Domain: ninja-forms-conditionals
@@ -25,7 +25,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
     }
 
     if( ! defined( 'NINJA_FORMS_CON_VERSION' ) ) {
-        define("NINJA_FORMS_CON_VERSION", "3.0.3");
+        define("NINJA_FORMS_CON_VERSION", "3.0.5");
     }
 
     include 'deprecated/conditionals.php';
@@ -38,7 +38,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
      */
     final class NF_ConditionalLogic
     {
-        const VERSION = '3.0.3';
+        const VERSION = '3.0.5';
         const SLUG    = 'conditional-logic';
         const NAME    = 'Conditional Logic';
         const AUTHOR  = 'The WP Ninjas';
@@ -125,8 +125,9 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
 
         public function builder_scripts()
         {
-            wp_enqueue_style(  'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
-            wp_enqueue_script( 'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+            $ver = self::VERSION;
+            wp_enqueue_style(  'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/css/builder.css', array(), $ver );
+            wp_enqueue_script( 'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js', array(), $ver );
             wp_localize_script( 'nf-cl-builder', 'nfcli18n', self::config( 'i18nCLBuilder' ) );
             wp_localize_script( 'nf-cl-builder', 'nfListCountries', Ninja_Forms::config( 'CountryList' ) );
         }
