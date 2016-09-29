@@ -18,7 +18,11 @@ define( [], function() {
 			 * Get our field model and set this option's "selected" property to 1
 			 */
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
-			targetFieldModel.set( 'clean', false ); // Allows for changes to default values.
+
+
+			if( _.contains( [ 'listselect', 'listcountry', 'liststate' ], targetFieldModel.get( 'type' ) ) ) { // TODO: Make this more dynamic.
+				targetFieldModel.set('clean', false); // Allows for changes to default values.
+			}
 
 			var options = targetFieldModel.get( 'options' );
 
@@ -26,7 +30,14 @@ define( [], function() {
 			option.selected = 1;
 
 			targetFieldModel.set( 'options', options );
-			targetFieldModel.set( 'value', option.value ); // Propagate the selected option to the model's value.
+
+			if( _.contains( [ 'listselect', 'listcountry', 'liststate' ], targetFieldModel.get( 'type' ) ) ) { // TODO: Make this more dynamic.
+				targetFieldModel.set('value', option.value); // Propagate the selected option to the model's value.
+			} else {
+				var value = targetFieldModel.get( 'value' );
+				value.push( option.value );
+				targetFieldModel.set( 'value', value ); // Propagate the selected option to the model's value.
+			}
 
 			/*
 			 * Re render our field
