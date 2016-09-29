@@ -125,8 +125,9 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
 
         public function builder_scripts()
         {
-            wp_enqueue_style(  'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/css/builder.css' );
-            wp_enqueue_script( 'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js' );
+            $ver = self::VERSION;
+            wp_enqueue_style(  'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/css/builder.css', array(), $ver );
+            wp_enqueue_script( 'nf-cl-builder',  plugin_dir_url( __FILE__ ) . 'assets/js/min/builder.js', array(), $ver );
             wp_localize_script( 'nf-cl-builder', 'nfcli18n', self::config( 'i18nCLBuilder' ) );
         }
 
