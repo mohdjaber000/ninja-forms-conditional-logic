@@ -305,13 +305,4 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
 
     NF_ConditionalLogic();
 
-    /*
-     * Localize our mock conditional logic data
-     */
-    function nf_cl_display_mock_data( $form_id ) {
-        wp_enqueue_script( 'nf-cl-front-end', plugin_dir_url( __FILE__ ) . 'assets/js/min/front-end.js', array( 'nf-front-end' ) );
-    }
-
-    add_action( 'ninja_forms_enqueue_scripts', 'nf_cl_display_mock_data' );
-
 }
