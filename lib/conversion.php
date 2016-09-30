@@ -18,6 +18,10 @@ final class NF_ConditionalLogic_Conversion
 
     function upgrade_field_settings( $form_data )
     {
+        if( isset( $form_data[ 'settings' ][ 'conditions' ] ) && ! empty( $form_data[ 'settings' ][ 'conditions' ] ) ) {
+            return $form_data;
+        }
+
 	    $this->actions = $form_data[ 'actions' ];
 	    $this->fields = $form_data[ 'fields' ];
 	    

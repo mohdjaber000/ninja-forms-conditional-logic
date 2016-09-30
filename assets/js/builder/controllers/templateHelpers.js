@@ -29,7 +29,7 @@ define( [], function() {
 
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var fieldOptions = _.chain( fieldCollection.models )
-				.filter( function( field ) { return ! nfRadio.channel( 'conditions-key-select-field-' + field.get( 'type' ) ).request( 'hide' ) || false; })
+				.filter( function( field ) { return ! nfRadio.channel( 'conditions-key-select-field-' + field.get( 'type' ) ).request( 'hide', modelType ) || false; })
 				.map( function( field ) { return { key: field.get( 'key' ), label: field.get( 'label' ) }; })
 				.value();
 
@@ -177,11 +177,16 @@ define( [], function() {
 				 * If we don't get a response, send a message out on the parent type channel
 				 */
 				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
-				
-				var triggers = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:triggers', defaultTriggers );
-				if ( ! triggers ) {
-					triggers = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
+
+				if( 'undefined' != typeof fieldModel ) {
+					var typeModel = nfRadio.channel('fields').request('get:type', fieldModel.get('type'));
+
+					var triggers = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:triggers', defaultTriggers);
+					if (!triggers) {
+						triggers = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:triggers', defaultTriggers) || defaultTriggers;
+					}
+				} else {
+					var triggers = nfRadio.channel( 'conditions-' + type ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;
 				}
 			} else {
 				var triggers = nfRadio.channel( 'conditions-' + type ).request( 'get:triggers', defaultTriggers ) || defaultTriggers;

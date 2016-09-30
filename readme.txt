@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.6.1
-Stable tag: 3.0.3
+Stable tag: 3.0.5
 
 License: GPLv2 or later
 
@@ -29,6 +29,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.5 (28 September 2016) =
+
+*Bugs:*
+
+* File Uploads should now show in Conditional Logic conditions.
+
+= 3.0.4 (22 September 2016) =
+
+*Bugs:*
+
+* Fixed a bug that could cause the builder to crash when fields were removed if there was a condition based upon that field.
 
 = 3.0.3 (11 September 2016) =
 
