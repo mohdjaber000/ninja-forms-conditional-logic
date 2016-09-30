@@ -19,8 +19,9 @@ final class NF_ConditionalLogic_ConditionModel
     private $then = array();
     private $else = array();
     private $fields;
+    private $result;
 
-    public function __construct( $condition, &$fieldsCollection )
+    public function __construct( $condition, &$fieldsCollection, $default = true )
     {
         if( isset( $condition[ 'when' ] ) ) {
             $this->when = $condition[ 'when' ];
@@ -34,13 +35,15 @@ final class NF_ConditionalLogic_ConditionModel
             $this->else = $condition[ 'else' ];
         }
 
+        $this->result = $default;
+
         $this->fields = $fieldsCollection;
     }
 
     public function process()
     {
         array_walk( $this->when, array( $this, 'compare' ) );
-        $result = array_reduce( $this->when, array( $this, 'evaluate' ), true );
+        $result = array_reduce( $this->when, array( $this, 'evaluate' ), $this->result );
 
         $triggers = ( $result ) ? $this->then : $this->else;
         array_map( array( $this, 'trigger' ), $triggers );
