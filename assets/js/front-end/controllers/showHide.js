@@ -18,14 +18,19 @@ define( [], function() {
 			if( 'undefined' == typeof targetFieldModel ) return;
 
 			targetFieldModel.set( 'visible', false );
-			targetFieldModel.trigger( 'change:value', targetFieldModel );
+			if ( ! targetFieldModel.get( 'clean' ) ) {
+				targetFieldModel.trigger( 'change:value', targetFieldModel );
+			}
+			
 			nfRadio.channel( 'fields' ).request( 'remove:error', targetFieldModel.get( 'id' ), 'required-error' );
 		},
 
 		showField: function( conditionModel, then ) {
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
 			targetFieldModel.set( 'visible', true );
-			targetFieldModel.trigger( 'change:value', targetFieldModel );
+			if ( ! targetFieldModel.get( 'clean' ) ) {
+				targetFieldModel.trigger( 'change:value', targetFieldModel );
+			}
 		}
 	});
 
