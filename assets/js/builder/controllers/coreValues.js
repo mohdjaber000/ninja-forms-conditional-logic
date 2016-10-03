@@ -13,6 +13,7 @@ define( [], function() {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:valueInput', this.getCheckboxValue );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:valueInput', this.getListValue );
+			nfRadio.channel( 'conditions-listcountry' ).reply( 'get:valueInput', this.getListCountryValue );
 		},
 
 		getCheckboxValue: function( key, trigger, value ) {
@@ -26,6 +27,19 @@ define( [], function() {
 			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-list' );
 			return template( { options: options, value: value } );
 		},
+
+		getListCountryValue: function( key, trigger, value ) {
+			var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
+			var options = fieldModel.get( 'options' );
+			var template = Backbone.Radio.channel( 'app' ).request( 'get:template', '#tmpl-nf-cl-value-list' );
+
+			options.reset();
+			_.each( nfListCountries, function( value, label ) {
+				options.add( { label: label, value: value } );
+			});
+
+			return template( { options: options, value: value } );
+		}
 
 
 	});
