@@ -30,7 +30,7 @@ define( [], function() {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var fieldOptions = _.chain( fieldCollection.models )
 				.filter( function( field ) { return ! nfRadio.channel( 'conditions-key-select-field-' + field.get( 'type' ) ).request( 'hide', modelType ) || false; })
-				.map( function( field ) { return { key: field.get( 'key' ), label: field.get( 'label' ) }; })
+				.map( function( field ) { label = field.get( 'admin_label' ) || field.get( 'label' ); return { key: field.get( 'key' ), label: label }; })
 				.value();
 
 			groups.push( { label: 'Fields', type: 'field', options: fieldOptions } );
