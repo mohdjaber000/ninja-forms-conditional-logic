@@ -35,7 +35,12 @@ define( [], function() {
 				targetFieldModel.set('value', option.value); // Propagate the selected option to the model's value.
 			} else {
 				var value = targetFieldModel.get( 'value' );
-				value.push( option.value );
+				if ( _.isArray( value ) ) {
+					value.push( option.value );
+				} else {
+					value = option.value;
+				}
+				
 				targetFieldModel.set( 'value', value ); // Propagate the selected option to the model's value.
 			}
 
