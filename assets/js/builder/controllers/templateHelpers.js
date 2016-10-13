@@ -42,7 +42,7 @@ define( [], function() {
 			 */
 			if ( 'when' == modelType && 0 < calcCollection.length ) {
 				var calcOptions = calcCollection.map( function( calc ) {
-					return { key: calc.get( 'key' ), label: calc.get( 'label' ) };
+					return { key: calc.get( 'name' ), label: calc.get( 'name' ) };
 				} );
 
 				groups.push( { label: 'Calculations', type: 'calc', options: calcOptions } );
