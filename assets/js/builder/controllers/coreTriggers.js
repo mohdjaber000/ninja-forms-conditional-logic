@@ -23,7 +23,7 @@ define( [], function() {
 				},
 
 				deselect_option: {
-					label: nfcli18n.coreTriggersSelectOption,
+					label: nfcli18n.coreTriggersDeselectOption,
 					value: 'deselect_option'
 				},
 
