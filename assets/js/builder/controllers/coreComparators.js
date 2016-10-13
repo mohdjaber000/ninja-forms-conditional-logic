@@ -12,6 +12,8 @@ define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:comparators', this.getCheckboxComparators );
+			nfRadio.channel( 'conditions-listradio' ).reply( 'get:comparators', this.getSingleListComparators );
+			nfRadio.channel( 'conditions-listselect' ).reply( 'get:comparators', this.getSingleListComparators );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:comparators', this.getListComparators );
 		},
 
@@ -24,6 +26,20 @@ define( [], function() {
 
 				isnot: {
 					label: nfcli18n.coreComparatorsIsNot,
+					value: 'notequal'
+				}
+			}
+		},
+
+		getSingleListComparators: function( defaultComparators ) {
+			return {
+				has: {
+					label: nfcli18n.coreComparatorsHasSelected,
+					value: 'equal'
+				},
+
+				hasnot: {
+					label: nfcli18n.coreComparatorsDoesNotHaveSelected,
 					value: 'notequal'
 				}
 			}
