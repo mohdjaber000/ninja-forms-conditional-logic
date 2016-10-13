@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.6.1
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 
 License: GPLv2 or later
 
@@ -29,6 +29,17 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.7 (13 October 2016) =
+
+*Bugs:*
+
+* Creating conditions can now properly be based upon calculations.
+* Fixed a bug with radio lists and the select option trigger.
+
+*Changes:*
+
+* When building conditions, fields should now show up with their admin label if one is set.
 
 = 3.0.6 (03 October 2016) =
 
