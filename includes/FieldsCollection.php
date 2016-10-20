@@ -38,7 +38,7 @@ final class NF_ConditionalLogic_FieldsCollection
         foreach( $this->fields as $field ){
             $settings = $field->get_settings();
             $settings[ 'id' ] = ( $field->get_tmp_id() ) ? $field->get_tmp_id() : $field->get_id();
-            $fields[] = $settings;
+            $fields[ $field->get_id() ] = $settings;
         }
         return $fields;
     }
