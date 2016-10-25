@@ -57,7 +57,12 @@ final class NF_ConditionalLogic_Submission
         unset( $action_condition[ 'then' ] );
         unset( $action_condition[ 'else' ] );
 
-        $condition = new NF_ConditionalLogic_ConditionModel( $action_condition, $fieldsCollection );
+        foreach( $action_condition[ 'when' ] as &$when ){
+            $when[ 'connector' ] = ( 'all' == $action_condition[ 'connector' ] ) ? 'AND' : 'OR';
+        }
+        $default = ( 'all' == $action_condition[ 'connector' ] );
+
+        $condition = new NF_ConditionalLogic_ConditionModel( $action_condition, $fieldsCollection, array(), $default );
         $result = $condition->process();
 
         if( 1 != $action_condition[ 'process' ] ) {
