@@ -154,7 +154,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
         public function comparator( $key )
         {
             if( isset( $this->comparators[ $key ] ) ) return $this->comparators[ $key ][ 'instance' ];
-            throw new Exception( 'Comparator does not exist.' );
+            return false;
         }
 
         /**
