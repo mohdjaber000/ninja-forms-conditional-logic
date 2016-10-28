@@ -128,10 +128,10 @@ define( [], function() {
 					var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
 
 					if( fieldModel ) {
-						var comparators = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:comparators', defaultComparators);
+						var comparators = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:comparators', defaultComparators, currentComparator );
 						if (!comparators) {
 							var typeModel = nfRadio.channel('fields').request('get:type', fieldModel.get('type'));
-							comparators = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:comparators', defaultComparators) || defaultComparators;
+							comparators = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:comparators', defaultComparators, currentComparator ) || defaultComparators;
 						}
 					} else {
 						var comparators = defaultComparators;
