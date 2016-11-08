@@ -15,7 +15,7 @@ final class NF_ConditionalLogic_Submission
     {
         if( ! isset( $data[ 'settings' ][ 'conditions' ] ) ) return $data;
 
-        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
+        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ], $data[ 'id' ] );
 
         foreach( $data[ 'settings' ][ 'conditions' ] as $condition ){
             $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection, $data );
@@ -41,7 +41,7 @@ final class NF_ConditionalLogic_Submission
 
     public function parse_actions( $actions, $form_data )
     {
-        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $form_data[ 'fields' ] );
+        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $form_data[ 'fields' ], $form_data[ 'id' ] );
 
         array_walk( $actions, array( $this, 'parse_action' ), $fieldsCollection );
 

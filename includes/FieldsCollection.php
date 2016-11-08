@@ -4,12 +4,15 @@ final class NF_ConditionalLogic_FieldsCollection
 {
     private $fields;
 
-    public function __construct( $fields = array() )
+    public function __construct( $fields = array(), $form_id )
     {
         foreach( $fields as $field ){
 
-            $fieldModel = Ninja_Forms()->form()->get_field( $field[ 'id' ] );
+            $fieldModel = Ninja_Forms()->form( $form_id )->get_field( $field[ 'id' ] );
             unset( $field[ 'id' ] );
+
+            $field_value = ( isset( $field[ 'settings' ][ 'value' ] ) ) ? $field[ 'settings' ][ 'value' ] : null;
+            $fieldModel->update_setting( 'value', $field_value );
 
             if( $fieldModel->get_tmp_id() && isset( $field[ 'key' ] ) ){
                 $fieldModel->update_setting( 'key', $field[ 'key' ] );
