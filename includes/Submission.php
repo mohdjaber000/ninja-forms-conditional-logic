@@ -50,6 +50,8 @@ final class NF_ConditionalLogic_Submission
 
     public function parse_action( &$action, $key, $fieldsCollection )
     {
+        if( ! isset( $action[ 'settings' ][ 'active' ] ) || ! $action[ 'settings' ][ 'active' ] ) return;
+
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
 
         if( ! $action_condition ) return;
