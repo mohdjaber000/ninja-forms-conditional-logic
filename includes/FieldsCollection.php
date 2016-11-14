@@ -37,7 +37,7 @@ final class NF_ConditionalLogic_FieldsCollection
             $setting = $field->get_setting( $property );
             if( $key_or_id == $setting ) return $field;
         }
-        return false;
+        return Ninja_Forms()->form()->get_field();
     }
 
     public function to_array()
