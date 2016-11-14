@@ -12,6 +12,8 @@ define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:comparators', this.getCheckboxComparators );
+			nfRadio.channel( 'conditions-listradio' ).reply( 'get:comparators', this.getListSingleComparators );
+			nfRadio.channel( 'conditions-listselect' ).reply( 'get:comparators', this.getListSingleComparators );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:comparators', this.getListComparators );
 		},
 
@@ -41,6 +43,41 @@ define( [], function() {
 					value: 'notcontains'
 				}
 			}
+		},
+
+		getListSingleComparators: function( defaultComparators, currentComparator ) {
+			/*
+			 * Radio and Select lists need to use equal and notequal.
+			 * In previous versions, however, they used contains and notcontains.
+			 * In order to keep forms working that were made in those previous versions,
+			 * we check to see if the currentComparator is contains or notcontains.
+			 * If it is, we return those values; else we return equal or not equal.
+			 */
+			if ( 'contains' == currentComparator || 'notcontains' == currentComparator ) {
+				return {
+					has: {
+						label: nfcli18n.coreComparatorsHasSelected,
+						value: 'contains'
+					},
+
+					hasnot: {
+						label: nfcli18n.coreComparatorsDoesNotHaveSelected,
+						value: 'notcontains'
+					}
+				}		
+			}
+
+			return {
+					has: {
+						label: nfcli18n.coreComparatorsHasSelected,
+						value: 'equal'
+					},
+
+					hasnot: {
+						label: nfcli18n.coreComparatorsDoesNotHaveSelected,
+						value: 'notequal'
+					}
+				}	
 		},
 
 
