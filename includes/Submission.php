@@ -2,6 +2,8 @@
 
 final class NF_ConditionalLogic_Submission
 {
+    private $fieldsCollection;
+
     public function __construct()
     {
         add_filter( 'ninja_forms_submit_data', array( $this, 'parse_fields' ) );
@@ -15,15 +17,15 @@ final class NF_ConditionalLogic_Submission
     {
         if( ! isset( $data[ 'settings' ][ 'conditions' ] ) ) return $data;
 
-        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ] );
+        $this->fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $data[ 'fields' ], $data[ 'id' ] );
 
         foreach( $data[ 'settings' ][ 'conditions' ] as $condition ){
-            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $fieldsCollection, $data );
+            $condition = new NF_ConditionalLogic_ConditionModel( $condition, $this->fieldsCollection, $data );
             $condition->process();
         }
 
-        $fieldsCollection = apply_filters( 'ninja_forms_conditional_logic_parse_fields', $fieldsCollection );
-        $data[ 'fields' ] = $fieldsCollection->to_array();
+        $this->fieldsCollection = apply_filters( 'ninja_forms_conditional_logic_parse_fields', $this->fieldsCollection );
+        $data[ 'fields' ] = $this->fieldsCollection->to_array();
 
         return $data;
     }
@@ -41,15 +43,15 @@ final class NF_ConditionalLogic_Submission
 
     public function parse_actions( $actions, $form_data )
     {
-        $fieldsCollection = new NF_ConditionalLogic_FieldsCollection( $form_data[ 'fields' ] );
-
-        array_walk( $actions, array( $this, 'parse_action' ), $fieldsCollection );
+        array_walk( $actions, array( $this, 'parse_action' ), $this->fieldsCollection );
 
         return $actions;
     }
 
     public function parse_action( &$action, $key, $fieldsCollection )
     {
+        if( ! isset( $action[ 'settings' ][ 'active' ] ) || ! $action[ 'settings' ][ 'active' ] ) return;
+
         $action_condition = ( is_object( $action ) ) ? $action->get_setting( 'conditions' ) : $action[ 'settings' ][ 'conditions' ];
 
         if( ! $action_condition ) return;

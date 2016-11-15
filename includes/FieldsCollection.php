@@ -4,19 +4,35 @@ final class NF_ConditionalLogic_FieldsCollection
 {
     private $fields;
 
-    public function __construct( $fields = array() )
+    public function __construct( $fields = array(), $form_id )
     {
         foreach( $fields as $field ){
 
-            $fieldModel = Ninja_Forms()->form()->get_field( $field[ 'id' ] );
+            $fieldModel = Ninja_Forms()->form( $form_id )->get_field( $field[ 'id' ] );
+            $fieldModel->get_settings(); // Initialized field settings from the database, if needed.
             unset( $field[ 'id' ] );
+
+            if( isset( $field[ 'settings' ][ 'value' ] ) ){
+                $field_value = $field[ 'settings' ][ 'value' ];
+            } elseif( isset( $field[ 'value' ] ) ){
+                $field_value = $field[ 'value' ];
+            } else {
+                $field_value =  null;
+            }
+
+            $fieldModel->update_setting( 'value', $field_value );
 
             if( $fieldModel->get_tmp_id() && isset( $field[ 'key' ] ) ){
                 $fieldModel->update_setting( 'key', $field[ 'key' ] );
             }
 
-            $settings = $fieldModel->get_settings();
-            $fieldModel->update_settings( $field, $settings );
+            if( isset( $field[ 'settings' ] ) ) {
+                $settings = array_merge( $field[ 'settings' ], $fieldModel->get_settings());
+            } else {
+                $settings = array_merge( $field, $fieldModel->get_settings());
+            }
+
+            $fieldModel->update_settings( $settings );
 
             $this->fields[] = $fieldModel;
         }
@@ -29,7 +45,7 @@ final class NF_ConditionalLogic_FieldsCollection
             $setting = $field->get_setting( $property );
             if( $key_or_id == $setting ) return $field;
         }
-        return false;
+        return Ninja_Forms()->form()->get_field();
     }
 
     public function to_array()
