@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.6.1
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 
 License: GPLv2 or later
 
@@ -29,6 +29,20 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.9 (15 November 2016) =
+
+*Bugs:*
+
+* Fixed a bug with list field options incorrectly triggering conditions based on partial matches.
+* Fixed a bug with missing field values causing the form to not submit properly.
+* Fixed a bug with false-positives when tabbing through a checkbox field.
+
+*Changes:*
+
+* Use the form cache for getting field data.
+* Corrected processing for different data structures.
+* Added a check for manually disabled actions, so as to not re-enable with conditions.
 
 = 3.0.8 (25 October 2016) =
 
