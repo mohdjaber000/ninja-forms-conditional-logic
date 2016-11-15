@@ -9,9 +9,17 @@ final class NF_ConditionalLogic_FieldsCollection
         foreach( $fields as $field ){
 
             $fieldModel = Ninja_Forms()->form( $form_id )->get_field( $field[ 'id' ] );
+            $fieldModel->get_settings(); // Initialized field settings from the database, if needed.
             unset( $field[ 'id' ] );
 
-            $field_value = ( isset( $field[ 'settings' ][ 'value' ] ) ) ? $field[ 'settings' ][ 'value' ] : null;
+            if( isset( $field[ 'settings' ][ 'value' ] ) ){
+                $field_value = $field[ 'settings' ][ 'value' ];
+            } elseif( isset( $field[ 'value' ] ) ){
+                $field_value = $field[ 'value' ];
+            } else {
+                $field_value =  null;
+            }
+
             $fieldModel->update_setting( 'value', $field_value );
 
             if( $fieldModel->get_tmp_id() && isset( $field[ 'key' ] ) ){
