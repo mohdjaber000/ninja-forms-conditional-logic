@@ -9,6 +9,7 @@ define( [ 'models/conditionCollection' ], function( ConditionCollection ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function( formModel ) {
 			var collection = new ConditionCollection( formModel.get( 'conditions' ), { formModel: formModel } );
+			formModel.set( 'conditions', collection );
 		}
 	});
 
