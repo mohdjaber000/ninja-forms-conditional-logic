@@ -31,6 +31,8 @@ define( [], function() {
 			if ( ! targetFieldModel.get( 'clean' ) ) {
 				targetFieldModel.trigger( 'change:value', targetFieldModel );
 			}
+			var viewEl = { el: nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:el' ) };
+			nfRadio.channel( 'form' ).request( 'init:help', viewEl );
 		}
 	});
 
