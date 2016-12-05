@@ -268,11 +268,13 @@ define( [], function() {
 				 * If we don't get a response, send a message out on the parent type channel
 				 */
 				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', key );
-				var typeModel = nfRadio.channel( 'fields' ).request( 'get:type', fieldModel.get( 'type' ) );
-				
-				var html = nfRadio.channel( 'conditions-' + fieldModel.get( 'type' ) ).request( 'get:valueInput', key, trigger, value );
-				if ( ! html ) {
-					html = nfRadio.channel( 'conditions-' + typeModel.get( 'parentType' ) ).request( 'get:valueInput', key, trigger, value ) || defaultHTML;
+
+				if( 'undefined' != typeof fieldModel ) {
+					var typeModel = nfRadio.channel('fields').request('get:type', fieldModel.get('type'));
+					var html = nfRadio.channel('conditions-' + fieldModel.get('type')).request('get:valueInput', key, trigger, value);
+					if (!html) {
+						html = nfRadio.channel('conditions-' + typeModel.get('parentType')).request('get:valueInput', key, trigger, value) || defaultHTML;
+					}
 				}
 			} else {
 				var html = defaultHTML;
