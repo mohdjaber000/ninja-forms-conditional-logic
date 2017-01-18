@@ -57,7 +57,6 @@ define( [], function() {
 		},
 
 		updateCompare: function( value ) {
-			console.log( 'TEST' );
 			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
 			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this.get( 'value' ) );
 			this.set( 'status', status );
@@ -80,7 +79,6 @@ define( [], function() {
 
 		compareValues: {
 			'equal': function( a, b ) {
-				console.log( 'equal' );
 				return a == b;
 			},
 			'notequal': function( a, b ) {
