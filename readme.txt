@@ -36,6 +36,10 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 * Textbox fields can now be compared to an empty string.
 
+*Bugs:*
+
+* Help text should render properly for conditionally shown/hidden fields.
+
 = 3.0.10 (09 December 2016) =
 
 *Bugs:*
