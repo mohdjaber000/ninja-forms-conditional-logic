@@ -1,13 +1,10 @@
 define( [], function() {
 	var model = Backbone.Model.extend( {
 		initialize: function( models, options ) {
-
 			/*
-			 * Usually, if our value is empty, we don't want to continue.
-			 * However, if the comparator is greater or lesser, then we want to continue in order to keep parity with how 2.9.x handled text strings issue #95
-			 * If our key, comparator, or value is empty, don't do anything else.
+			 * If our key or comparator is empty, don't do anything else.
 			 */
-			if ( ! this.get( 'key' ) || ! this.get( 'comparator' ) || ( 'greater' != this.get( 'comparator' ) && 'less' != this.get( 'comparator' ) && ! this.get( 'value' ) ) ) return;
+			if ( ! this.get( 'key' ) || ! this.get( 'comparator' ) ) return;
 
 			/*
 			 * Our key could be a field or a calc.
