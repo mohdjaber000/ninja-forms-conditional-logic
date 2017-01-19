@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.5
-Tested up to: 4.7
-Stable tag: 3.0.10
+Tested up to: 4.7.1
+Stable tag: 3.0.11
 
 License: GPLv2 or later
 
@@ -29,6 +29,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.11 (19 January 2017) =
+
+*Changes:*
+
+* Textbox fields can now be compared to an empty string.
 
 = 3.0.10 (09 December 2016) =
 
