@@ -6,7 +6,7 @@ final class NF_ConditionalLogic_Triggers_ShowField implements NF_ConditionalLogi
     {
         if( $field->get_setting( 'value' ) ) return;
         $submitted_value = $field->get_setting( 'submitted_value' );
-        $field->update_setting( 'value', $submitted_value );
+        if( ! is_null( $submitted_value ) ) $field->update_setting( 'value', $submitted_value );
 
         // Visible fields should be validated for required.
         if( 1 == $field->get_setting( 'required' ) ) {
