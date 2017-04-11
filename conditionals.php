@@ -3,7 +3,7 @@
  * Plugin Name: Ninja Forms - Conditional Logic
  * Plugin URI: https://ninjaforms.com/extensions/conditional-logic/
  * Description: Conditional form logic add-on for Ninja Forms.
- * Version: 3.0.11
+ * Version: 3.0.12
  * Author: The WP Ninjas
  * Author URI: https://ninjaforms.com
  * Text Domain: ninja-forms-conditionals
@@ -25,7 +25,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
     }
 
     if( ! defined( 'NINJA_FORMS_CON_VERSION' ) ) {
-        define("NINJA_FORMS_CON_VERSION", "3.0.11");
+        define("NINJA_FORMS_CON_VERSION", "3.0.12");
     }
 
     include 'deprecated/conditionals.php';
@@ -38,7 +38,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
      */
     final class NF_ConditionalLogic
     {
-        const VERSION = '3.0.11';
+        const VERSION = '3.0.12';
         const SLUG    = 'conditional-logic';
         const NAME    = 'Conditional Logic';
         const AUTHOR  = 'The WP Ninjas';
@@ -86,6 +86,11 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
             add_filter( 'ninja_forms_actions_settings_all', array( $this, 'action_settings_all' ) );
             add_filter( 'nf_admin_enqueue_scripts', array( $this, 'builder_scripts' ) );
             add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
+
+            /*
+             * Add action conditions to the form conditions localised data
+             */
+            add_filter( 'ninja_forms_display_form_settings', array( $this, 'localize_action_conditions' ), 10, 2 );
         }
 
         public function init()
@@ -286,6 +291,43 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
             if ( ! class_exists( 'NF_Extension_Updater' ) ) return;
 
             new NF_Extension_Updater( self::NAME, self::VERSION, self::AUTHOR, __FILE__, self::SLUG );
+        }
+
+        public function localize_action_conditions( $settings, $form_id ) {
+            /*
+             * Get any action conditions
+             */
+            $action_conditions = array();
+
+            $form_actions = Ninja_Forms()->form( $form_id )->get_actions();
+            foreach( $form_actions as $action ){
+                $conditions = $action->get_setting( 'conditions' );
+                if( ! isset ( $conditions[ 'when' ][0][ 'key' ] ) || empty( $conditions[ 'when' ][0][ 'key' ] ) ) continue;
+                
+                /*
+                 * Make sure that we have a valid "then" setting.
+                 */
+                if ( ! isset ( $conditions[ 'then' ][0][ 'key' ] ) || empty( $conditions[ 'then' ][0][ 'key' ] ) ) {
+                    $conditions[ 'then' ][0][ 'key' ] = $action->get_id();
+                    $conditions[ 'then' ][0][ 'trigger' ] = 'activate_action';
+                    $conditions[ 'then' ][0][ 'type' ] = 'action';
+                }
+
+                /*
+                 * Make sure that we have a valid "else" setting.
+                 */
+                if ( ! isset ( $conditions[ 'else' ][0][ 'key' ] ) || empty( $conditions[ 'else' ][0][ 'key' ] ) ) {
+                    $conditions[ 'else' ][0][ 'key' ] = $action->get_id();
+                    $conditions[ 'else' ][0][ 'trigger' ] = 'deactivate_action';
+                    $conditions[ 'else' ][0][ 'type' ] = 'action';
+                    $conditions[ 'else' ][0][ 'modelType' ] = 'else';
+                }
+
+                $settings[ 'conditions' ][] = $conditions;
+
+            }
+
+            return $settings;
         }
     }
 

@@ -27,7 +27,7 @@ final class NF_ConditionalLogic_Integrations_MultiPart
 
     public function get_part( $key, $data )
     {
-        $form = Ninja_Forms()->form( $data['form_id'] )->get();
+        $form = Ninja_Forms()->form( $data['id'] )->get();
 
         if( isset( $data[ 'settings' ][ 'is_preview' ] ) && $data[ 'settings' ][ 'is_preview' ] ){
             $form_settings = get_user_option( 'nf_form_preview_' . $data['form_id'] );
