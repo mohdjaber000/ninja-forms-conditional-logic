@@ -49,7 +49,10 @@ define( [], function() {
 
 			if( 'checkbox' == fieldModel.get( 'type' ) ){
 				var fieldValue = ( 'checked' == jQuery( el ).attr( 'checked' ) ) ? 1 : 0;
-			} else {
+			} else if( 'listcheckbox' == fieldModel.get( 'type' ) ) {
+				// This field isn't a single element, so we need to reference the fieldModel, instead of the DOM.
+                var fieldValue = fieldModel.get( 'value' ).join();
+            } else {
 				var fieldValue = jQuery( el ).val();
 			}
 
@@ -57,12 +60,14 @@ define( [], function() {
 		},
 
 		updateCompare: function( value ) {
+
 			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
 			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this.get( 'value' ) );
 			this.set( 'status', status );
 		},
 
 		updateFieldCompare: function( fieldModel, val, fieldValue ) {
+
 			if ( _.isEmpty( fieldValue ) ) {
 				fieldValue = fieldModel.get( 'value' );
 			}
