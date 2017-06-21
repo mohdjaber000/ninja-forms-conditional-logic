@@ -30,7 +30,16 @@ define( [], function() {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var fieldOptions = _.chain( fieldCollection.models )
 				.filter( function( field ) { return ! nfRadio.channel( 'conditions-key-select-field-' + field.get( 'type' ) ).request( 'hide', modelType ) || false; })
-				.map( function( field ) { label = field.get( 'admin_label' ) || field.get( 'label' ); return { key: field.get( 'key' ), label: label }; })
+				.map( function( field ) {
+                    var label = field.get( 'label' )
+					if( 'undefined' !== typeof field.get( 'admin_label' ) && 0 < field.get( 'admin_label' ).length ){
+                    	label = field.get( 'admin_label' );
+					}
+					return { key: field.get( 'key' ), label: label }; }
+				)
+				.sortBy( function( field ){
+					return field.label.toLowerCase();
+				} )
 				.value();
 
 			groups.push( { label: 'Fields', type: 'field', options: fieldOptions } );
