@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.5
-Tested up to: 4.7.3
-Stable tag: 3.0.14
+Tested up to: 4.8
+Stable tag: 3.0.15
 
 License: GPLv2 or later
 
@@ -29,6 +29,16 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.15 (27 June 2017) =
+
+*Changes:*
+
+* When setting up conditions, fields should now appear in alphabetical order within the field list.
+
+*Bugs:*
+
+* Conditional Logic should now work properly with the Save Progress add-on.
 
 = 3.0.14 (31 May 2017) =
 
