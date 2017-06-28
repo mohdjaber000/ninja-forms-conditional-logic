@@ -32,11 +32,15 @@ define( [], function() {
 			targetFieldModel.set( 'options', options );
 
 			if( _.contains( [ 'listselect', 'listcountry', 'liststate' ], targetFieldModel.get( 'type' ) ) ) { // TODO: Make this more dynamic.
-				targetFieldModel.set('value', option.value); // Propagate the selected option to the model's value.
+				targetFieldModel.set( 'value', option.value ); // Propagate the selected option to the model's value.
 			} else {
 				var value = targetFieldModel.get( 'value' );
 				if ( _.isArray( value ) ) {
-					value.push( option.value );
+                    if ( 0 > value.indexOf( option.value ) ) {
+                        value.push( option.value );
+                        // Set the value to nothing so it knows that something has changed.
+                        targetFieldModel.set( 'value', '' );
+                    }
 				} else {
 					value = option.value;
 				}
