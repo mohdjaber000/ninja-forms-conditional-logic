@@ -56,9 +56,28 @@ final class NF_ConditionalLogic_ConditionModel
     private function compare( &$when )
     {
         if( ! $when[ 'key' ] ) return;
-        $fieldModel = $this->fields->get_field( $when[ 'key' ] );
-        $field_value = $fieldModel->get_setting( 'value' );
-        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $field_value, $when[ 'value' ] );
+
+        /**
+         * This was originally written only with fields in mind.
+         * To handle calcs, we are using the Calcs Merge Tag global (since the values aren't passed in).
+         */
+        switch( $when[ 'type' ] ){
+            case 'field':
+                $fieldModel = $this->fields->get_field( $when[ 'key' ] );
+                $value = $fieldModel->get_setting( 'value' );
+                break;
+            case 'calc':
+                try {
+                    $value = Ninja_Forms()->merge_tags[ 'calcs' ]->get_calc_value( $when[ 'key' ] );
+                }catch( Exception $e ){
+                    $value = false;
+                }
+                break;
+            default:
+                $value = false;
+        }
+
+        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $value, $when[ 'value' ] );
     }
 
     private function evaluate( $current, $when )
