@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.5
 Tested up to: 4.8
-Stable tag: 3.0.15
+Stable tag: 3.0.16
 
 License: GPLv2 or later
 
@@ -29,6 +29,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.16 (02 August 2017) =
+
+*Bugs:*
+
+* Action conditions should now properly support calculations.
+* Fixed a bug that could cause calculations to fail when using Conditional Logic. 
 
 = 3.0.15 (27 June 2017) =
 
