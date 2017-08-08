@@ -308,7 +308,8 @@ final class NF_ConditionalLogic_Conversion
 	function find_key( $id )
 	{
 		$this->current_id = $id;
-		$field = array_shift( array_filter( $this->fields, array( $this, 'filter_by_id' ) ) );
+        $field = array_filter( $this->fields, array( $this, 'filter_by_id' ) );
+		$field = array_shift( $field );
 		$this->current_id = 0;
 		$this->known_keys[ $id ] = $field[ 'key' ];
 		return isset( $field[ 'key' ] ) ? $field[ 'key' ] : false;
@@ -337,7 +338,8 @@ final class NF_ConditionalLogic_Conversion
 	{
 		$current_id = $this->current_id;
 		$this->current_id = $field_id;
-		$field = array_shift( array_filter( $this->fields, array( $this, 'filter_by_id' ) ) );
+        $field = array_filter( $this->fields, array( $this, 'filter_by_id' ) );
+		$field = array_shift( $field );
 		$this->current_id = $current_id;
 
 		switch ( $comparator ) {
