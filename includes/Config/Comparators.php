@@ -50,10 +50,22 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
         'instance' => new NF_ConditionalLogic_Comparators_Greater()
     ),
 
+    'greaterequal' => array(
+        'key'      => 'greaterequal',
+        'label'    => __( 'Greater Than Or Equal', 'ninja-forms-conditional-logic' ),
+        'instance' => new NF_ConditionalLogic_Comparators_GreaterEqual()
+    ),
+
     'less' => array(
         'key'      => 'less',
         'label'    => __( 'Less Than', 'ninja-forms-conditional-logic' ),
         'instance' => new NF_ConditionalLogic_Comparators_Less()
+    ),
+
+    'lessequal' => array(
+        'key'      => 'lessequal',
+        'label'    => __( 'Less Than Or Equal', 'ninja-forms-conditional-logic' ),
+        'instance' => new NF_ConditionalLogic_Comparators_LessEqual()
     ),
 
 ));
