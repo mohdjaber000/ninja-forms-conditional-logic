@@ -27,6 +27,9 @@ define( [], function() {
 
 		showField: function( conditionModel, then ) {
 			var targetFieldModel = nfRadio.channel( 'form-' + conditionModel.collection.formModel.get( 'id' ) ).request( 'get:fieldByKey', then.key );
+
+			//TODO: Add an error to let the user know the show/hide field is empty.
+			if( 'undefined' == typeof targetFieldModel ) return;
 			targetFieldModel.set( 'visible', true );
 			if ( ! targetFieldModel.get( 'clean' ) ) {
 				targetFieldModel.trigger( 'change:value', targetFieldModel );
