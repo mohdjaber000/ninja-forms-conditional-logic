@@ -68,4 +68,22 @@ return apply_filters( 'ninja_forms_conditional_logic_comparators', array(
         'instance' => new NF_ConditionalLogic_Comparators_LessEqual()
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Date After / Before
+    |--------------------------------------------------------------------------
+    */
+
+    'dateafter' => array(
+        'key'      => 'dateafter',
+        'label'    => __( 'After Date', 'ninja-forms-conditional-logic' ),
+        'instance' => new NF_ConditionalLogic_Comparators_DateAfter()
+    ),
+
+    'datebefore' => array(
+        'key'      => 'datebefore',
+        'label'    => __( 'Before Date', 'ninja-forms-conditional-logic' ),
+        'instance' => new NF_ConditionalLogic_Comparators_DateBefore()
+    ),
+
 ));
