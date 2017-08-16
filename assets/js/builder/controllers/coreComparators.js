@@ -11,11 +11,31 @@
 define( [], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
+			nfRadio.channel( 'conditions-date' ).reply( 'get:comparators', this.getDateComparators );
 			nfRadio.channel( 'conditions-checkbox' ).reply( 'get:comparators', this.getCheckboxComparators );
 			nfRadio.channel( 'conditions-listradio' ).reply( 'get:comparators', this.getListSingleComparators );
 			nfRadio.channel( 'conditions-listselect' ).reply( 'get:comparators', this.getListSingleComparators );
 			nfRadio.channel( 'conditions-list' ).reply( 'get:comparators', this.getListComparators );
 		},
+
+        getDateComparators: function( defaultComparators ) {
+            return {
+                dateafter: {
+                    label: 'After', // @todo translate
+                    value: 'dateafter'
+                },
+
+                datebefore: {
+                    label: 'Before', // @todo translate
+                    value: 'datebefore'
+                },
+
+                dateequals: {
+                    label: 'Same As', // @todo translate
+                    value: 'dateequals'
+                }
+            }
+        },
 
 		getCheckboxComparators: function( defaultComparators ) {
 			return {

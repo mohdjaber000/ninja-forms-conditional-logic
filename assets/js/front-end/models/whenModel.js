@@ -142,8 +142,11 @@ define( [], function() {
 			},
 			'lessequal': function( a, b ) {
 				return parseFloat( a ) < parseFloat( b ) || parseFloat( a ) == parseFloat( b );
-			}
-		} 
+			},
+			'dateafter': function( a, b ){ return false; },
+			'datebefore': function( a, b ){ return false; },
+			'dateequals': function( a, b ){ return false; },
+		}
 	} );
 	
 	return model;
