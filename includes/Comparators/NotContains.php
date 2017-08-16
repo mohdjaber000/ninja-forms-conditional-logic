@@ -2,7 +2,7 @@
 
 class NF_ConditionalLogic_Comparators_NotContains implements NF_ConditionalLogic_Comparator
 {
-    public function compare( $comparison, $value )
+    public function compare( $comparison, $value, $field )
     {
 
         if ( is_array( $comparison ) ) {

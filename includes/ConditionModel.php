@@ -77,7 +77,9 @@ final class NF_ConditionalLogic_ConditionModel
                 $value = false;
         }
 
-        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $value, $when[ 'value' ] );
+        // For the purpose of Date Fields, we need to pass the fieldModel to access format settings.
+        if( ! isset( $fieldModel ) ) $fieldModel = false;
+        $when[ 'result' ] = NF_ConditionalLogic()->comparator( $when[ 'comparator' ] )->compare( $value, $when[ 'value' ], $fieldModel );
     }
 
     private function evaluate( $current, $when )
