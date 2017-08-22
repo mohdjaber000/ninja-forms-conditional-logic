@@ -2,9 +2,9 @@
 Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
-Requires at least: 4.5
+Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 3.0.16
+Stable tag: 3.0.17
 
 License: GPLv2 or later
 
@@ -29,6 +29,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.17 (22 August 2017) =
+
+*Bugs:*
+
+* Actions that use the greaterthan and lessthan comparators should work properly.
+* Incorrectly setup conditions should no longer cause form display to crash.
 
 = 3.0.16 (02 August 2017) =
 
