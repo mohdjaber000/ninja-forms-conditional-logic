@@ -1,5 +1,5 @@
 === Ninja Forms - Conditionals Extension ===
-Contributors: kstover, jameslaws
+Contributors: kstover, jameslaws, kbjohnson, klhall1987, Much2tall, deckerweb
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
