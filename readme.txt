@@ -2,9 +2,9 @@
 Contributors: kstover, jameslaws, kbjohnson, klhall1987, Much2tall, deckerweb
 Donate link: http://ninjaforms.com
 Tags: form, forms
-Requires at least: 4.6
-Tested up to: 4.8
-Stable tag: 3.0.17
+Requires at least: 4.7
+Tested up to: 4.9
+Stable tag: 3.0.18
 
 License: GPLv2 or later
 
@@ -29,6 +29,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
 
 == Changelog ==
+
+= 3.0.18 (24 February 2018) =
+
+*Bugs:*
+
+* Checkbox values can now be updated via conditional logic again.
 
 = 3.0.17 (22 August 2017) =
 
