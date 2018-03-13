@@ -10,7 +10,6 @@ define( [], function() {
 			 * Our key could be a field or a calc.
 			 * We need to setup a listener on either the field or calc model for changes.
 			 */
-
 			if ( 'calc' == this.get( 'type' ) ) { // We have a calculation key
 				/*
 				 * Get our calc model
@@ -46,7 +45,6 @@ define( [], function() {
 		},
 
 		maybeupdateFieldCompare: function( el, fieldModel, keyCode ) {
-
 			if( 'checkbox' == fieldModel.get( 'type' ) ){
 				var fieldValue = ( 'checked' == jQuery( el ).attr( 'checked' ) ) ? 1 : 0;
 			} else if( 'listcheckbox' == fieldModel.get( 'type' ) ) {
@@ -67,11 +65,18 @@ define( [], function() {
 		},
 
 		updateFieldCompare: function( fieldModel, val, fieldValue ) {
-
 			if ( _.isEmpty( fieldValue ) ) {
 				fieldValue = fieldModel.get( 'value' );
 			}
 
+			// Change the value of checkboxes to match the new convention.
+			if( 'checkbox' == fieldModel.get( 'type' ) ) {
+				if( 0 == fieldValue ) {
+					fieldValue = 'unchecked';
+				} else {
+					fieldValue = 'checked';
+				}
+			}
 			this.updateCompare( fieldValue );
 			
 			/*
