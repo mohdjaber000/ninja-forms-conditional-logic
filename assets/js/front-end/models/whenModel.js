@@ -46,19 +46,19 @@ define( [], function() {
 
 		maybeupdateFieldCompare: function( el, fieldModel, keyCode ) {
 			if( 'checkbox' == fieldModel.get( 'type' ) ){
-				var fieldValue = ( 'checked' == jQuery( el ).attr( 'checked' ) ) ? 1 : 0;
-			} else if( 'listcheckbox' == fieldModel.get( 'type' ) ) {
+                var fieldValue = ( 'checked' == jQuery( el ).attr( 'checked' ) ) ? 1 : 0;
+            } else if( 'listcheckbox' == fieldModel.get( 'type' ) ) {
 				// This field isn't a single element, so we need to reference the fieldModel, instead of the DOM.
                 var fieldValue = fieldModel.get( 'value' ).join();
             } else {
 				var fieldValue = jQuery( el ).val();
 			}
 
+
 			this.updateFieldCompare( fieldModel, null, fieldValue );
 		},
 
 		updateCompare: function( value ) {
-
 			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
 			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this.get( 'value' ) );
 			this.set( 'status', status );
@@ -78,7 +78,7 @@ define( [], function() {
 				}
 			}
 			this.updateCompare( fieldValue );
-			
+
 			/*
 			 * TODO: This should be moved to the show_field/hide_field file because it is specific to showing and hiding.
 			 */
