@@ -21,7 +21,8 @@ define( [], function() {
 		updateKey: function( fieldModel, keyModel, settingModel ) {
 			var oldKey = keyModel._previousAttributes[ 'key' ];
             var newKey = keyModel.get( 'key' );
-            if( this.get( 'key' ) == oldKey ) {
+            
+            if( this.get( 'key' ) == oldKey && this.cid === keyModel.cid ) {
                 this.set( 'key', newKey );
             }
 		}
