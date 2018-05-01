@@ -59,8 +59,15 @@ define( [], function() {
 		},
 
 		updateCompare: function( value ) {
+			var this_val = this.get( 'value' );
+
+			// if this is a calcModel then let's convert to number for comparison
+			if ( 'calc' === this.get( 'type' ) ) {
+				this_val = Number( this_val );
+				value = Number( value );
+			}
 			// Check to see if the value of the field model value COMPARATOR the value of our when condition is true.
-			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this.get( 'value' ) );
+			var status = this.compareValues[ this.get( 'comparator' ) ]( value, this_val );
 			this.set( 'status', status );
 		},
 
